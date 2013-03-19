@@ -1,0 +1,62 @@
+// IMPORTS
+
+// Friendly defaults
+@import 'normalize';
+@import 'boilerplate'; // trimmed
+
+// Compass
+@import 'compass/utilities';
+@import 'compass/css3';
+@import 'compass/typography/vertical_rhythm';
+
+// Custom
+@import 'functions';
+@import 'settings';
+@import 'mixins';
+@import 'extensions';
+
+//@import 'typography';
+@import 'helpers';
+
+/*
+
+May want to restructure files this way:
+http://nicolasgallagher.com/mobile-first-css-sass-and-ie/
+
+@import "base";
+@media (min-width:320px) {
+    @import "320-up"; }
+@media (min-width:480px) {
+    @import "480-up"; }
+@media (min-width:780px) {
+    @import "780-up"; }
+@media (min-width:960px) {
+    @import "960-up"; }
+@media (min-width:1100px) {
+    @import "1100-up"; }
+    
+*/
+
+/*
+
+Inline media queries
+http://css-tricks.com/sass-vs-less/
+
+
+=respond-to($name)
+
+  @if $name == small-screen
+    @media only screen and (min-width: 320px)
+      @content
+
+  @if $name == large-screen
+    @media only screen and (min-width: 800px)
+      @content
+      
+
+.column
+    width: 25%
+    +respond-to(small-screen)
+      width: 100%
+      
+*/

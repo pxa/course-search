@@ -1,0 +1,323 @@
+@import 'main';
+@import 'normalize';
+@import 'boilerplate';
+//@import 'helpers';
+//@import 'mediaqueries';
+
+
+$base-color: desaturate($cream, 25%);
+//$base-color: $cream;
+$background-color: tint($base-color, 90%);
+$border-color: shade($base-color, 20%);
+
+$interactive-background-color: mix($base-color, gray(10%), 25%);
+$interactive-color: shade($base-color, 60%);
+
+$selected-background-color: shade($base-color, 10%);
+//$active-background-color: darken($base-color, 35%);
+$selected-border-color: shade($base-color, 35%);
+//$active-border-color: darken($base-color, 50%);
+$selected-color: shade($base-color, 80%);
+$selected-box-shadow: 0 2px 2px 1px gray(15%);
+
+$hightlight-color: tint($base-color, 50%);
+
+
+.-interactive {
+	@include box-shadow(inset 0 1px white);
+	background-color: $interactive-background-color;
+	border: 1px solid $border-color;
+	color: $interactive-color;
+	cursor: pointer;
+	text-shadow: 0 1px #FFF;
+}
+
+.-hover {
+	
+}
+
+.-active {
+	
+}
+
+.-selected {
+	@include box-shadow(inset 0 1px tint($border-color, 75%));
+	background-color: $selected-background-color;
+	border-color: $selected-border-color;
+	border-width: 1px;
+	color: $selected-color;
+	text-shadow: 0 1px tint($border-color, 50%);
+}
+
+
+html {
+	//@include baseline-grid-background;
+	color: #222;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+	font-size: $base-font-size;
+}
+
+section {
+	@include border-radius;
+	background-color: $background-color;
+	border: 1px solid $border-color;
+	margin: rhythm(1) auto 0;
+	width: 30em;
+	
+	> div {
+		padding: 1em;
+	}
+}
+
+header {
+	padding: 1em;
+	position: relative;
+	
+	h1 {
+		@include adjust-font-size-to($l, 1);
+		margin: 0;
+	}
+	
+	span {
+		position: absolute;
+		right: 1em;
+		top: 1em;
+	}
+	
+	label {
+		font-size: em($s);
+		margin-right: 0.5em;
+	}
+}
+
+nav {
+	text-align: center;
+	
+	a {
+		$shade: rgba(black, 0.1);
+		@extend .-interactive;
+		@include inline-block;
+		border-right-width: 0;
+		font-size: 1em;
+		font-weight: normal;
+		line-height: 2;
+		padding: 0 1em;
+		position: relative;
+		text-decoration: none;
+		
+		&:first-child {
+			@include border-radius(2px 0 0 2px);
+		}
+		
+		&:last-child {
+			@include border-radius(0 2px 2px 0);
+			border-right-width: 1px;
+		}
+		
+		&.active {
+			@extend .-selected;
+			
+			& + * {
+				border-left-width: 0;
+			}
+			
+			&:before {
+				display: none;
+			}
+		}
+	}
+	
+	& + nav {
+		//border-bottom: 1px solid $border-color;
+		padding: 1em;
+		
+		a {
+			font-size: em($s);
+			font-weight: bold;
+		}
+	}
+}
+
+h2 {
+	@include adjust-font-size-to($m, 1);
+	margin: 0 0 1rem;
+}
+
+h3 {
+	@include adjust-font-size-to($r, 1);
+	margin: 0 0 0.5rem;
+	text-align: center;
+}
+
+footer {
+	border-top: 1px solid $border-color;
+	padding: 0 1em;
+	
+	a {
+		@include adjust-font-size-to($s, 1.5);
+	}
+}
+
+.activity { // table
+	margin: 1em 0;
+	width: 100%;
+	
+	tbody {
+		font-size: em($s);
+	}
+	
+	td, th {
+		padding-top: 0.25em;
+		padding-bottom: 0.25em;
+		vertical-align: top;
+	}
+	
+	td, time {
+		white-space: nowrap;
+	}
+	
+	td time {
+		color: $interactive-color;
+	}
+	
+	th {
+		text-align: left;
+		font-weight: normal;
+	}
+	
+	.group tr:first-child { // tbody
+	
+		td {
+			vertical-align: middle;
+		}
+		
+		th {
+			font-size: em($m);
+			font-weight: bold;
+		}
+	}
+	
+	.summary { // tbody
+		border-top: 1px solid $border-color;
+		
+		tr:first-child > * {
+			padding-top: 1em;
+		}
+		
+		th {
+			font-weight: bold;
+		}
+	}
+	
+	.due { // tbody
+		background-color: $hightlight-color;
+		border-top: 3px double $border-color;
+		font-size: em($r);
+	}
+}
+
+.money {
+	font-family: monospace;
+	padding-left: 0.5em;
+	padding-right: 1.65em;
+	text-align: right;
+}
+
+.credit {
+	$color: tint(green, 0%);
+	color: $color;
+	padding-right: 1em;
+	
+	&:before, &:after {
+		color: tint($color, 60%);
+	}
+	
+	&:before {
+		content: '($';
+	}
+	
+	&:after {
+		content: ')';
+	}
+}
+
+.debit {
+	$color: shade(red, 20%);
+	color: $color;
+	
+	&:before {
+		content: '$';
+		color: tint($color, 60%);
+	}
+}
+
+.btn {
+	$color: $violet;
+	$dark: shade($color, 30%);
+	$light: tint($color, 60%);
+	$shade: rgba(black, 0.25);
+	@include border-radius;
+	@include inline-block;
+	@include box-shadow(inset 0 0 0 1px $dark, inset 0 1px 0 1px $light, 0 1px 0 0 $shade);
+	background-color: $color;
+	color: contrast-color($color, #000, #FFF, 60%);
+	padding: 0 0.5em;
+	text-decoration: none;
+	text-shadow: 0 1px $dark;                                                        
+	vertical-align: baseline;
+}
+
+.box { // div
+	@include border-radius;
+	background-color: #FFF;
+	border: 1px solid $border-color;
+	padding: 0 1em;
+}
+
+.statement { // details
+	@include border-radius;
+	background-color: #FFF;
+	border: 1px solid $border-color;
+	
+	summary {
+		@extend .-interactive;
+		border-width: 0;
+		font-size: em($r);
+		line-height: 2em;
+		padding: 0.25em 0.25em 0.25em 0.75em;
+		position: relative;
+		
+		span {
+			position: absolute;
+			right: 0;
+		}
+		
+		.money {
+			font-weight: inherit;
+			padding: 0;
+		}
+		
+		a {
+			@extend .btn;
+			margin: 0 0.25em;
+		}
+	}
+	
+	&[open] {
+		@include box-shadow($selected-box-shadow);
+		border-color: $selected-border-color;
+		
+		summary {
+			@extend .-selected;
+			border-width: 0 0 1px;
+		}
+	}
+	
+	> div {
+		padding: 0 1em;
+	}
+	
+	tr:last-child > * {
+		padding-bottom: 1em;
+	}
+}

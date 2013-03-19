@@ -1,0 +1,35 @@
+// FUNCTIONS
+
+
+//
+// Pixel conversion
+// ----------------
+
+// https://gist.github.com/1441967
+
+// Convert using base-font-size 
+// EX: font-size: em(13px);
+@function em($target, $context: $base-font-size) {
+   @if $target == 0 { @return 0 }
+   @return $target / $context + 0em;
+}
+
+// Convert using base-line-height 
+// EX: font-size: em-base(13px);
+@function em-base($target, $context: $base-line-height) {
+   @return em($target, $context);
+}
+
+@function rem($target, $context: $base-font-size) {
+   @if $target == 0 { @return 0 }
+   @return $target / $context + 0rem;
+}
+
+
+//
+// Color
+// -----
+
+@function gray($percent) {
+   @return darken(white, $percent);
+}

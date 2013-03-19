@@ -1,0 +1,581 @@
+@import 'main';
+
+
+/*
+ * Course Search
+ */
+
+#course-search {
+
+	&.no-preset {
+	
+		header h2, header .campus-program summary, header .campus-program a {
+			display: none;
+		}
+	}
+
+	&.preset {
+		
+		header form, > div > div {
+			display: none;
+		}
+	}
+	
+	&.no-results {
+		
+		> div > div {
+			display: none;
+		}
+	}
+
+	header {
+		@include box-shadow(0 2px 1px #FFF);
+		border-bottom: 1px solid #DDD;
+		position: relative;
+		
+		h1 {
+			@include border-top-radius;
+			@include box-shadow(0 20px 20px #FFF inset);
+			border-bottom: 1px solid #CCC;
+			font-size: 24px;
+			font-weight: 100;
+			line-height: 80px;
+			margin: 0;
+			padding: 0 0 0 30px;
+		}
+		
+		h2 {
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 60px;
+			margin: 0 20px 0 0;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+		
+		nav {
+			@include box-shadow(0 1px 2px #DDD inset);
+			background-color: #EEE;
+			padding: 20px;
+			
+			> details.campus-program {
+				text-align: center;
+				
+				summary {
+					color: #666;
+					cursor: pointer;
+					font-size: 13px;
+					line-height: 20px;
+					margin-right: 20px;
+					position: absolute;
+					top: 40px;
+					right: 0;
+				}
+				
+				> div {
+					text-align: center;				
+				}
+				
+				select {
+					margin: 0 2px;
+				}
+				
+				a {
+					font-size: 13px;
+					margin-right: 20px;
+					text-decoration: underline;
+				}
+				
+				button {
+					@include border-radius(4px);
+					@include box-shadow(1px 2px 0 #BBB, 2px 4px 2px #DDD, 0 5px 10px #FFF inset);
+					@include inline-block;
+					background-color: #EEE;
+					border: 1px solid #BBB;
+					cursor: pointer;
+					font-size: 13px;
+					line-height: 30px;
+					margin: 20px 0 0;
+					padding: 0 10px;
+					position: relative;
+					
+					&:after {
+						color: #BBB;
+						content: " \2192";
+					}
+					
+					&:hover {
+						@include box-shadow(1px 2px 0 #BBB, 2px 4px 2px #DDD, 0 5px 10px #DDD inset);
+						color: #7D110C;
+						
+						&:active {
+							@include box-shadow(0 0 5px #DDD, 0 5px 10px #DDD inset);
+							position: relative;
+							left: 1px;
+							top: 2px;
+						}
+						
+						&:after {
+							color: #333;
+						}
+					}
+				}	
+			}
+		
+			form {
+				position: relative;
+				
+				> label {
+					display: block;
+					font-size: 14px;
+					font-weight: bold;
+					line-height: 30px;
+					position: absolute;
+					text-align: right;
+					width: 120px;
+				}
+	
+				> div {
+					margin: 0 40px 0 130px;
+					
+					input {
+						@include search;
+					}
+				}
+				
+				/* Search examples */
+				> details.examples {
+					position: absolute;
+					margin: 3px;
+					top: 0;
+					right: 40px;
+					
+					summary {
+						@include border-radius;
+						background-color: #EEE;
+						border: 1px solid #CCC;
+						color: #666;
+						cursor: pointer;
+						display: inline;
+						font-size: 13px;
+						line-height: 20px;
+						padding: 0 5px;
+						text-align: center;
+					}
+					
+					&[open] summary {
+						color: #333;
+					}
+					
+					dl {
+						@include border-bottom-radius;
+						@include box-shadow(0 8px 10px $default-box-shadow-color);
+						background-color: #EEE;
+						border: 1px solid #CCC;
+						margin: 3px 0 0;
+						padding: 0 20px 10px;
+						position: absolute;
+						right: 0px;
+						width: 250px;
+						z-index: 1;
+						
+						dt {
+							font-size: 14px;
+							margin-top: 20px;
+						}
+						
+						dd {
+							margin: 10px 0;
+							
+							a {
+								@include search;
+								@include border-radius;
+								border-width: 1px;
+								display: block;
+								font-size: 13px;
+								position: relative;
+								text-decoration: none;
+								
+								span, &:after {
+									@include border-radius;
+									@include inline-block;
+									background-color: #7D110C;
+									color: #FFF;
+									font-size: 12px;
+									height: 20px;
+									position: absolute;
+									right: 4px;
+									text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+									top: 4px;
+									width: 20px;
+								}
+								
+								span {
+									@include box-shadow(0 1px 1px #999);
+									@include transition(width);
+									line-height: 20px;
+									padding: 0 15px 0 5px;
+									overflow: hidden;
+									width: 0;
+									
+									/* Sadly, poor support for animated ::before */
+									&:before {
+										content: "try this search";
+									}
+								}
+								
+								&:after {
+									content: "\2192";
+									line-height: 22px;
+									text-align: center;
+								}
+								
+								&:hover span {
+									width: 80px;
+								}
+							}
+						}
+					}
+				}
+
+				/* Filters */
+				> details.requirements {
+					@include border-radius;
+					margin: 20px 0 0 130px;
+					
+					&[open] {
+						@include box-shadow(0 2px 2px #CCC);
+						background-color: #F9F9F9;
+						
+						summary {
+							@include border-top-radius;
+							box-shadow: inset 0 2px 2px #CCC;
+							color: #222;
+						}
+					}
+					
+					summary {
+						@include border-radius;
+						@include box-shadow(0 -1px 0 #FFF, 0 1px 0 #CCC);
+						background-color: #E0E0E0;
+						color: #666;
+						cursor: pointer;
+						font-size: 14px;
+						line-height: 30px;
+						padding: 0 10px;
+					}
+					
+					ul {
+						@include box-shadow(0 2px 1px #FFF);
+						border-bottom: 1px solid #EEE;
+						list-style-type: none;
+						padding: 10px 0;
+						margin: 0 10px;
+						
+						&:last-child {
+							@include box-shadow(none);
+							border-width: 0;
+						}
+						
+						label {
+							border-bottom: 1px solid #F9F9F9;
+							cursor: pointer;
+							display: block;
+							font-size: 14px;
+							padding: 5px 5px 4px 30px;
+							position: relative;
+							
+							&:hover {
+								background-color: #EEE;
+							}
+							
+							&.active {
+								background-color: $cream;
+							}
+							
+							input {
+								left: 5px;
+								margin-top: -6px;
+								position: absolute;
+								top: 50%;
+							}
+							
+							dfn {
+								font-weight: bold;
+								font-style: normal;
+							}
+						}
+					}
+				}
+				
+				button {
+					height: 30px;
+					font-size: 14px;
+					font-weight: bold;
+					position: absolute;
+					right: 0;
+					top: 0;
+					width: 40px;
+				}
+			}
+		}
+	}
+
+	> div {
+		padding-top: 10px;
+	}
+	
+	/* Department listings */
+	.depts {
+		font-size: 14px;
+		float: left;
+		margin-left: 10px;
+		width: 130px;
+		
+		h2 {
+			@include box-shadow(0 2px 1px #FFF);
+			border-bottom: 1px solid #EEE;
+			font-size: inherit;
+			font-weight: bold;
+			padding: 5px 10px 10px;
+			margin: 0 0 5px;
+		}
+		
+		small {
+			@include border-radius(10px);
+			@include box-shadow(0 1px 1px $default-box-shadow-color inset);
+			float: right;
+			font-size: inherit;
+			padding: 0 5px;
+		}
+		
+		ol {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			
+			a {
+				display: block;
+				padding: 5px 10px;
+				
+				&:hover {
+					background-color: #EEE;
+				}
+			}
+		}
+	}
+	
+	.depts small, .courses h3 dfn {
+		background-color: $leather;
+		color: #FFF;
+		font-weight: bold;
+		text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+	}
+	
+	.courses {
+		margin-left: 150px;
+		position: relative;
+		
+		h2 {
+			@include box-shadow(0 2px 1px #FFF);
+			border-bottom: 1px solid #EEE;
+			font-size: 14px;
+			font-weight: bold;
+			padding: 5px 10px 10px;
+			margin: 0 0 5px;
+		}
+		
+		h3 {
+			box-sizing: border-box;
+			color: $leather;
+			font-size: 14px;
+			font-weight: normal;
+			margin: 20px 0 0;
+			min-height: 30px;
+			padding-top: 6px;
+			padding-left: 90px;
+			position: relative;
+			
+			&:first-child {
+				margin-top: 10px;
+			}
+			
+			dfn {
+				@include border-right-radius;
+				@include box-shadow(0 1px 1px #999);
+				@include inline-block;
+				border-bottom: 1px solid rgba(0,0,0,0.25);
+				font-style: normal;
+				left: 0;
+				margin-right: 10px;
+				padding: 5px;
+				position: absolute;
+				text-align: center;
+				top: 0;
+				width: 70px;
+			}
+			
+			abbr {
+				border-width: 0;
+			}
+		}
+		
+		h4 {
+			@include box-shadow(0 2px 0px #FFF);
+			background-color: #FFF;
+			border-bottom: 1px solid #EEE;
+			font-size: 16px;
+			font-weight: normal;
+			padding: 10px 80px;
+			margin: 0;
+			position: relative;
+			
+			strong {
+				display: block;
+				font-size: 16px;
+				font-weight: bold;
+				left: 10px;
+				position: absolute;
+				width: 70px;
+				
+				span {
+					display: none;
+				}
+			}
+			
+			small {
+				color: #333;
+				display: block;
+				font-size: 13px;
+				font-weight: bold;
+				line-height: 24px;
+				right: 10px;
+				text-align: right;
+				top: 10px;
+				position: absolute;
+				width: 70px;
+			}
+		}
+		
+		ul {
+			@include border-radius(0 0 0 4px);
+			@include box-shadow(5px -5px 10px #EEE inset, -1px 2px 0 #FFF);
+			list-style-type: none;
+			margin: 0;
+			padding: 10px 0;
+			
+			&:last-child {
+				@include border-radius(0);
+				@include box-shadow(5px -5px 10px #EEE inset, -1px 0 0 #FFF);
+			}
+			
+			li {
+				@include border-radius;
+				@include box-shadow(0 2px 2px #DDD);
+				background-color: #F9F9F9;
+				border: 1px solid #EEE;
+				font-size: 13px;
+				margin: 10px 10px 0;
+				
+				&:first-child {
+					margin-top: 0;
+				}
+			}
+		}
+		
+		dl {
+			@include box-shadow(0 2px 1px #FFF);
+			border-bottom: 1px solid #EEE;
+			margin: 0 10px;
+			padding: 10px;
+			
+			dt {
+				color: #999;
+				display: inline;
+				padding-right: 10px;
+			}
+			
+			dd {
+				display: inline;
+				margin: 0;
+				
+				span {
+					white-space: nowrap;
+				}
+			}
+		}
+		
+		h4 + dl {
+			border-top-width: 0;
+		}
+		
+		p {
+			margin: 10px;
+		}
+		
+		a {
+			text-decoration: underline;
+		}
+		
+		mark {
+			@include border-radius;
+			@include box-shadow(0 1px 2px $default-box-shadow-color);
+			background-color: $cream;
+		}
+		
+		nav {
+			padding: 10px 0;
+			text-align: center;
+			
+			&:first-child {
+				float: right;
+				font-size: 0;
+				padding: 5px 20px;
+				
+				a.previous, a.next {
+					@include box-shadow(none);
+					margin: 0;
+				}
+				
+				a.previous + a.next {
+					margin: 0 0 0 20px;
+				}
+			}
+			
+			a {
+				margin: 0 6px;
+				text-decoration: none;
+		
+				&:hover {
+					text-decoration: underline;
+				}
+				
+				&.previous, &.next {
+					font-size: 14px;
+				}
+				
+				&.previous {
+					@include box-shadow(3px 0 0 5px #F9F9F9, 4px 0 0 5px #FFF, 5px 0 0 5px #DDD, 6px 0 0 5px #FFF);
+					margin: 0 10px 0 0;
+				}
+				
+				&.next {
+					@include box-shadow(-3px 0 0 5px #F9F9F9, -4px 0 0 5px #FFF, -5px 0 0 5px #DDD, -6px 0 0 5px #FFF);
+					margin: 0 0 0 10px;
+				}
+				
+				&.active {
+					@include border-radius;
+					@include box-shadow(0 1px 2px #CCC, 0 1px 1px #FFF inset);
+					@include inline-block;
+					background-color: $cream;
+					color: inherit;
+					font-weight: bold;
+					padding: 2px 6px 0;
+					vertical-align: 0;
+				}
+			}
+		}
+	}
+}

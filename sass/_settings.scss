@@ -1,0 +1,172 @@
+// SETTINGS
+
+
+//
+// Colors
+// ------
+
+// http://visualidentity.iu.edu/media/
+
+// Primary Palette
+$crimson: #7D110C;
+$cream: #F8F3D2;
+$gold: #AF906A;
+$black: #000000;
+$hyperlinks: #990000;
+
+// Secondary Palette
+$darkgray: #6D6E70;
+$lightgray: #B0B2B4;
+$midnight: #2D637F;
+$violet: #6F679D;
+$olive: #808A53;
+$leather: #C78036;
+
+// Base
+//$base-color: desaturate($cream, 25%);
+//$base-color: $cream;
+
+
+/*
+$cold-highlight;
+$cold-light;
+$cold-tint;
+$cold-shade;
+$cold-dark;
+$cold-lowlight;
+
+
+$cool-1: white;
+$cool-2: mix($base-color, gray(10%), 25%);
+$cool-3: shade($base-color, 20%);
+$cool-4: shade($base-color, 60%);
+
+$warm-1: tint($cool-3, 75%);
+$warm-2: shade($base-color, 10%);
+$warm-3: shade($base-color, 35%);
+$warm-4: shade($base-color, 80%);
+*/
+
+$base-color: desaturate($cream, 40%);
+
+
+$mud: mix($base-color, gray(10%), 25%);
+//$base-color: $mud;
+
+$tint-1: tint($base-color, 80%);
+
+$shade-1: shade($base-color, 10%);
+$shade-2: shade($base-color, 20%);
+$shade-3: shade($base-color, 40%);
+$shade-4: shade($base-color, 60%);
+$shade-5: shade($base-color, 80%);
+
+$color-0: white;
+$color-1: $tint-1;
+$color-2: $base-color;
+$color-3: $shade-1;
+$color-4: $shade-2;
+$color-5: $shade-3;
+$color-6: $shade-4;
+$color-7: $shade-5;
+$color-8: black;
+
+//$active-background-color: darken($base-color, 35%);
+//$active-border-color: darken($base-color, 50%);
+
+$background-color: $color-1;
+$border-color: $color-4;
+
+// Interactive
+$interactive-highlight-color: $color-0;
+$interactive-background-color: $mud;
+//$interactive-background-color: $color-1;
+$interactive-color: $color-6;
+
+// Hover
+$hover-background-color: $color-2;
+
+// Selected
+$selected-background-color: saturate($color-3, 20%);
+$selected-highlight-color: $color-2;
+$selected-color: $color-7;
+
+$selected-box-shadow: 0 2px 2px 1px gray(15%);
+
+
+// Other
+$hightlight-color: tint($base-color, 50%);
+
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+/*
+// Define your main colour palette
+$primary							: #666;
+$secondary							: #222;	
+$tertiary							: #444;
+
+// Assign colours to variable roles
+$base-color							: $primary;
+$heading-color						: $secondary;
+$secondary-heading-color			: $tertiary;
+
+// Links
+$action								: $primary;
+$action-respond						: $secondary;
+$secondary-action					: $action-respond;
+$secondary-action-respond			: $action;
+
+// Alerts, errors and UI interface
+$alert 								: red;
+$success 							: green;
+*/
+
+
+//
+// Compass defaults
+// ----------------
+
+$default-border-radius: 2px;
+$default-box-shadow-color: rgba(black, 0.25);
+$default-text-shadow-blur: 0;
+$default-text-shadow-color: white;
+$default-text-shadow-v-offset: 1px;
+$default-transition-duration: 0.25s;
+
+
+//
+// Fonts
+// -----
+
+$base-font-size: 16px;
+
+$golden: 1.61803398875; // Golden ratio
+$scale: sqrt($golden);
+
+$s: $base-font-size / $scale; // Small
+$r: $s * $scale; // Regular
+$m: $r * $scale; // Medium
+$l: $m * $scale; // Large
+$xl: $l * $scale; // Extra Large
+$xxl: $xl * $scale; // Extra Extra Large
+
+$s: round($s);
+$r: round($r);
+$m: round($m);
+$l: round($l);
+$xl: round($xl);
+$xxl: round($xxl);
+
+
+//
+// Vertical rhythm
+// ---------------
+
+$base-line-height: round($base-font-size * $golden);
+//$base-line-height: $base-font-size;
+$grid-background-baseline-color: lighten(blue, 40%); 
+$grid-background-baseline-height: $base-line-height;
+
+$show-baseline-grid-backgrounds: true;
+
+@include establish-baseline;

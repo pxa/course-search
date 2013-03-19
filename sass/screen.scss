@@ -1,0 +1,317 @@
+
+
+@import 'main';
+
+
+html {
+	//@include baseline-grid-background;
+	background-color: $mud;
+	color: #222;
+	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+body {
+
+}
+
+section {
+	@extend %grid;
+	
+	> * {
+		@extend %grid_item;
+	}
+}
+
+nav {
+	background-color: white;
+	padding: 1em 0;
+	width: 15em;
+	
+	> * {
+		margin: 0 1em;
+	}
+}
+
+.facet {
+	//position: relative;
+	
+	h3 {
+		@include adjust-font-size-to($r, 1);
+		@include border-top-radius;
+		@extend %interactive;
+		margin: 1em 0 0;
+		padding: 0 0.5em;
+		
+		&:before {
+			content: 'select';
+			float: right;
+			font-size: em($s);
+			font-style: italic;
+			font-weight: normal;
+		}
+		
+		& + label {
+			border-top: 1px solid transparent;
+		}
+	}
+	
+	label {
+		border-bottom: 1px solid $color-2;
+		color: $color-6;
+		cursor: pointer;
+		display: block;
+		padding-left: 0.5em;
+		
+		&:hover {
+			background-color: $color-2;
+			color: $color-7;
+		}
+		
+		&.active {
+			background-color: $color-2;
+		}
+	}
+	
+	> label {
+	
+		&:hover {
+
+			&:before {
+				@include box-shadow(0 -1px $color-3, 0 1px $color-3);
+				background-color: $color-3;
+				color: white;
+			}
+		}
+		
+		&:before {
+			color: $border-color;
+			content: '\2715';
+			float: right;
+			padding: 0 0.5em;
+		}
+		
+		input {
+			display: none;
+		}
+	}
+	
+	small {
+		color: $color-6;
+		float: right;
+		margin-right: 1em;
+		text-align: right;
+	}
+	
+	input {
+		margin-right: 0.5em;
+	}
+	
+	> div {
+		background-color: rgba(black, 0.8);
+		height: 100%;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+	
+	section {
+		//@include columns(10em 2);
+		@include border-radius;
+		background-color: white;
+		padding: 2em;
+		position: fixed;
+		top: 0;
+		left: 50%;
+		margin: 5em 0 0 -20em;
+		width: 40em;
+		
+		> div {
+			@include column-count(3);
+			width: 100%;
+		}
+	}
+}
+
+/*
+	label {
+		cursor: pointer;
+		display: block;
+		padding: 0 0.5em;
+		
+		&:hover {
+			background-color: $color-2;
+		}
+		
+		&.active {
+			background-color: $color-3;
+		}
+	}
+	
+	input {
+		margin-right: 0.25em;
+	}
+	*/
+
+ol {
+	list-style-type: none;
+}
+
+table {
+	margin: 0 2em;
+}
+
+
+navx {
+	@extend %grid_item;
+	@include box-shadow(0 0 0.5em 0.25em $shadow-color);
+	background-color: white;
+	width: 100%;
+	height: 100%;
+	vertical-align: top;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+	//position: absolute;
+	
+	> div {
+		@include box-sizing(border-box);
+		@include box-shadow(0 4px 4px $shadow-color);
+		background: white;
+		border-bottom: 1px solid $border-color;
+		padding: 1em 1em 0;
+		//position: fixed;
+		z-index: 1;
+		width: 100%;
+		
+		> label {
+			display: none;
+		}
+	}
+	
+	.filters {
+		margin: 1em 0;
+		
+		input[type="checkbox"] {
+			@extend %favorite;
+			
+			& + label {
+				@include border-radius;
+				@include inline-block;
+				border-width: 1px;
+				padding: 0 0.5em;
+			}
+		}
+	}
+	
+	.results { // div
+		position: relative;
+		
+		label {
+			font-size: em($s);
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+	
+	#search { // input
+		@include border-radius;
+		@include box-sizing(border-box);
+		@include box-shadow(inset 0 2px 2px $shadow-color);
+		border: 1px solid $border-color;
+		font-size: em($m);
+		padding: 0.25em;
+		width: 100%;	
+	}
+	
+	select {
+		font-size: em($m);
+	}
+
+	ol {
+		@extend %plain-list;
+		//margin-top: 155px;
+		
+		li {
+			@extend %inline-list;
+			position: relative;
+		}
+		
+		li:nth-child(even) > * {
+			background-color: $color-2;
+		}
+		
+		input[type="checkbox"] {
+			@extend %favorite;
+			
+			& + label {
+				border-width: 0;
+				display: block;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 2em;
+				
+				&:before {
+					left: 50%;
+					position: absolute;
+					margin: -0.75em 0 0 -0.5em;
+					top: 50%;
+				}
+			}
+		}
+		
+		a {
+			display: block;
+			color: inherit;
+			line-height: 1.4;
+			margin-left: 2em;
+			padding: 1em 1.5em 1em 1em;
+			position: relative;
+			text-decoration: none;
+			
+			&:hover {
+				background-color: $color-3;
+				
+				&:after {
+					@include triangle(right, $color-2, 0.4em);
+				}
+			}
+			
+			&:after {
+				@include triangle(right, $color-3, 0.4em);
+				margin-top: -0.2em;
+				right: 0.6em;
+				top: 50%;
+			}
+			
+			&.selected {
+				background-color: tint($violet, 60%);
+			}
+		}
+		
+		small {
+			white-space: nowrap;
+		}
+	}
+}
+
+article {
+	@extend %grid_item;
+	padding: 2em 5% 0 5%;
+	margin-left: 30%;
+	max-width: 50em;
+	width: 65%;
+}
+
+h1 {
+	line-height: 1.2;
+}
+
+.empty-state { // p
+	@include text-shadow;
+	color: $color-5;
+	font-size: em($l);
+	font-style: italic;
+}
