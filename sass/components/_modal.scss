@@ -1,0 +1,49 @@
+.modal-backdrop {
+	background-color: rgba(black, 0.8);
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 100%;
+}
+
+.modal {
+
+	section {
+		@include border-radius;
+		@include box-shadow(0 3px 7px rgba(0,0,0,0.3));
+		background-color: white;
+		left: 50%;
+		margin: 4em 0 0 -15em;
+		position: fixed;
+		top: 0;
+		width: 30em;
+		z-index: 1;
+		
+		> * {
+			padding: 1em;
+		}
+	}
+	
+	header {
+		border-bottom: 1px solid $border-color;
+		padding: 0 1em;
+
+		h1 {
+			font-size: em($m);
+		}
+	}
+	
+	footer {
+		@include border-bottom-radius;
+		@include box-shadow(inset 0 1px #fff);
+		background-color: $color-2;
+		border-top: 1px solid $border-color;
+		
+		button {
+			@extend .btn;
+			line-height: 2em;
+		}
+	}
+}

@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function CourseSearchCtrl($scope, $routeParams, $http) {
+function CourseSearchCtrl($scope, $routeParams, $http, $dialog) {
 	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
@@ -28,10 +28,42 @@ function CourseSearchCtrl($scope, $routeParams, $http) {
 		$scope.facetGroups = facetGroups;
 	});
 	
+	var resultsPerPage = 20;
+	
 	$http.get('json/search.json').success(function(data) {
 		$scope.results = data;
-		//console.log($scope.results);
+		
+		$scope.numberOfPages = Math.ceil($scope.results.iTotalRecords / resultsPerPage);
+		$scope.currentPage = 3;
+		$scope.maxPageSize = 5;
 	});
+	
+	$scope.openFacetGroupDialog = function(facetGroup) {
+	
+		var opts = {
+			templateUrl: 'partials/modal.facet-group.html',
+			controller: 'FacetGroupDialogController',
+			// Duplicate the facetGroup object to allow easy cancelation.
+			resolve: { facetGroup: function() { return angular.copy(facetGroup); } }
+		};
+		
+		var d = $dialog.dialog(opts);
+		d.open().then(function(result) {
+			if(result) {
+				// Copy back changes into the original facetGroup object
+				angular.copy(result.facetGroup, facetGroup);
+			}
+		});
+	};
+}
+
+// the dialog is injected in the specified controller
+function FacetGroupDialogController($scope, dialog, facetGroup) {
+	$scope.facetGroup = facetGroup;
+	$scope.close = function() {
+		// Result
+		dialog.close({ facetGroup: $scope.facetGroup });
+	};
 }
 
 function CourseDetailCtrl($scope, $routeParams, $http) {

@@ -1,4 +1,5 @@
 # Require any additional compass plugins here.
+#require 'susy'
 
 # Set this to the root of your project when deployed:
 http_path = "/"
@@ -7,6 +8,8 @@ sass_dir = "sass"
 images_dir = "app/img"
 javascripts_dir = "app/js"
 
+add_import_path "sass/lib"
+add_import_path "sass/components"
 add_import_path "sass/apps"
 
 output_style = :compressed

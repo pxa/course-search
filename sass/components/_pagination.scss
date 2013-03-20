@@ -1,0 +1,41 @@
+.pagination { // nav
+	@extend %grid;
+	text-align: center;
+	width: 100%;
+	display: block;
+	
+	a {
+		@extend %grid-item;
+		background-color: $color-0;
+		border: 1px solid $border-color;
+		border-left-width: 0;
+		color: $violet;
+		line-height: 2em;
+		padding: 0 0.75em;
+		text-decoration: none;
+		
+		&:first-child {
+			@include border-left-radius;
+			border-width: 1px;
+		}
+		
+		&:last-child {
+			@include border-right-radius;
+		}
+		
+		&:hover {
+			background-color: $color-2;
+		}
+		
+		&.active {
+			background-color: $color-2;
+			color: $color-5;
+		}
+		
+		&.disabled {
+			background-color: $color-0;
+			color: $color-5;
+			cursor: default;
+		}
+	}
+}

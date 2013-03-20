@@ -1,0 +1,14 @@
+<section class="facet-group">
+	<header>
+		<h1>Select {{facetGroup.label}}</h1>
+	</header>
+	<div>
+		<label ng-repeat="facet in facetGroup.facets" ng-class="{ active:facet.checked }">
+			<input type="checkbox" ng-model="facet.checked" />
+			{{facet.label}}
+		</label>
+	</div>
+	<footer>
+		<button ng-click="close()">Apply</button>
+	</footer>
+</section>

@@ -3,22 +3,22 @@
 // Silent classes
 
 // https://github.com/csswizardry/csswizardry-grids/blob/master/csswizardry-grids.scss
-%grid{
-    list-style:none;                /* [1] */
-    margin:0;                       /* [2] */
-    padding:0;                      /* [2] */
-    margin-left:0;           /* [3] */
-    letter-spacing:-0.31em;         /* [4] */
-    word-spacing:-0.43em;           /* [4] */
+%grid {
+    list-style: none;                /* [1] */
+    margin: 0;                       /* [2] */
+    padding: 0;                      /* [2] */
+    margin-left: 0;           /* [3] */
+    letter-spacing: -0.31em;         /* [4] */
+    word-spacing: -0.43em;           /* [4] */
 }
 
-%grid_item{
+%grid-item {
 	@include inline-block;
 	@include box-sizing(border-box);
-    padding-left:0;           /* [2] */
-    vertical-align:top;             /* [3] */
-    letter-spacing:normal;          /* [4] */
-    word-spacing:normal;            /* [4] */
+    padding-left: 0;           /* [2] */
+    vertical-align: top;             /* [3] */
+    letter-spacing: normal;          /* [4] */
+    word-spacing: normal;            /* [4] */
 }
 
 %interactive {

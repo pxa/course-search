@@ -9,6 +9,11 @@
 @import 'compass/css3';
 @import 'compass/typography/vertical_rhythm';
 
+// Compass plugins
+// http://susy.oddbird.net
+// https://github.com/ericam/susy/tree/master/sass
+@import 'susy';
+
 // Custom
 @import 'functions';
 @import 'settings';
@@ -17,6 +22,11 @@
 
 //@import 'typography';
 @import 'helpers';
+
+// Components
+@import 'modal';
+@import 'pagination';
+
 
 /*
 

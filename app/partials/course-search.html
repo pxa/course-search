@@ -1,56 +1,67 @@
-<nav>
-	
-	<label for="search">Search</label>
-	<input id="search" ng-model="query" placeholder="Search" />
+<nav id="search">
+
+	<label for="searchInput">Search</label>
+	<input id="searchInput" ng-model="query" placeholder="Search" />
 	
 	<p>{{results.iTotalRecords}}
 		<span ng-pluralize count="results.iTotalRecords" when="{ 'one':'result', 'other':'results' }"></span>
 	</p>
 	
-	<div ng-repeat="group in facetGroups" class="facet">
-		<h3 ng-click="show = !show">{{group.label}}</h3>
-		<label ng-repeat="facet in group.facets | filter:{ checked:true }">
+	<div ng-repeat="facetGroup in facetGroups" class="facet">
+		<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
+		<label ng-repeat="facet in facetGroup.facets | filter:{ checked:true }">
 			<input type="checkbox" ng-model="facet.checked" />
 			{{facet.label}}
 			<small>{{facet.count}}</small>
 		</label>
-		<div ng-show="show" ng-click="show = false"></div>
-		<section ng-show="show">
-			<div>
-				<label ng-repeat="facet in group.facets" ng-class="{ active:facet.checked }">
-					<input type="checkbox" ng-model="facet.checked" />
-					{{facet.label}}
-					<small>{{facet.count}}</small>
-				</label>
-			</div>
-			<button>Apply</button>
-		</section>
 	</div>
 	
 </nav>
 
-<table>
-	<tr ng-repeat="r in results.aaData">
-		<td>{{r[0]}}</td>
-		<td>{{r[1]}}</td>
-		<td ng-bind-html-unsafe="r[2]"></td>
-		<td>{{r[3]}}</td>
-		<td ng-bind-html-unsafe="r[4]"></td>
-		<td ng-bind-html-unsafe="r[5]"></td>
-		<td ng-bind-html-unsafe="r[6]"></td>
-	</tr>
-</table>
+<div>
 
-<ol class="results">
-	<li ng-repeat="r in results.aaData">
-		<h2>
-			<strong>{{r[1]}}</strong>
-			<span ng-bind-html-unsafe="r[2]"></span>
-		</h2>
-		<small>{{r[0]}}</small>
-		<p>An exploration of the relationships among musics of West and Central African people and their descendants in the United States, Latin America, and the Caribbean. Emphasis placed on the conceptual and aesthetic continuities between musical expression in Old and New World contexts—a uniformity which exists because of shared African cultural ancestry. Credit given for only one of AAAD A112, FOLK E112, or FOLK F112.</p>
-	</li>
-</ol>
+	<table>
+		<tr ng-repeat="r in results.aaData">
+			<td>{{r[0]}}</td>
+			<td>{{r[1]}}</td>
+			<td ng-bind-html-unsafe="r[2]"></td>
+			<td>{{r[3]}}</td>
+			<!--<td ng-bind-html-unsafe="r[4]"></td>-->
+			<td ng-bind-html-unsafe="r[5]"></td>
+			<td ng-bind-html-unsafe="r[6]"></td>
+		</tr>
+	</table>
 	
-	<a href="#" onclick="openMenu('edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail','course_quick_detail',null,event,'#edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail_anchor','myplan-quick-detail',{tail:{align:'middle'},align:'middle',position:'top'},false)" target="_self" title="Introduction to Algebra" class="myplan-text-ellipsis">Introduction to Algebra</a>
+	<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
+
+</div>
+<!--
 	
+	
+	<table>
+		<tr ng-repeat="r in results.aaData">
+			<td>{{r[0]}}</td>
+			<td>{{r[1]}}</td>
+			<td ng-bind-html-unsafe="r[2]"></td>
+			<td>{{r[3]}}</td>
+			<td ng-bind-html-unsafe="r[4]"></td>
+			<td ng-bind-html-unsafe="r[5]"></td>
+			<td ng-bind-html-unsafe="r[6]"></td>
+		</tr>
+	</table>
+	
+	<ol class="results">
+		<li ng-repeat="r in results.aaData">
+			<h2>
+				<strong>{{r[1]}}</strong>
+				<span ng-bind-html-unsafe="r[2]"></span>
+			</h2>
+			<small>{{r[0]}}</small>
+			<p>An exploration of the relationships among musics of West and Central African people and their descendants in the United States, Latin America, and the Caribbean. Emphasis placed on the conceptual and aesthetic continuities between musical expression in Old and New World contexts—a uniformity which exists because of shared African cultural ancestry. Credit given for only one of AAAD A112, FOLK E112, or FOLK F112.</p>
+		</li>
+	</ol>
+		
+		<a href="#" onclick="openMenu('edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail','course_quick_detail',null,event,'#edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail_anchor','myplan-quick-detail',{tail:{align:'middle'},align:'middle',position:'top'},false)" target="_self" title="Introduction to Algebra" class="myplan-text-ellipsis">Introduction to Algebra</a>
+	
+</div>
+-->
