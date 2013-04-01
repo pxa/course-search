@@ -25,6 +25,10 @@
    @return $target / $context + 0rem;
 }
 
+@function px($target, $context: $base-font-size) { // em
+	@return $target * $context + 0px;
+}
+
 
 //
 // Color

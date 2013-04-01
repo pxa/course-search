@@ -8,11 +8,25 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 
 		$stateProvider
 			.state('course', {
-				//abstract: true,
+				abstract: true,
+				templateUrl: 'partials/course.html'
+			})
+			.state('course.search', {
 				url: '/search',
-				templateUrl: 'partials/course-search.html'
+				templateUrl: 'partials/course.search.html'
+			})
+			.state('course.plan', {
+				url: '/plan',
+				templateUrl: 'partials/course.plan.html'
+			})
+			.state('course.bookmarks', {
+				url: '/bookmarks',
+				templateUrl: 'partials/course.bookmarks.html'
+			})
+			.state('course.detail', {
+				url: '/courses/{courseId}',
+				templateUrl: 'partials/course.detail.html'
 			});
-        
 	}])
 	
 	.run([ '$rootScope', '$state', '$stateParams', '$filter', function($rootScope, $state, $stateParams, $filter) {
@@ -26,7 +40,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 		//$rootScope.dueDate = '2013-04-11';
 		//$rootScope.dueDateString = $filter('date')($rootScope.dueDate, 'MMM d');
 
-		$state.transitionTo('course');
+		$state.transitionTo('course.search');
 	}]);
 	
 /*

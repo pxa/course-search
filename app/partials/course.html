@@ -1,0 +1,12 @@
+<header>
+	<div>
+		<h1>Courses</h1>
+		<nav>
+			<a href="#/search" ng-class="{ active: $state.includes('course.search') }">Search</a>
+			<a href="#/plan" ng-class="{ active: $state.includes('course.plan') }">Plan</a>
+			<a href="#/bookmarks" ng-class="{ active: $state.includes('course.bookmarks') }">Bookmarks</a>
+		</nav>
+	</div>
+</header>
+
+<div ui-view></div>

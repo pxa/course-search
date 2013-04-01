@@ -3,35 +3,84 @@
 html {
 	//@include baseline-grid-background;
 	background-color: $mud;
+	background-color: $color-1;
 	color: #222;
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 #courseSearch { // section
-	@include container;
-	@include box-shadow(0 0 2px 2px $color-3);
+	//@include container;
 	//@include susy-grid-background;
-	background-color: $color-1;
-	padding-bottom: 1em;
 	
 	header {
-		border-bottom: 4px solid $color-2;
+		$color: $violet;
+		$dark: shade($color, 30%);
+		$light: tint($color, 60%);
+		
+		@include box-shadow(0 4px $color-2, 0 5px $color-3);
 		background-color: #fff;
-		padding: 1em;
-		position: relative;
+		line-height: 3rem;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+		
+		* {
+			@include box-sizing(border-box);
+		}
+		
+		> div {
+			@include container;
+			margin: 0 auto;
+		}
 		
 		h1 {
+			@include span-columns(3);
 			color: $color-5;
-			font-size: em($l);
+			font-size: em($m);
 			margin: 0;
+			padding-left: 1rem;
+		}
+		
+		nav {
+			@extend %grid;
+			@include span-columns(9 omega);
+		}
+		
+		a {
+			@extend %grid-item;
+			color: $color;
+			font-weight: bold;
+			padding: 0 1rem;
+			text-decoration: none;
+			
+			&:hover {
+				@include box-shadow(0 4px $light, 0 5px $color);
+			}
+			
+			&:active {
+				color: $dark;
+			}
+			
+			&.active {
+				@include box-shadow(0 4px $color, 0 5px $dark);
+				color: $dark;
+			}
 		}
 	}
 	
-	> nav {
-		@include span-columns(3);
+	> div {
+		//@include box-shadow(0 0 0 1px $color-7);
+		@include container;
+		background-color: $color-1;
+		padding-bottom: 1em;
+		padding-top: px(3) + 5px;
+	}
+	
+	> div > nav {
+		@include box-shadow(0 0 0 1px $color-2);
 		@include box-sizing(border-box);
-		border: 1px solid $color-2;
-		border-width: 0 1px 1px 0;
+		@include span-columns(3);
 		background-color: white;
 		padding-bottom: 1em;
 		
@@ -63,7 +112,7 @@ html {
 		}
 	}
 	
-	> div {
+	> div > div {
 		@include span-columns(9 omega);
 		
 		> p {
@@ -198,7 +247,7 @@ ol {
 		
 		> div {
 			float: right;
-			margin: 1em 0.5em;
+			margin: 1em;
 			
 			label {
 				@extend %bookmark;
@@ -215,10 +264,18 @@ ol {
 		
 		&:hover {
 			//@include box-shadow(0 2px 2px 1px $color-2);
-			@include box-shadow(0 0 0 2px $color-2);
-			background-color: #fff;
+			//@include box-shadow(0 0 0 2px $color-2);
+			//background-color: #fff;
+			//border-color: $color-3;
+			//cursor: pointer;
+		}
+		
+		> a h2:hover {
 			border-color: $color-3;
-			cursor: pointer;
+			
+			> * {
+				color: $violet;
+			}
 		}
 	}
 	
@@ -272,55 +329,47 @@ ol {
 	dl {
 		@extend %grid;
 		margin: 1em;
-		letter-spacing: 0.5em * 0.62; // Renders as 1em. Odd.
+		//letter-spacing: 0.5em * 0.62; // Renders as 1em. Odd.
 	}
 
 	dt {
-		@extend %grid-item;
-		color: $color-6;
-		font-size: em($s);
-		margin-right: 0.5rem;
 		display: none;
 	}
 	
 	dd {
 		@extend %grid-item;
 		@include border-radius;
-		@include box-shadow(inset 0 0 0 1px #fff);
-		@include text-shadow;
-		background-color: $color-3;
+		background-color: #fff;
 		border: 1px solid $color-3;
+		color: $color-5;
 		font-size: em($s);
 		font-style: normal;
 		margin: 0;
-		padding: 0 0.9em;
+		padding: 0 0.5em;
+		position: relative;
 		
 		& + dd {
-			//margin-left: 0.5rem;
+			margin-left: 0.5rem;
 		}
 		
-		&[data-placeholder] {
-			padding: 0 0 0 0.5em;
-			
-			&[data-not-offered] {
-				padding: 0;
-				
-				&:after {
-					margin: 0;
-					padding: 0 0.9em;
-				}
-			}
+		&:after {
+			content: attr(data-placeholder);
+			opacity: 0;
+		}
 		
-			&:after {
-				@include border-right-radius;
-				background-color: #fff;
-				color: $color-3;
-				content: attr(data-placeholder);
-				display: inline-block;
-				float: right; // Fixes Chrome pixel-rounding issue, which caused background to overlap border.
-				margin-left: 0.5em;
-				padding: 0 0.5em;
-			}
+		&.notOffered {
+			border-style: dashed;
+		}
+		
+		&.upcomingOffering {
+			background-color: $cream;
+		}
+		
+		span {
+			left: 0;
+			position: absolute;
+			text-align: center;
+			width: 100%;
 		}
 	}
 	

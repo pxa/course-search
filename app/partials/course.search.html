@@ -1,0 +1,60 @@
+<nav id="search">
+	
+	<div>
+		<label for="searchInput">Search</label>
+		<input id="searchInput" ng-model="query" placeholder="Search" />
+	</div>
+	
+	<div ng-repeat="facetGroup in facetGroups" class="facet">
+		<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
+		<label ng-repeat="facet in facetGroup.facets | filter:{ checked:true }">
+			<input type="checkbox" ng-model="facet.checked" />
+			{{facet.label}}
+			<small>{{facet.count}}</small>
+		</label>
+	</div>
+	
+</nav>
+
+<div>
+
+	<p>Page {{currentPage}} of {{courses.count}}
+		<span ng-pluralize count="courses.count" when="{ 'one':'result', 'other':'results' }"></span>
+	</p>
+
+	<ol class="results">
+		<li ng-repeat="course in courses.results">
+			<a ng-href="#/courses/{{course.campus}}-{{course.subject}}">
+				<h2>
+						<span>{{course.campus}}</span>
+						<strong>{{course.subject}}</strong>
+						<span>{{course.title}}</span>
+						<small>{{course.credits}} credits</small>
+				</h2>
+			</a>
+			<div>
+				<label ng-class="{ active: course.bookmarked }" ng-switch="course.bookmarked">
+					<input type="checkbox" ng-model="course.bookmarked" />
+					<span ng-switch-when="true" title="Undo bookmark">Bookmarked</span>
+					<span ng-switch-default title="Bookmark">Bookmark</span>
+				</label>
+				<a>Add to planner</a>
+			</div>
+			<dl>
+				<dt>Offered</dt>
+				<dd ng-repeat="offering in course.offering"
+					data-placeholder="{{offering.term}} {{offering.year}}"
+					ng-class="{ notOffered: offering.offering == 0, upcomingOffering: offering.offering == 2 }"
+					ng-switch="offering.offering">
+					<span ng-switch-when="0"></span>
+					<span ng-switch-when="1">{{offering.term}}</span>
+					<span ng-switch-when="2">{{offering.term}} {{offering.year}}</span>
+				</dd>
+			</dl>
+			<p>{{course.description}}</p>
+		</li>
+	</ol>
+	
+	<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
+
+</div>

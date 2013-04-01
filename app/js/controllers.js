@@ -30,10 +30,64 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog) {
 	
 	var resultsPerPage = 20;
 	
+	function getRandomInt(min, max) {
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
 	$http.get('json/search.json').success(function(data) {
-		$scope.results = data;
+	
+		// Transform the returned data as a temporary patch, until better formed data is generated dynamically
+		var courses = {
+			count: data.iTotalRecords,
+			results: []
+		}
+	
+		for(var i = 0, n = data.aaData.length; i < n; i++) {
+			var r = data.aaData[i];
+			
+			// Dive deep into the markup
+			var wrapper = document.createElement('div');
+			wrapper.innerHTML = r[2];
+			var title = wrapper.firstChild.firstChild.firstChild.nodeValue;
+			
+			/*
+			 * Offering
+			 * 0: Not offered
+			 * 1: Typically offered
+			 * 2: Offered
+			 */
+
+			courses.results.push({
+				id: i,
+				campus: r[0],
+				subject: r[1],
+				title: title,
+				credits: r[3],
+				bookmarked: getRandomInt(0,1) == 1,
+				offering: [
+					{
+						year: 2013,
+						term: 'Fall',
+						offering: getRandomInt(0,2)
+					},
+					{
+						year: 2014,
+						term: 'Spring',
+						offering: getRandomInt(0,2)
+					},
+					{
+						year: 2014,
+						term: 'Summer',
+						offering: getRandomInt(0,2)
+					},
+				],
+				description: 'An exploration of the relationships among musics of West and Central African people and their descendants in the United States, Latin America, and the Caribbean. Emphasis placed on the conceptual and aesthetic continuities between musical expression in Old and New World contexts—a uniformity which exists because of shared African cultural ancestry. Credit given for only one of AAAD A112, FOLK E112, or FOLK F112.'
+			});
+		}
+	
+		$scope.courses = courses;
 		
-		$scope.numberOfPages = Math.ceil($scope.results.iTotalRecords / resultsPerPage);
+		$scope.numberOfPages = Math.ceil($scope.courses.count / resultsPerPage);
 		$scope.currentPage = 3;
 		$scope.maxPageSize = 5;
 	});
