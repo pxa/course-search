@@ -1,0 +1,45 @@
+<div class="results">
+
+	<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{courses.count}}
+		<span ng-pluralize count="courses.count" when="{ 'one': singularListItemName, 'other': pluralListItemName }"></span>
+	</p>
+	
+	<ol>
+		<li ng-repeat="course in courses.results | orderBy:sortOrderPredicate" ng-switch="course.bookmarked">
+			<div switch-when="">
+				<a ng-href="#/courses/{{course.campus}}-{{course.subject}}">
+					<h2>
+							<span>{{course.campus}}</span>
+							<strong>{{course.subject}}</strong>
+							<span>{{course.title}}</span>
+							<small>{{course.credits}} credits</small>
+					</h2>
+				</a>
+				<div>
+					<div>
+						<label ng-class="{ active: course.bookmarked }" ng-switch="course.bookmarked">
+							<input type="checkbox" ng-model="course.bookmarked" />
+							<span ng-switch-when="true" title="Undo bookmark">Bookmarked</span>
+							<span ng-switch-default title="Bookmark">Bookmark</span>
+						</label>
+						<a>Add to planner</a>
+					</div>
+					<dl>
+						<dt>Offered</dt>
+						<dd ng-repeat="offering in course.offering"
+							data-placeholder="{{offering.term}} {{offering.year}}"
+							ng-class="{ notOffered: offering.offering == 0, upcomingOffering: offering.offering == 2 }"
+							ng-switch="offering.offering">
+							<span ng-switch-when="0"></span>
+							<span ng-switch-when="1">{{offering.term}}</span>
+							<span ng-switch-when="2">{{offering.term}} {{offering.year}}</span>
+						</dd>
+					</dl>
+					<p>{{course.description}}</p>
+				</div>
+		</li>
+	</ol>
+
+	<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
+
+</div>

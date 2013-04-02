@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function CourseSearchCtrl($scope, $routeParams, $http, $dialog) {
+function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
@@ -27,8 +27,6 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog) {
 		
 		$scope.facetGroups = facetGroups;
 	});
-	
-	var resultsPerPage = 20;
 	
 	function getRandomInt(min, max) {
 	    return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -56,14 +54,45 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog) {
 			 * 1: Typically offered
 			 * 2: Offered
 			 */
-
+			 
+			var bookmark = getRandomInt(0,1) == 0 ? null : Date.now();
+			//bookmark = null;
+			
 			courses.results.push({
 				id: i,
 				campus: r[0],
 				subject: r[1],
 				title: title,
 				credits: r[3],
-				bookmarked: getRandomInt(0,1) == 1,
+				bookmark: bookmark,
+				_bookmark: bookmark, // Retain restore
+				get bookmarked() { return this.bookmark != null; },
+				set bookmarked(val) {
+					if( val ) { // Bookmark and save restore
+						this.bookmark = this._bookmark = Date.now();
+						this.bookmarkAddedAnimation();
+					}
+					else { // Undo bookmark but retain restore
+						this.bookmark = null;
+						this.bookmarkRemovedAnimation();
+					}
+				},
+				restoreBookmark: function() {
+					this.bookmark = this._bookmark;
+					this.bookmarkAddedAnimation();
+				},
+				bookmarkAddedAnimation: function() {
+					$scope.bookmarkAdded = true;
+					$timeout(function() { // Remove animation class after the animation completes
+						$scope.bookmarkAdded = false;
+					}, 500);
+				},
+				bookmarkRemovedAnimation: function() {
+					$scope.bookmarkRemoved = true;
+					$timeout(function() { // Remove animation class after the animation completes
+						$scope.bookmarkRemoved = false;
+					}, 500);
+				},
 				offering: [
 					{
 						year: 2013,
@@ -87,9 +116,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog) {
 	
 		$scope.courses = courses;
 		
-		$scope.numberOfPages = Math.ceil($scope.courses.count / resultsPerPage);
-		$scope.currentPage = 3;
+		$scope.numberOfPages = Math.ceil($scope.courses.count / $scope.resultsPerPage);
+		$scope.currentPage = 1;
 		$scope.maxPageSize = 5;
+		$scope.singularListItemName = 'result';
+		$scope.pluralListItemName = 'results';
 	});
 	
 	$scope.openFacetGroupDialog = function(facetGroup) {
@@ -139,6 +170,44 @@ function CourseDetailCtrl($scope, $routeParams, $http) {
 				$scope.session = item;
 		});
 	});
+}
+
+function BookmarksCtrl($scope, $routeParams, $http, $dialog) {
+	
+	/*
+	 * Most of this should be exchanged for an API call, once available
+	 */
+	 
+	var bookmarks = {
+		count: 0,
+		undos: 0, // Number of bookmarks unbookmarked
+		get active() { return this.count - this.undos },
+		restore: function(course) {
+			this.undos--;
+			course.restoreBookmark();
+		},
+		undo: function() {
+			this.undos++;
+		},
+		results: []
+	};
+	
+	angular.forEach($scope.$parent.$parent.courses.results, function(value, key) {
+		if( value.bookmarked )
+			bookmarks.results.push(value);
+	});
+	
+	bookmarks.count = bookmarks.results.length;
+	//courses.count = 0;
+	
+	$scope.bookmarks = bookmarks;
+	
+	$scope.numberOfPages = Math.ceil($scope.bookmarks.count / $scope.resultsPerPage);
+	$scope.currentPage = 1;
+	$scope.maxPageSize = 5;
+	$scope.singularListItemName = 'bookmark';
+	$scope.pluralListItemName = 'bookmarks';
+	$scope.sortOrderPredicate = '-_bookmark';
 }
 
 //PhoneListCtrl.$inject = ['$scope', 'Phone'];

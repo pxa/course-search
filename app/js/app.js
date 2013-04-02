@@ -9,19 +9,32 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 		$stateProvider
 			.state('course', {
 				abstract: true,
-				templateUrl: 'partials/course.html'
+				templateUrl: 'partials/course.html',
+				//controller: CourseSearchCtrl
 			})
 			.state('course.search', {
 				url: '/search',
+				//abstact: true,
 				templateUrl: 'partials/course.search.html'
 			})
+			/*
+			.state('course.search.list', {
+				url: '/search',
+				views: {
+					'': {
+						templateUrl: 'partials/course.list.html'
+					}
+				}
+			})
+			*/
 			.state('course.plan', {
 				url: '/plan',
 				templateUrl: 'partials/course.plan.html'
 			})
 			.state('course.bookmarks', {
 				url: '/bookmarks',
-				templateUrl: 'partials/course.bookmarks.html'
+				templateUrl: 'partials/course.bookmarks.html',
+				controller: BookmarksCtrl
 			})
 			.state('course.detail', {
 				url: '/courses/{courseId}',
@@ -32,6 +45,9 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 	.run([ '$rootScope', '$state', '$stateParams', '$filter', function($rootScope, $state, $stateParams, $filter) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
+		
+		$rootScope.resultsPerPage = 20;
+		$rootScope.bookmarkAdded = false;
 		
 		$rootScope.title = function(t) {
 			return (t ? t + ' - ' : '') + 'Billing';

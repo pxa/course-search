@@ -1,8 +1,37 @@
 @import 'main';
 
+@-webkit-keyframes added {
+	0%, 100% {
+		top: 0;
+	}
+	50% {
+		top: 5px;
+	}
+}
+
+@-webkit-keyframes removed {
+	0%, 100% {
+		left: 0;
+	}
+	25% {
+		left: -5px;
+	}
+	75% {
+		left: 5px;
+	}
+}
+
+.bookmarkAdded {
+	-webkit-animation: added 0.25s 2 ease-out;
+}
+
+.bookmarkRemoved {
+	-webkit-animation: removed 0.25s 2 ease-out;
+}
+
 html {
 	//@include baseline-grid-background;
-	background-color: $mud;
+	//background-color: $mud;
 	background-color: $color-1;
 	color: #222;
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
@@ -52,6 +81,7 @@ html {
 			color: $color;
 			font-weight: bold;
 			padding: 0 1rem;
+			position: relative;
 			text-decoration: none;
 			
 			&:hover {
@@ -114,11 +144,6 @@ html {
 	
 	> div > div {
 		@include span-columns(9 omega);
-		
-		> p {
-			border-bottom: 1px solid $color-2;
-			color: $color-5;
-		}
 		
 		table {
 			margin: 1em 0;
@@ -230,52 +255,70 @@ html {
 	}
 }
 
-ol {
-	list-style-type: none;
-	margin: 0 1em 0 0;
-	padding: 0;
+.results {
+	
+	> p {
+		border-bottom: 1px solid $color-2;
+		color: $color-5;
+	}
+	
+	ol {
+		list-style-type: none;
+		margin: 0 1em 0 0;
+		padding: 0;
+	}
 	
 	li {
-		@include border-radius;
-		//@include box-shadow(0 2px 2px $color-2);
-		//background-color: #fff;
-		border: 1px solid $color-2;
 		
 		+ li {
 			margin-top: 1em;
 		}
 		
 		> div {
-			float: right;
-			margin: 1em;
-			
-			label {
-				@extend %bookmark;
+		
+			> div {
+				@include border-bottom-radius;
+				border: 1px solid $color-2;
+				border-top-width: 0;
+				padding: 1em;
+				
+				> div {
+					float: right;
+					
+					label {
+						@extend %bookmark;
+					}
+					
+					a {
+						font-size: em($s);
+					}
+					
+					> * + * {
+						margin-left: 0.5em;
+					}
+				}
 			}
 			
-			a {
-				font-size: em($s);
-			}
-			
-			> * + * {
-				margin-left: 0.5em;
+			> a h2:hover {
+				//@include box-shadow(0 0 0 1px $color-3);
+				//background-color: $cream;
+				//border-color: $violet;
+				border-color: $color-3;
+				
+				span:first-child {
+					//background-color: $color-3;
+				}
+				
+				> * {
+					//color: $violet;
+				}
 			}
 		}
 		
-		&:hover {
-			//@include box-shadow(0 2px 2px 1px $color-2);
-			//@include box-shadow(0 0 0 2px $color-2);
-			//background-color: #fff;
-			//border-color: $color-3;
-			//cursor: pointer;
-		}
-		
-		> a h2:hover {
-			border-color: $color-3;
-			
-			> * {
-				color: $violet;
-			}
+		p {
+			font-size: em($s);
+			line-height: 1.5;
+			margin: 1rem 0 0 0;
 		}
 	}
 	
@@ -283,7 +326,7 @@ ol {
 		@extend %grid;
 		@include border-top-radius;
 		background-color: #fff;
-		border-bottom: 1px solid $color-2;
+		border: 1px solid $color-2;
 		font-size: em($r);
 		font-weight: normal;
 		line-height: 2;
@@ -328,7 +371,7 @@ ol {
 	
 	dl {
 		@extend %grid;
-		margin: 1em;
+		//margin: 1em;
 		//letter-spacing: 0.5em * 0.62; // Renders as 1em. Odd.
 	}
 
@@ -373,10 +416,32 @@ ol {
 		}
 	}
 	
-	p {
-		font-size: em($s);
-		line-height: 1.5;
-		margin: 1rem;
+	.undo {
+		
+		a {
+			
+			&, &:link, &:visited {
+				border-width: 0;
+				border-color: transparent;
+			}
+			
+			&:hover h2 {
+				background-color: #fff;
+			}
+		}
+		
+		h2 {
+			@include border-radius;
+			background-color: transparent;
+			
+			> *, > *:first-child {
+				color: $color-3;
+			}
+			
+			small {
+				color: $violet;
+			}
+		}
 	}
 }
 
@@ -426,120 +491,4 @@ ol {
 			color: $color;
 		}
 	}
-}
-
-/*
-
-h4 {
-	@include box-shadow(0 2px 0px #FFF);
-	background-color: #FFF;
-	border-bottom: 1px solid #EEE;
-	font-size: 16px;
-	font-weight: normal;
-	padding: 10px 80px;
-	margin: 0;
-	position: relative;
-	
-	strong {
-		display: block;
-		font-size: 16px;
-		font-weight: bold;
-		left: 10px;
-		position: absolute;
-		width: 70px;
-		
-		span {
-			display: none;
-		}
-	}
-	
-	small {
-		color: #333;
-		display: block;
-		font-size: 13px;
-		font-weight: bold;
-		line-height: 24px;
-		right: 10px;
-		text-align: right;
-		top: 10px;
-		position: absolute;
-		width: 70px;
-	}
-}
-
-ul {
-	@include border-radius(0 0 0 4px);
-	@include box-shadow(5px -5px 10px #EEE inset, -1px 2px 0 #FFF);
-	list-style-type: none;
-	margin: 0;
-	padding: 10px 0;
-	
-	&:last-child {
-		@include border-radius(0);
-		@include box-shadow(5px -5px 10px #EEE inset, -1px 0 0 #FFF);
-	}
-	
-	li {
-		@include border-radius;
-		@include box-shadow(0 2px 2px #DDD);
-		background-color: #F9F9F9;
-		border: 1px solid #EEE;
-		font-size: 13px;
-		margin: 10px 10px 0;
-		
-		&:first-child {
-			margin-top: 0;
-		}
-	}
-}
-
-dl {
-	@include box-shadow(0 2px 1px #FFF);
-	border-bottom: 1px solid #EEE;
-	margin: 0 10px;
-	padding: 10px;
-	
-	dt {
-		color: #999;
-		display: inline;
-		padding-right: 10px;
-	}
-	
-	dd {
-		display: inline;
-		margin: 0;
-		
-		span {
-			white-space: nowrap;
-		}
-	}
-}
-
-h4 + dl {
-	border-top-width: 0;
-}
-
-p {
-	margin: 10px;
-}
-
-a {
-	text-decoration: underline;
-}
-
-*/
-
-article {
-	@extend %grid-item;
-	padding: 2em 5% 0 5%;
-	margin-left: 30%;
-	max-width: 50em;
-	width: 65%;
-}
-
-.empty-state { // p
-	@include text-shadow;
-	color: $color-5;
-	font-size: em($l);
-	font-style: italic;
 }
