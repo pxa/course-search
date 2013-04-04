@@ -1,3 +1,8 @@
+.modal-open {
+	//position: fixed;
+	overflow: hidden;
+}
+
 .modal-backdrop {
 	background-color: rgba(black, 0.8);
 	bottom: 0;
@@ -6,20 +11,28 @@
 	right: 0;
 	top: 0;
 	width: 100%;
+	z-index: 2;
 }
 
 .modal {
-
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 3;
+	overflow-y: scroll;
+	
 	section {
 		@include border-radius;
 		@include box-shadow(0 3px 7px rgba(0,0,0,0.3));
 		background-color: white;
 		left: 50%;
 		margin: 4em 0 0 -15em;
-		position: fixed;
+		position: relative;
 		top: 0;
 		width: 30em;
-		z-index: 1;
+		//z-index: 3;
 		
 		> * {
 			padding: 1em;

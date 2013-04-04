@@ -1,8 +1,8 @@
 <div ng-switch="bookmarks.count">
 
-	<div ng-switch-when="0">
+	<div ng-switch-when="0" class="empty">
 		<h1>No bookmarks</h1>
-		<p>Try searching and bookmarking courses of interest.</p>
+		<p>Try <a href="#/search">searching</a> and <span class="bookmark">bookmarking</span> courses of interest.</p>
 	</div>
 	
 	<div ng-switch-default class="results">
@@ -15,7 +15,7 @@
 			<li ng-repeat="course in bookmarks.results | orderBy:'-_bookmark'" ng-switch="course.bookmarked">
 			
 				<div ng-switch-when="false" class="undo">
-					<a ng-click="bookmarks.restore(course)" title="Restore bookmark">
+					<a ng-click="bookmarks.restore(course)" title="Restore bookmark" href>
 						<h2>
 								<span>{{course.campus}}</span>
 								<strong>{{course.subject}}</strong>

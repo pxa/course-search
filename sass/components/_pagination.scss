@@ -7,7 +7,7 @@
 	a {
 		@extend %grid-item;
 		background-color: #fff;
-		border: 1px solid $border-color;
+		border: 1px solid $color-2;
 		border-left-width: 0;
 		color: $violet;
 		line-height: 2em;
@@ -30,10 +30,13 @@
 		&.active {
 			background-color: $color-2;
 			color: $color-5;
+			
+			background-color: $cream;
+			color: $color-5;
 		}
 		
 		&.disabled {
-			background-color: $color-0;
+			background-color: $color-1;
 			color: $color-5;
 			cursor: default;
 		}

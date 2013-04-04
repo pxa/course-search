@@ -5,7 +5,7 @@
 		top: 0;
 	}
 	50% {
-		top: 5px;
+		top: 0.4em;
 	}
 }
 
@@ -14,27 +14,100 @@
 		left: 0;
 	}
 	25% {
-		left: -5px;
+		left: -0.25em;
 	}
 	75% {
-		left: 5px;
+		left: 0.25em;
 	}
 }
 
 .bookmarkAdded {
-	-webkit-animation: added 0.25s 2 ease-out;
+	position: relative;
+	-webkit-animation: added 0.25s 1 ease-out;
 }
 
 .bookmarkRemoved {
+	position: relative;
 	-webkit-animation: removed 0.25s 2 ease-out;
 }
 
 html {
 	//@include baseline-grid-background;
-	//background-color: $mud;
 	background-color: $color-1;
 	color: #222;
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.modal-open {
+	//position: fixed;
+	overflow: hidden;
+}
+
+.modal-backdrop {
+
+	background-color: rgba(black, 0.8);
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	//width: 100%;
+	z-index: 1;
+	
+	//display: none;
+	//position: static;
+}
+
+.modal {
+//background-color: rgba(black, 0.8);
+	position: static;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	overflow-y: scroll;
+	
+	section {
+		@include border-radius;
+		@include box-shadow(0 3px 7px rgba(0,0,0,0.3));
+		background-color: white;
+		left: 50%;
+		margin: 1em 0 1em -15em;
+		position: absolute;
+		top: 0;
+		width: 30em;
+		z-index: 3;
+		
+		
+
+	
+		> * {
+			padding: 1em;
+		}
+	}
+	
+	header {
+		border-bottom: 1px solid $border-color;
+		padding: 0 1em;
+
+		h1 {
+			color: $color-5;
+			font-size: em($m);
+		}
+	}
+	
+	footer {
+		@include border-bottom-radius;
+		@include box-shadow(inset 0 1px #fff);
+		background-color: $color-2;
+		border-top: 1px solid $border-color;
+		
+		button {
+			@extend .btn;
+			line-height: 2em;
+		}
+	}
 }
 
 #courseSearch { // section
@@ -81,7 +154,6 @@ html {
 			color: $color;
 			font-weight: bold;
 			padding: 0 1rem;
-			position: relative;
 			text-decoration: none;
 			
 			&:hover {
@@ -255,6 +327,38 @@ html {
 	}
 }
 
+.empty {
+	$color: $violet;
+	$dark: shade($color, 30%);
+	$light: tint($color, 60%);
+	border-bottom: 1px solid $color-2;
+	
+	h1 {
+		color: $color-4;
+		margin-top: 2em;
+	}
+	
+	p {
+		color: $color-5;
+		font-size: em($m);
+		margin-bottom: 2em;
+	}
+	
+	a {
+		color: $color;
+
+		&:hover {
+			color: $dark;
+		}
+	}
+	
+	.bookmark:before {
+		content: '\2605';
+		color: $light;
+		padding: 0 0.25em;
+	}
+}
+
 .results {
 	
 	> p {
@@ -419,11 +523,6 @@ html {
 	.undo {
 		
 		a {
-			
-			&, &:link, &:visited {
-				border-width: 0;
-				border-color: transparent;
-			}
 			
 			&:hover h2 {
 				background-color: #fff;

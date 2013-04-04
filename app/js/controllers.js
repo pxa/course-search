@@ -7,30 +7,32 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
 		
-		var convert = function(obj) {
+		// Higher `chance`, fewer random items
+		var convert = function(obj, chance) {
+			chance = chance ? chance : 0;
 			var a = [];
 			for( var key in obj ) {
-				a.push({ label:key, count:obj[key].count, checked:obj[key].checked });
+				a.push({
+					label: key,
+					count: obj[key].count,
+					checked: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
+				});
 			}
 			return a;
 		}
 		
 		var facetGroups = [
 			{ label: 'Campus', facets: convert(data.oFacetState.facet_campus) },
-			{ label: 'Terms', facets: convert(data.oFacetState.facet_terms) },
-			{ label: 'Gen Ed', facets: convert(data.oFacetState.facet_gened) },
-			{ label: 'Credits', facets: convert(data.oFacetState.facet_credits) },
-			{ label: 'Class Level', facets: convert(data.oFacetState.facet_level) },
-			{ label: 'Subject', facets: convert(data.oFacetState.facet_subject) },
-			{ label: 'Keywords', facets: convert(data.oFacetState.facet_keywords) }
+			{ label: 'Terms', facets: convert(data.oFacetState.facet_terms, 2) },
+			{ label: 'Gen Ed', facets: convert(data.oFacetState.facet_gened, 1) },
+			{ label: 'Credits', facets: convert(data.oFacetState.facet_credits, 10) },
+			{ label: 'Class Level', facets: convert(data.oFacetState.facet_level, 4) },
+			{ label: 'Subject', facets: convert(data.oFacetState.facet_subject, 8) },
+			{ label: 'Keywords', facets: convert(data.oFacetState.facet_keywords, 8) }
 		];
 		
 		$scope.facetGroups = facetGroups;
 	});
-	
-	function getRandomInt(min, max) {
-	    return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
 
 	$http.get('json/search.json').success(function(data) {
 	
@@ -85,7 +87,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 					$scope.bookmarkAdded = true;
 					$timeout(function() { // Remove animation class after the animation completes
 						$scope.bookmarkAdded = false;
-					}, 500);
+					}, 250);
 				},
 				bookmarkRemovedAnimation: function() {
 					$scope.bookmarkRemoved = true;
@@ -198,7 +200,7 @@ function BookmarksCtrl($scope, $routeParams, $http, $dialog) {
 	});
 	
 	bookmarks.count = bookmarks.results.length;
-	//courses.count = 0;
+	//bookmarks.count = 0;
 	
 	$scope.bookmarks = bookmarks;
 	
@@ -210,6 +212,10 @@ function BookmarksCtrl($scope, $routeParams, $http, $dialog) {
 	$scope.sortOrderPredicate = '-_bookmark';
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+	
 //PhoneListCtrl.$inject = ['$scope', 'Phone'];
 
 
