@@ -130,6 +130,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		var opts = {
 			templateUrl: 'partials/modal.facet-group.html',
 			controller: 'FacetGroupDialogController',
+			//backdrop: false,
 			// Duplicate the facetGroup object to allow easy cancelation.
 			resolve: { facetGroup: function() { return angular.copy(facetGroup); } }
 		};

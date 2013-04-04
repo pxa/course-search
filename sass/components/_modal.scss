@@ -1,5 +1,4 @@
 .modal-open {
-	//position: fixed;
 	overflow: hidden;
 }
 
@@ -10,29 +9,26 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	width: 100%;
-	z-index: 2;
+	z-index: 1;
 }
 
 .modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
 	bottom: 0;
-	z-index: 3;
+	left: 50%;
+	margin-left: -15em;
 	overflow-y: scroll;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 30em;
+	z-index: 2;
 	
 	section {
-		@include border-radius;
+		@include border-bottom-radius;
 		@include box-shadow(0 3px 7px rgba(0,0,0,0.3));
 		background-color: white;
-		left: 50%;
-		margin: 4em 0 0 -15em;
-		position: relative;
-		top: 0;
-		width: 30em;
-		//z-index: 3;
+		position: absolute;
+		width: 100%;
 		
 		> * {
 			padding: 1em;
