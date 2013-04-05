@@ -1,19 +1,95 @@
-<nav id="search">
-	
-	<div>
-		<label for="searchInput">Search</label>
-		<input id="searchInput" ng-model="query" placeholder="Search" />
-	</div>
-	
-	<div ng-repeat="facetGroup in facetGroups" class="facet">
-		<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
-		<label ng-repeat="facet in facetGroup.facets | filter:{ checked:true }">
-			<input type="checkbox" ng-model="facet.checked" />
-			{{facet.label}}
-			<small>{{facet.count}}</small>
-		</label>
-	</div>
-	
-</nav>
+<div ng-switch="0" class="search">
 
-<div ng-include="'partials/course.list.html'"></div>
+	<nav ng-switch-when="0" class="initial-search">
+		<h1>Campus</h1>
+		<div>
+			<select>
+				<optgroup label="Campuses">
+					<option data-programs="Undergraduate,Graduate,Dentistry,Law,Medicine">IU Bloomington</option>
+					<option data-programs="Undergraduate,Graduate,Dentistry,Law,Medicine">IUPUI Indianapolis</option>
+					<option data-programs="Undergraduate,Graduate">IUPUC Columbus</option>
+					<option data-programs="Undergraduate,Graduate">IU East</option>
+					<option data-programs="Undergraduate,Graduate">IPFW Fort Wayne</option>
+					<option data-programs="Undergraduate,Graduate">IU Kokomo</option>
+					<option data-programs="Undergraduate,Graduate">IU Northwest</option>
+					<option data-programs="Undergraduate,Graduate">IU South Bend</option>
+					<option data-programs="Undergraduate,Graduate">IU Southeast</option>
+				</optgroup>
+				<optgroup>
+					<option data-programs="Undergraduate,Graduate">Online</option>
+				</optgroup>
+			</select>
+		</div>
+		<h1>Degree</h1>
+		<div>
+			<label><input type="checkbox" />Undergraduate</label>
+			<label><input type="checkbox" />Graduate</label>
+		</div>
+		<h1>Terms</h1>
+		<div>
+			<label><input type="checkbox" checked /><strong>Any term</strong></label>
+			<hr />
+			<label><input type="checkbox" />Spring 2013</label>
+			<label><input type="checkbox" />Summer 2013</label>
+			<label><input type="checkbox" />Fall 2013</label>
+			<hr />
+			<label><input type="checkbox" />Fall</label>
+			<label><input type="checkbox" />Spring</label>
+			<label><input type="checkbox" />Summer</label>
+			<hr />
+			<label><input type="checkbox" />Include courses not typically offered</label>
+		</div>
+		<div>
+			<input type="text" placeholder="Search for course stuff" />
+			<button>Search</button>
+		</div>
+	</nav>
+	
+	<div ng-switch-default>
+	
+		<nav class="search-results">
+			
+			<div>
+				<label for="searchInput">Search</label>
+				<input id="searchInput" ng-model="query" placeholder="Search" />
+			</div>
+			
+			<div ng-repeat="facetGroup in facetGroups" class="facet">
+				<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
+				<label ng-repeat="facet in facetGroup.facets | filter:{ checked:true }">
+					<input type="checkbox" ng-model="facet.checked" />
+					{{facet.label}}
+					<small>{{facet.count}}</small>
+				</label>
+			</div>
+			
+		</nav>
+		
+		<div ng-switch="course.count">
+		
+			<div ng-switch-when="0" class="empty">
+				<h1>No results</h1>
+				<p>Try widening your search or <a href="#/search">start over</a>.</p>
+			</div>
+	
+			<div ng-switch-default class="results">
+			
+				<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{courses.count}}
+					<span ng-pluralize count="courses.count" when="{ 'one': 'result', 'other': 'results' }"></span>
+				</p>
+				
+				<ol>
+					<li ng-repeat="course in courses.results">
+						<div ng-include="'partials/course.item.html'"></div>
+					</li>
+				</ol>
+			
+				<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
+			
+			</div>
+			
+		</div>
+		
+	</div>
+
+</div>

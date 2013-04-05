@@ -1,4 +1,4 @@
-<div ng-switch="bookmarks.count">
+<div ng-switch="bookmarks.count" class="bookmarks">
 
 	<div ng-switch-when="0" class="empty">
 		<h1>No bookmarks</h1>
@@ -25,38 +25,7 @@
 					</a>
 				</div>
 				
-				<div ng-switch-default>
-					<a ng-href="#/courses/{{course.campus}}-{{course.subject}}">
-						<h2>
-								<span>{{course.campus}}</span>
-								<strong>{{course.subject}}</strong>
-								<span>{{course.title}}</span>
-								<small>{{course.credits}} credits</small>
-						</h2>
-					</a>
-					<div>
-						<div>
-							<label ng-class="{ active: course.bookmarked }" ng-switch="course.bookmarked">
-								<input type="checkbox" ng-model="course.bookmarked" ng-change="bookmarks.undo()" />
-								<span ng-switch-when="true" title="Undo bookmark">Bookmarked</span>
-								<span ng-switch-default title="Bookmark">Bookmark</span>
-							</label>
-							<a>Add to planner</a>
-						</div>
-						<dl>
-							<dt>Offered</dt>
-							<dd ng-repeat="offering in course.offering"
-								data-placeholder="{{offering.term}} {{offering.year}}"
-								ng-class="{ notOffered: offering.offering == 0, upcomingOffering: offering.offering == 2 }"
-								ng-switch="offering.offering">
-								<span ng-switch-when="0"></span>
-								<span ng-switch-when="1">{{offering.term}}</span>
-								<span ng-switch-when="2">{{offering.term}} {{offering.year}}</span>
-							</dd>
-						</dl>
-						<p>{{course.description}}</p>
-					</div>
-				</div>
+				<div ng-switch-default ng-include="'partials/course.item.html'"></div>
 				
 			</li>
 		</ol>

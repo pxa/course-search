@@ -39,8 +39,6 @@ html {
 }
 
 #courseSearch { // section
-	//@include container;
-	//@include susy-grid-background;
 	
 	header {
 		$color: $violet;
@@ -61,7 +59,7 @@ html {
 		
 		> div {
 			@include container;
-			margin: 0 auto;
+			//@include susy-grid-background;
 		}
 		
 		h1 {
@@ -100,60 +98,109 @@ html {
 	}
 	
 	> div {
-		//@include box-shadow(0 0 0 1px $color-7);
 		@include container;
 		background-color: $color-1;
 		padding-bottom: 1em;
 		padding-top: px(3) + 5px;
 	}
+}
+
+.search {
+	position: relative;
+}
+
+.initial-search { // nav
+	@include span-columns(9 omega);
+	margin: 3em 0 0 0;
 	
-	> div > nav {
-		@include box-shadow(0 0 0 1px $color-2);
-		@include box-sizing(border-box);
+	h1 {
 		@include span-columns(3);
-		background-color: white;
-		padding-bottom: 1em;
+		color: $color-5;
+		font-size: em($m);
+		left: 0;
+		position: absolute;
+		text-align: right;
+	}
+	
+	div {
+		border-bottom: 1px solid $color-2;
+		min-height: 3em;
+		padding: 1em 0;
+	}
+	
+	label {
+		color: $color-6;
+		display: block;
+	}
+	
+	input[type="checkbox"] {
+		margin-right: 0.5em;
+	}
+	
+	input[type="text"] {
+		@include border-radius;
+		@include box-sizing(border-box);
+		border: 1px solid $color-2;
+		color: $color-6;
+		display: block;
+		font-size: em($l);
+		line-height: 1.5;
+		padding: 0.25em 0.5em;
+		width: 100%;
+	}
+	
+	button {
+		@extend .btn;
+		font-size: em($m);
+		line-height: 2;
+		margin: 1em 0;
+		padding: 0 1em;
+	}
+	
+	hr {
+		border: 1px solid $color-2;
+		border-width: 0 0 1px;
+		margin: 0.5em auto 0.5em 0;
+		width: 10em;
+	}
+}
+
+.search-results { // nav
+	@include box-shadow(0 0 0 1px $color-2);
+	@include box-sizing(border-box);
+	@include span-columns(3);
+	background-color: white;
+	padding-bottom: 1em;
+	
+	> div {
+		padding: 0 1em;
+	}
+	
+	> div:first-child {
+		background-color: #fff;
+		border-bottom: 1px solid $color-2;
+		padding: 0.5em 1em 1em;
 		
-		> div {
-			padding: 0 1em;
+		label {
+			display: block;
+			color: $color-4;
+			font-size: em($s);
+			text-transform: uppercase;
 		}
-		
-		> div:first-child {
-			background-color: #fff;
-			border-bottom: 1px solid $color-2;
-			padding: 0.5em 1em 1em;
 			
-			label {
-				display: block;
-				color: $color-4;
-				font-size: em($s);
-				text-transform: uppercase;
-			}
-				
-			input {
-				@include border-radius;
-				@include box-shadow(inset 0 1px 2px $color-3);
-				@include box-sizing(border-box);
-				border: 1px solid $border-color;
-				color: $color-6;
-				padding: 0.5em;
-				width: 100%;
-			}
+		input {
+			@include border-radius;
+			@include box-shadow(inset 0 1px 2px $color-3);
+			@include box-sizing(border-box);
+			border: 1px solid $border-color;
+			color: $color-6;
+			padding: 0.5em;
+			width: 100%;
 		}
 	}
 	
-	> div > div {
+	& + div {
 		@include span-columns(9 omega);
-		
-		table {
-			margin: 1em 0;
-		}
-		
-		nav {
-			border-top: 1px solid $color-2;
-			margin-top: 1em;
-			padding-top: 1em;
-		}
 	}
 }
 
@@ -166,7 +213,7 @@ html {
 		margin: 1em 0 0;
 		padding: 0 0.5em;
 		
-		&:before {
+		&::before {
 			content: 'select';
 			float: right;
 			font-size: em($s);
@@ -190,14 +237,14 @@ html {
 			background-color: $color-2;
 			color: $color-7;
 			
-			&:before {
+			&::before {
 				@include box-shadow(0 -1px $color-3, 0 1px $color-3);
 				background-color: $color-3;
 				color: white;
 			}
 		}
 		
-		&:before {
+		&::before {
 			color: $border-color;
 			content: '\2715';
 			float: right;
@@ -221,6 +268,10 @@ html {
 	}
 }
 
+.bookmarks {
+	@include span-columns(9 omega);
+}
+
 .modal .facet-group {
 	
 	> div {
@@ -235,7 +286,7 @@ html {
 				border-color: $color-3;
 			}
 			
-			&:before {
+			&::before {
 				display: none;
 			}
 			
@@ -280,7 +331,7 @@ html {
 		}
 	}
 	
-	.bookmark:before {
+	.bookmark::before {
 		content: '\2605';
 		color: $light;
 		padding: 0 0.25em;
@@ -322,7 +373,39 @@ html {
 					}
 					
 					a {
+						$color: $violet;
+						$dark: shade($color, 30%);
+						$light: tint($color, 60%);
+						
+						@include border-radius;
+						@include inline-block;
+						border: 1px solid $light;
+						color: $dark;
 						font-size: em($s);
+						padding: 0 0.5em;
+						text-decoration: none;
+						vertical-align: top;
+							
+						&:hover {
+							background-color: $light;
+							cursor: pointer;
+							
+							&::before {
+								@include text-shadow(none);
+								color: #FFF;
+							}
+						}
+						
+						&::before {
+							@include text-shadow;
+							content: '+';
+							color: $light;
+							font-weight: bold;
+							margin-right: 0.25em;
+							position: relative;
+							top: -1px; // Vertical align does seem quite right
+							vertical-align: top;
+						}
 					}
 					
 					> * + * {
@@ -374,6 +457,7 @@ html {
 			@include border-top-left-radius;
 			@include text-shadow;
 			background-color: $color-2;
+			border-right: 1px solid $color-2;
 			color: $color-5;
 			padding: 0 0.5em;
 		}
@@ -427,7 +511,7 @@ html {
 			margin-left: 0.5rem;
 		}
 		
-		&:after {
+		&::after {
 			content: attr(data-placeholder);
 			opacity: 0;
 		}
@@ -493,13 +577,13 @@ html {
 		background-color: $light;
 		cursor: pointer;
 		
-		&:before {
+		&::before {
 			@include text-shadow(none);
 			color: #FFF;
 		}
 	}
 	
-	&:before {
+	&::before {
 		@include text-shadow;
 		content: '\2606';
 		color: $light;
@@ -509,11 +593,11 @@ html {
 	&.active {
 		background-color: $light;
 		
-		&:hover:before {
+		&:hover::before {
 			@include text-shadow;
 		}
 		
-		&:before {
+		&::before {
 			content: '\2605';
 			color: $color;
 		}

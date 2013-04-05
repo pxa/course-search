@@ -121,8 +121,6 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		$scope.numberOfPages = Math.ceil($scope.courses.count / $scope.resultsPerPage);
 		$scope.currentPage = 1;
 		$scope.maxPageSize = 5;
-		$scope.singularListItemName = 'result';
-		$scope.pluralListItemName = 'results';
 	});
 	
 	$scope.openFacetGroupDialog = function(facetGroup) {
@@ -130,7 +128,6 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		var opts = {
 			templateUrl: 'partials/modal.facet-group.html',
 			controller: 'FacetGroupDialogController',
-			//backdrop: false,
 			// Duplicate the facetGroup object to allow easy cancelation.
 			resolve: { facetGroup: function() { return angular.copy(facetGroup); } }
 		};
@@ -216,21 +213,15 @@ function BookmarksCtrl($scope, $routeParams, $http, $dialog) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-	
-//PhoneListCtrl.$inject = ['$scope', 'Phone'];
 
 
 /*
-function SessionDetailCtrl($scope, $routeParams, Session) {
+function PhoneDetailCtrl($scope, $routeParams, Session) {
 
   $scope.phone = Phone.get({ phoneId:$routeParams.phoneId }, function(phone) {
     $scope.mainImageUrl = phone.images[0];
   });
 
-  $scope.setImage = function(imageUrl) {
-    $scope.mainImageUrl = imageUrl;
-  }
-
 }
-  */
-//PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
+PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
+*/
