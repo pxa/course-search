@@ -1,43 +1,33 @@
 <div ng-switch="0" class="search">
 
 	<nav ng-switch-when="0" class="initial-search">
-		<h1>Campus</h1>
-		<div>
-			<select>
-				<optgroup label="Campuses">
-					<option data-programs="Undergraduate,Graduate,Dentistry,Law,Medicine">IU Bloomington</option>
-					<option data-programs="Undergraduate,Graduate,Dentistry,Law,Medicine">IUPUI Indianapolis</option>
-					<option data-programs="Undergraduate,Graduate">IUPUC Columbus</option>
-					<option data-programs="Undergraduate,Graduate">IU East</option>
-					<option data-programs="Undergraduate,Graduate">IPFW Fort Wayne</option>
-					<option data-programs="Undergraduate,Graduate">IU Kokomo</option>
-					<option data-programs="Undergraduate,Graduate">IU Northwest</option>
-					<option data-programs="Undergraduate,Graduate">IU South Bend</option>
-					<option data-programs="Undergraduate,Graduate">IU Southeast</option>
-				</optgroup>
-				<optgroup>
-					<option data-programs="Undergraduate,Graduate">Online</option>
-				</optgroup>
-			</select>
-		</div>
-		<h1>Degree</h1>
-		<div>
-			<label><input type="checkbox" />Undergraduate</label>
-			<label><input type="checkbox" />Graduate</label>
-		</div>
-		<h1>Terms</h1>
-		<div>
-			<label><input type="checkbox" checked /><strong>Any term</strong></label>
-			<hr />
-			<label><input type="checkbox" />Spring 2013</label>
-			<label><input type="checkbox" />Summer 2013</label>
-			<label><input type="checkbox" />Fall 2013</label>
-			<hr />
-			<label><input type="checkbox" />Fall</label>
-			<label><input type="checkbox" />Spring</label>
-			<label><input type="checkbox" />Summer</label>
-			<hr />
-			<label><input type="checkbox" />Include courses not typically offered</label>
+		<div ng-repeat="category in initSearch" ng-switch="category.selection">
+			<h1>{{category.label}}</h1>
+			<div ng-switch-when="single">
+				<select>
+					<option ng-repeat="facet in category.facets">{{facet.label}}</option>
+					<optgroup ng-repeat="facetGroup in category.groups" label="{{facetGroup.label}}">
+						<option ng-repeat="facet in facetGroup.facets">{{facet.label}}</option>
+					</optgroup>
+				</select>
+			</div>
+			<div ng-switch-default>
+				<label ui-if="category.any" ng-class="{ active: category.any.checked, grayed: category.any.grayed }">
+					<input type="checkbox" ng-model="category.any.checked" checkbox-all="category" />
+					{{category.any.label}}
+				</label>
+				<label ng-repeat="facet in category.facets" ng-class="{ active: facet.checked }">
+					<input type="checkbox" ng-model="facet.checked" />
+					{{facet.label}}
+				</label>
+				<div ng-repeat="facetGroup in category.groups">
+					<hr ui-if="!$first || category.any"/>
+					<label ng-repeat="facet in facetGroup.facets" ng-class="{ active: facet.checked }">
+						<input type="checkbox" ng-model="facet.checked" />
+						{{facet.label}}
+					</label>
+				</div>
+			</div>
 		</div>
 		<div>
 			<input type="text" placeholder="Search for course stuff" />

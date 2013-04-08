@@ -4,22 +4,84 @@
 
 function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
+	// Higher `chance`, fewer random items
+	var convert = function(obj, chance) {
+		chance = chance ? chance : 0;
+		var a = [];
+		for( var key in obj ) {
+			a.push({
+				label: key,
+				count: obj[key].count,
+				checked: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
+			});
+		}
+		return a;
+	};
+	
+	var labelize = function(arr) {
+		var a = [];
+		for( var i = 0, n = arr.length; i < n; i++ ) {
+			a.push({ label: arr[i], checked: false });
+		}
+		return a;
+	};
+	
+	var campuses = [
+		'IU Bloomington',
+		'IUPUI Indianapolis',
+		'IUPUC Columbus',
+		'IU East',
+		'IPFW Fort Wayne',
+		'IU Kokomo',
+		'IU Northwest',
+		'IU South Bend',
+		'IU Southeast'
+	];
+	
+	var degrees = [
+		'Undergraduate',
+		'Graduate'
+	];
+	
+	var scheduledTerms = [
+		'Spring 2013',
+		'Summer 2013',
+		'Fall 2013'
+	];
+	
+	var projectedTerms = [
+		'Fall',
+		'Spring',
+		'Summer'
+	];
+	
+	// Until AngularJS supports comment repeaters,
+	// `facets` and `groups` must be separated,
+	// instead of smartly deriving object types.
+	// Not sufficient flexibility, unfortunately.
+	$scope.initSearch = [
+		{
+			label: 'Campus',
+			selection: 'single',
+			groups: [
+				{ label: 'Campuses', facets: labelize(campuses) },
+				{ label: '', facets: labelize(['Online']) }
+			]
+		},
+		{ label: 'Degree', facets: labelize(degrees) },
+		{
+			label: 'Terms',
+			any: { label: 'Any term' },
+			groups: [
+				{ label: '', facets: labelize(scheduledTerms) },
+				{ label: '', facets: labelize(projectedTerms) },
+				{ label: '', facets: labelize(['Include courses not typically offered']) }
+			]
+		}
+	];
+	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
-		
-		// Higher `chance`, fewer random items
-		var convert = function(obj, chance) {
-			chance = chance ? chance : 0;
-			var a = [];
-			for( var key in obj ) {
-				a.push({
-					label: key,
-					count: obj[key].count,
-					checked: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
-				});
-			}
-			return a;
-		}
 		
 		var facetGroups = [
 			{ label: 'Campus', facets: convert(data.oFacetState.facet_campus) },
