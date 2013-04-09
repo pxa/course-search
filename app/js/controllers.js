@@ -71,13 +71,22 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		},
 		{ label: 'Degree Level', facets: labelize(degrees) },
 		{
-			label: 'Terms',
+			label: 'Offering',
+			facets: [
+				{ label: 'Any term', checked: true, expanded: false, facets: [
+					{ facets: labelize(scheduledTerms) },
+					{ facets: labelize(projectedTerms) }
+				] },
+				{ label: 'Not offered in last 10 years' }	
+			]
+			/*
 			selectAll: { label: 'Any term', checked: true },
 			groups: [
 				{ label: '', facets: labelize(scheduledTerms) },
 				{ label: '', facets: labelize(projectedTerms) },
 				{ label: '', facets: labelize(['Include courses not typically offered']) }
 			]
+			*/
 		}
 	];
 	

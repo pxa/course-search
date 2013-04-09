@@ -122,6 +122,12 @@ html {
 		text-align: right;
 	}
 	
+	h2 {
+		color: $color-7;
+		font-size: em($r);
+		margin: 0.5em 0 0 2em;
+	}
+	
 	> div > div {
 		border-bottom: 1px solid $color-2;
 		//min-height: 3em;
@@ -158,6 +164,16 @@ html {
 		&:hover {
 			background-color: $color-2;
 		}
+		
+
+	}
+	
+	label:not(.child) ~ .child {
+		//margin-left: 1.5em;
+	}
+	
+	label ~ div {
+		margin-left: 1.5em;
 	}
 	
 	input[type="checkbox"] {

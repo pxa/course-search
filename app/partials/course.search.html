@@ -12,6 +12,38 @@
 				</select>
 			</div>
 			<div ng-switch-default>
+			
+				<div ng-repeat="facetA in category.facets"
+					ng-init="hasExpanded = facetA.expanded != undefined">
+			
+					<label ng-class="{ active: facetA.checked }">
+						<input type="checkbox" ng-model="facetA.checked" />
+						{{facetA.label}}
+					</label>
+					
+					<div ui-if="!hasExpanded || !facetA.checked">
+						<div ng-repeat="facetB in facetA.facets"
+							ng-init="hasCheck = facetB.checked != undefined; hasLabel = facetB.label != undefined && facetB.label.length > 0">
+							<label ui-if="hasCheck && hasLabel" ng-class="{ active: facetB.checked }">
+								<input type="checkbox" ng-model="facetB.checked" />
+								{{facetB.label}}
+							</label>
+							<h2 ui-if="!hasCheck && hasLabel">{{facetB.label}}</h2>
+							<hr ui-if="!hasCheck && !hasLabel && !$first" />
+							<div>
+								<label ng-repeat="facetC in facetB.facets" ng-class="{ active: facetC.checked }" class="child">
+									<input type="checkbox" ng-model="facetC.checked" />
+									{{facetC.label}}
+								</label>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			
+			<!--
+			
+			
 				<label ui-if="category.selectAll" ng-class="{ active: category.selectAll.checked, grayed: category.selectAll.grayed }">
 					<input type="checkbox" ng-model="category.selectAll.checked" select-all="category" />
 					{{category.selectAll.label}}
@@ -27,6 +59,7 @@
 						{{facet.label}}
 					</label>
 				</div>
+			-->
 			</div>
 		</div>
 		<div>
