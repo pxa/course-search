@@ -12,16 +12,16 @@
 				</select>
 			</div>
 			<div ng-switch-default>
-				<label ui-if="category.any" ng-class="{ active: category.any.checked, grayed: category.any.grayed }">
-					<input type="checkbox" ng-model="category.any.checked" checkbox-all="category" />
-					{{category.any.label}}
+				<label ui-if="category.selectAll" ng-class="{ active: category.selectAll.checked, grayed: category.selectAll.grayed }">
+					<input type="checkbox" ng-model="category.selectAll.checked" select-all="category" />
+					{{category.selectAll.label}}
 				</label>
 				<label ng-repeat="facet in category.facets" ng-class="{ active: facet.checked }">
 					<input type="checkbox" ng-model="facet.checked" />
 					{{facet.label}}
 				</label>
 				<div ng-repeat="facetGroup in category.groups">
-					<hr ui-if="!$first || category.any"/>
+					<hr ui-if="!$first || category.selectAll"/>
 					<label ng-repeat="facet in facetGroup.facets" ng-class="{ active: facet.checked }">
 						<input type="checkbox" ng-model="facet.checked" />
 						{{facet.label}}

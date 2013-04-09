@@ -12,22 +12,22 @@ angular.module('courseSearchApp.directives', [])
   
 	// http://stackoverflow.com/a/14803274
 	// http://plnkr.co/edit/gSeQL6XPaMsNSnlXwgHt
-	.directive('checkboxAll', function() {
+	.directive('selectAll', function() {
 		return function(scope, iElement, iAttrs) {
-			var groups = iAttrs.checkboxAll + '.groups';
-			var facets = iAttrs.checkboxAll + '.facets';
+			var groups = iAttrs.selectAll + '.groups';
+			var facets = iAttrs.selectAll + '.facets';
 			var checkedKey = 'checked';
 			
 			// Set appropriate values for conditions
-			var autoAny = function(hasTrue, hasFalse) {
-				var any = scope.$eval(iAttrs.checkboxAll + '.any');
+			var autoSelectAll = function(hasTrue, hasFalse) {
+				var selectAll = scope.$eval(iAttrs.selectAll + '.selectAll');
 				
 				if (hasTrue && hasFalse) {
-					any.checked = false;
-					any.grayed = true;
+					selectAll.checked = false;
+					selectAll.grayed = true;
 				} else {
-					any.checked = hasTrue;
-					any.grayed = false;
+					selectAll.checked = hasTrue;
+					selectAll.grayed = false;
 				}
 			};
 			
@@ -58,7 +58,7 @@ angular.module('courseSearchApp.directives', [])
 						}
 					});
 				});
-				autoAny(hasTrue, hasFalse);
+				autoSelectAll(hasTrue, hasFalse);
 			}, true);
 			scope.$watch(facets, function(newVal) {
 				var hasTrue, hasFalse;
@@ -69,7 +69,7 @@ angular.module('courseSearchApp.directives', [])
 						hasFalse = true;
 					}
 				});
-				autoAny(hasTrue, hasFalse);
+				autoSelectAll(hasTrue, hasFalse);
 			}, true);
 		};
 	});

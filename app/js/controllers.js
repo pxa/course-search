@@ -40,7 +40,8 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
 	var degrees = [
 		'Undergraduate',
-		'Graduate'
+		'Graduate',
+		'Professional'
 	];
 	
 	var scheduledTerms = [
@@ -68,10 +69,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 				{ label: '', facets: labelize(['Online']) }
 			]
 		},
-		{ label: 'Degree', facets: labelize(degrees) },
+		{ label: 'Degree Level', facets: labelize(degrees) },
 		{
 			label: 'Terms',
-			any: { label: 'Any term' },
+			selectAll: { label: 'Any term', checked: true },
 			groups: [
 				{ label: '', facets: labelize(scheduledTerms) },
 				{ label: '', facets: labelize(projectedTerms) },
