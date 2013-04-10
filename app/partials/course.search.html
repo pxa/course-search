@@ -1,23 +1,26 @@
 <div ng-switch="0" class="search">
 
 	<nav ng-switch-when="0" class="initial-search">
-		<div ng-repeat="category in initSearch" ng-switch="category.selection">
+		<div ng-repeat="category in initSearch" ng-switch="category.selected != undefined">
 			<h1>{{category.label}}</h1>
-			<div ng-switch-when="single">
-				<select>
-					<option ng-repeat="facet in category.facets">{{facet.label}}</option>
+			<div ng-switch-when="true">
+				<select ng-model="category.selected" ng-change="checkFacets()" ng-options="f.id as f.label group by f.group for f in selectize(category.facets)"></select>
+			<!--
+				<select ng-model="category.selected" ng-change="">
+					<option ng-repeat="facet in category.facets" value="{{facet.id}}">{{facet.label}}</option>
 					<optgroup ng-repeat="facetGroup in category.groups" label="{{facetGroup.label}}">
-						<option ng-repeat="facet in facetGroup.facets">{{facet.label}}</option>
+						<option ng-repeat="facet in facetGroup.facets" value="{{facet.id}}">{{facet.label}}</option>
 					</optgroup>
 				</select>
+				-->
 			</div>
 			<div ng-switch-default>
 			
 				<div ng-repeat="facetA in category.facets"
 					ng-init="hasExpanded = facetA.expanded != undefined">
 			
-					<label ng-class="{ active: facetA.checked }">
-						<input type="checkbox" ng-model="facetA.checked" />
+					<label ui-if="!facetA.exclude" ng-class="{ active: facetA.checked }">
+						<input type="checkbox" ng-model="facetA.checked" ng-click="checkFacets()" />
 						{{facetA.label}}
 					</label>
 					
@@ -25,14 +28,14 @@
 						<div ng-repeat="facetB in facetA.facets"
 							ng-init="hasCheck = facetB.checked != undefined; hasLabel = facetB.label != undefined && facetB.label.length > 0">
 							<label ui-if="hasCheck && hasLabel" ng-class="{ active: facetB.checked }">
-								<input type="checkbox" ng-model="facetB.checked" />
+								<input type="checkbox" ng-model="facetB.checked" ng-click="checkFacets()" />
 								{{facetB.label}}
 							</label>
 							<h2 ui-if="!hasCheck && hasLabel">{{facetB.label}}</h2>
 							<hr ui-if="!hasCheck && !hasLabel && !$first" />
-							<div>
-								<label ng-repeat="facetC in facetB.facets" ng-class="{ active: facetC.checked }" class="child">
-									<input type="checkbox" ng-model="facetC.checked" />
+							<div ng-repeat="facetC in facetB.facets">
+								<label ui-if="!facetC.exclude" ng-class="{ active: facetC.checked }" class="child">
+									<input type="checkbox" ng-model="facetC.checked" ng-click="checkFacets()" />
 									{{facetC.label}}
 								</label>
 							</div>
@@ -63,7 +66,7 @@
 			</div>
 		</div>
 		<div>
-			<input type="text" placeholder="Search for course stuff" />
+			<input type="text" placeholder="title, keyword, department, subject, or number" />
 			<button>Search</button>
 		</div>
 	</nav>

@@ -18,17 +18,19 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		return a;
 	};
 	
+	var k = 0;
+	
 	var labelize = function(arr) {
 		var a = [];
-		for( var i = 0, n = arr.length; i < n; i++ ) {
-			a.push({ label: arr[i], checked: false });
+		for( var i = 0, n = arr.length; i < n; i++, ++k ) {
+			a.push({ label: arr[i], checked: false, id: k });
 		}
 		return a;
 	};
 	
-	var campuses = [
-		'IU Bloomington',
-		'IUPUI Indianapolis',
+	var campuses = labelize([
+		'IU Bloomington', // id: 0
+		'IUPUI Indianapolis', // id: 1
 		'IUPUC Columbus',
 		'IU East',
 		'IPFW Fort Wayne',
@@ -36,25 +38,37 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		'IU Northwest',
 		'IU South Bend',
 		'IU Southeast'
-	];
+	]);
 	
-	var degrees = [
+	//for( var i = 2, n = campuses.length; i < n; i++ )
+	//	campuses[i].exclude = [11];
+	
+	var degrees = labelize([
 		'Undergraduate',
-		'Graduate',
+		'Graduate', // id: 10
 		'Professional'
-	];
+	]);
 	
-	var scheduledTerms = [
+	degrees[2].includeWhen = "0||1"; // BL or IUPUI
+	
+	var scheduledTerms = labelize([
 		'Spring 2013',
 		'Summer 2013',
-		'Fall 2013'
-	];
+		'Fall 2013',
+		'Winter 2013'
+	]);
 	
-	var projectedTerms = [
+	// (BL & Grad) or (IUPUI & Grad)
+	// "(0&10)|(1&10)"
+	// Grad & (BL or IUPUI)
+	// "10&(0|1)"
+	scheduledTerms[3].includeWhen = "10&&(0||1)";
+	
+	var projectedTerms = labelize([
 		'Fall',
 		'Spring',
 		'Summer'
-	];
+	]);
 	
 	// Until AngularJS supports comment repeaters,
 	// `facets` and `groups` must be separated,
@@ -63,32 +77,115 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	$scope.initSearch = [
 		{
 			label: 'Campus',
-			selection: 'single',
-			groups: [
-				{ label: 'Campuses', facets: labelize(campuses) },
-				{ label: '', facets: labelize(['Online']) }
+			selected: 0, // facet id
+			facets: [
+				{ label: 'Campuses', facets: campuses },
+				{ label: ' ', facets: labelize(['Online']) }
 			]
 		},
-		{ label: 'Degree Level', facets: labelize(degrees) },
+		{ label: 'Degree Level', facets: degrees },
 		{
-			label: 'Offering',
+			label: 'Offered',
 			facets: [
-				{ label: 'Any term', checked: true, expanded: false, facets: [
-					{ facets: labelize(scheduledTerms) },
-					{ facets: labelize(projectedTerms) }
+				{ label: 'Any term', id: (++k), checked: true, expanded: false, facets: [
+					{ label: 'Scheduled classes', facets: scheduledTerms },
+					{ label: 'All courses', facets: projectedTerms }
 				] },
-				{ label: 'Not offered in last 10 years' }	
+				{ label: 'More than 10 years ago', id: (++k) }	
 			]
 			/*
 			selectAll: { label: 'Any term', checked: true },
-			groups: [
-				{ label: '', facets: labelize(scheduledTerms) },
-				{ label: '', facets: labelize(projectedTerms) },
-				{ label: '', facets: labelize(['Include courses not typically offered']) }
-			]
 			*/
 		}
 	];
+	
+	// Flattens the source facet array to prepare for <select>'s ng-option
+	$scope.selectize = function(source) {
+		var array = [];
+		for( var i = 0, n = source.length; i < n; i++ ) {
+			var a = source[i];
+			for( var j = 0, m = a.facets.length; j < m; j++ ) {
+				var b = a.facets[j];
+				b.group = a.label;
+				array.push(b);
+			}
+		}
+		return array;	
+	};
+	
+	var selectedFacetIds = function(source, arr) {
+	
+		// Generate an array, if one is not provided
+		if( !angular.isArray(arr) )
+			arr = [];
+			
+		// Loop through facets
+		for( var i = 0, n = source.length; i < n; i++ ) {
+			var facet = source[i];
+			
+			// Add the <select> id, if available
+			if( angular.isDefined(facet.selected) )
+				arr.push(facet.selected);
+				
+			// Or add this facet's id if checked
+			else if( angular.isDefined(facet.id) && facet.checked == true )
+				arr.push(facet.id);
+				
+			// Recursively find child facet ids
+			if( angular.isArray(facet.facets) )
+				selectedFacetIds(facet.facets, arr);
+		}
+		
+		return arr;
+	};
+	
+	var checkFacet = function(source, ids) {
+	
+		for( var i = 0, n = source.length; i < n; i++ ) {
+			var facet = source[i];
+			
+			// Ignore, if not a string, such as undefined
+			if( angular.isString(facet.includeWhen) ) {
+			
+				// Converts something like this:
+				// "10&&(0||1)" => "false&&(true||false)" => false
+				
+				// Split the string, matching ids
+				var includes = facet.includeWhen.split(/(\d+)/g);
+				
+				// Process ids
+				for( var j = 0, m = includes.length; j < m; j++) {
+					var a = includes[j];
+					
+					// Ignore empty, non-numeric strings
+					if( a.length > 0 && !isNaN(a) )
+						// Replace with a bool indicating a match in the source ids
+						includes[j] = ids.indexOf(Number(a)) != -1;
+				}
+				
+				// Rejoin
+				includes = includes.join('');
+				
+				// Easier to template, if thinking of excluding
+				if( $scope.$eval(includes) )
+					delete facet.exclude;
+				else
+					facet.exclude = true;
+				
+				//console.log(ids + ' - ' + facet.label + ' => ' + facet.includeWhen + ' - ' + includes + ' => ' + facet.exclude);
+			}
+			
+			// Recursively check all child facets
+			if( angular.isArray(facet.facets) )
+				checkFacet(facet.facets, ids);
+		}
+	};
+	
+	$scope.checkFacets = function() {
+		checkFacet($scope.initSearch, selectedFacetIds($scope.initSearch));
+	};
+	
+	$scope.checkFacets();
 	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
