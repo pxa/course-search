@@ -192,8 +192,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 			if( angular.isString(facet.includeWhen) ) {
 				if( checkCondition(facet.includeWhen, ids) )
 					delete facet.exclude;
-				else
-					facet.exclude = true;	
+				else {
+					facet.exclude = true;
+					facet.value = 0; // Reset value when excluded
+				}		
 			}
 
 			// Recursively check all child facets
