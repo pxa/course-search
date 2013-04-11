@@ -202,7 +202,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		}
 	};
 	
-	var validate = function(source, ids) {
+	var _validate = function(source, ids) {
 	
 		// Determine the default facet source, if not supplied
 		if( !angular.isArray(source) )
@@ -227,23 +227,26 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 
 			// Recursively check all child facets
 			if( angular.isArray(facet.facets) )
-				valid &= validate(facet.facets, ids);
+				valid &= _validate(facet.facets, ids);
 		}
 		
 		return valid;
 	};
 	
-	$scope.valid = true;
+	var valid = true;
 	
-	$scope.validate = function() {
-		$scope.valid = validate();
+	var validate = function() {
+		valid = _validate();
 	};
 	
 	$scope.searchCourses = function() {
-		$scope.validate();
+		validate();
 	};
 	
 	$scope.checkFacets = function() {
+		// When facet updates with errors, recheck validation
+		if( !valid )
+			validate();
 		checkFacets();
 	};
 	
