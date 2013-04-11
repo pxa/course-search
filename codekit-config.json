@@ -14,15 +14,15 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/app\/js\/filters.js" : {
+    "\/test\/lib\/angular\/angular-mocks.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/js\/filters.js",
+      "inputAbbreviatedPath" : "\/test\/lib\/angular\/angular-mocks.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/app\/js\/filters.min.js",
+      "outputAbbreviatedPath" : "\/test\/lib\/angular\/angular-mocks.min.js",
       "fileType" : 64
     },
     "\/app\/partials\/course.plan.html" : {
@@ -34,15 +34,15 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/test\/lib\/angular\/angular-mocks.js" : {
+    "\/app\/js\/filters.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/test\/lib\/angular\/angular-mocks.js",
+      "inputAbbreviatedPath" : "\/app\/js\/filters.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/test\/lib\/angular\/angular-mocks.min.js",
+      "outputAbbreviatedPath" : "\/app\/js\/filters.min.js",
       "fileType" : 64
     },
     "\/sass\/mediaqueries.scss" : {
@@ -91,14 +91,16 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular.min.min.js",
       "fileType" : 64
     },
-    "\/app\/css\/screen.css" : {
+    "\/app\/lib\/angular\/angular-resource.min.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/css\/screen.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
+      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-resource.min.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-resource.min.min.js",
+      "fileType" : 64
     },
     "\/app\/lib\/angular\/angular-loader.min.js" : {
       "ignoreWasSetByUser" : 0,
@@ -111,16 +113,14 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-loader.min.min.js",
       "fileType" : 64
     },
-    "\/app\/lib\/angular\/angular-resource.min.js" : {
+    "\/app\/css\/screen.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-resource.min.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-resource.min.min.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/app\/css\/screen.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
     },
     "\/sass\/_extensions.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -217,15 +217,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/app\/partials\/course.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/partials\/course.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
     "\/sass\/lib\/susy\/_functions.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -237,6 +228,15 @@
       "outputAbbreviatedPath" : "\/app\/css\/_functions.css",
       "fileType" : 4,
       "debugStyle" : 0
+    },
+    "\/app\/partials\/course.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/partials\/course.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/sass\/lib\/susy\/_grid.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -250,15 +250,6 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/app\/partials\/course.search.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/partials\/course.search.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
     "\/test\/unit\/filtersSpec.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
@@ -269,6 +260,15 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/test\/unit\/filtersSpec.min.js",
       "fileType" : 64
+    },
+    "\/app\/partials\/course.search.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/partials\/course.search.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/app\/partials\/modal.facet-group.html" : {
       "ignoreWasSetByUser" : 0,
@@ -362,17 +362,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/sass\/lib\/susy\/_isolation.scss" : {
+    "\/app\/lib\/angular\/angular-cookies.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_isolation.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_isolation.css",
-      "fileType" : 4,
-      "debugStyle" : 0
+      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-cookies.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-cookies.min.js",
+      "fileType" : 64
     },
     "\/app\/lib\/angular\/angular-loader.js" : {
       "ignoreWasSetByUser" : 0,
@@ -385,16 +384,17 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-loader.min.js",
       "fileType" : 64
     },
-    "\/app\/lib\/angular\/angular-cookies.js" : {
+    "\/sass\/lib\/susy\/_isolation.scss" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-cookies.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-cookies.min.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_isolation.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_isolation.css",
+      "fileType" : 4,
+      "debugStyle" : 0
     },
     "\/sass\/_main.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -520,15 +520,15 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/sass\/normalize.scss" : {
+    "\/sass\/lib\/susy\/_media.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/normalize.scss",
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_media.scss",
       "outputStyle" : 2,
       "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/normalize.css",
+      "outputAbbreviatedPath" : "\/app\/css\/_media.css",
       "fileType" : 4,
       "debugStyle" : 0
     },
@@ -544,15 +544,15 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/sass\/lib\/susy\/_media.scss" : {
+    "\/sass\/normalize.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_media.scss",
+      "inputAbbreviatedPath" : "\/sass\/normalize.scss",
       "outputStyle" : 2,
       "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_media.css",
+      "outputAbbreviatedPath" : "\/app\/css\/normalize.css",
       "fileType" : 4,
       "debugStyle" : 0
     },
@@ -601,15 +601,6 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap.min.js",
       "fileType" : 64
     },
-    "\/app\/template\/popover\/popover.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/template\/popover\/popover.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
     "\/config\/testacular.conf.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
@@ -620,6 +611,15 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/config\/testacular.conf.min.js",
       "fileType" : 64
+    },
+    "\/app\/template\/popover\/popover.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/template\/popover\/popover.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/test\/unit\/directivesSpec.js" : {
       "ignoreWasSetByUser" : 1,
@@ -650,14 +650,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/config.rb" : {
+    "\/app\/lib\/angular\/angular-sanitize.min.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/config.rb",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 32768
+      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-sanitize.min.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-sanitize.min.min.js",
+      "fileType" : 64
     },
     "\/app\/lib\/angular\/angular-bootstrap-prettify.min.js" : {
       "ignoreWasSetByUser" : 0,
@@ -670,16 +672,14 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap-prettify.min.min.js",
       "fileType" : 64
     },
-    "\/app\/lib\/angular\/angular-sanitize.min.js" : {
+    "\/config.rb" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-sanitize.min.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-sanitize.min.min.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/config.rb",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 32768
     },
     "\/app\/lib\/angular\/angular-scenario.js" : {
       "ignoreWasSetByUser" : 0,
@@ -713,16 +713,17 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/app\/lib\/angular-ui-states.min.js" : {
+    "\/sass\/components\/_modal.scss" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/lib\/angular-ui-states.min.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/app\/lib\/angular-ui-states.min.min.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/sass\/components\/_modal.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_modal.css",
+      "fileType" : 4,
+      "debugStyle" : 0
     },
     "\/sass\/lib\/susy\/_support.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -745,17 +746,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/sass\/components\/_modal.scss" : {
+    "\/app\/lib\/angular-ui-states.min.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/components\/_modal.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_modal.css",
-      "fileType" : 4,
-      "debugStyle" : 0
+      "inputAbbreviatedPath" : "\/app\/lib\/angular-ui-states.min.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/app\/lib\/angular-ui-states.min.min.js",
+      "fileType" : 64
     },
     "\/test\/lib\/angular\/angular-scenario.js" : {
       "ignoreWasSetByUser" : 1,
@@ -812,6 +812,15 @@
       "outputAbbreviatedPath" : "\/config\/testacular-e2e.conf.min.js",
       "fileType" : 64
     },
+    "\/app\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/app\/lib\/angular\/angular-bootstrap-prettify.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -823,12 +832,12 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap-prettify.min.js",
       "fileType" : 64
     },
-    "\/app\/index.html" : {
+    "\/app\/template\/alert\/alert.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/index.html",
+      "inputAbbreviatedPath" : "\/app\/template\/alert\/alert.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
@@ -844,14 +853,16 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/app\/template\/alert\/alert.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+    "\/test\/unit\/controllersSpec.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/template\/alert\/alert.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/test\/unit\/controllersSpec.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/test\/unit\/controllersSpec.min.js",
+      "fileType" : 64
     },
     "\/app\/lib\/angular\/angular-mocks.js" : {
       "ignoreWasSetByUser" : 0,
@@ -864,26 +875,6 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-mocks.min.js",
       "fileType" : 64
     },
-    "\/test\/e2e\/runner.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/test\/e2e\/runner.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/test\/unit\/controllersSpec.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/test\/unit\/controllersSpec.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/test\/unit\/controllersSpec.min.js",
-      "fileType" : 64
-    },
     "\/app\/js\/app.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
@@ -894,6 +885,15 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/app\/js\/app.min.js",
       "fileType" : 64
+    },
+    "\/test\/e2e\/runner.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/test\/e2e\/runner.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/sass\/lib\/susy\/_units.scss" : {
       "ignoreWasSetByUser" : 0,

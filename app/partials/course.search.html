@@ -62,20 +62,16 @@
 		<div class="searchBox">
 
 			<div>
-				<input type="text" placeholder="title, keyword, department, subject, or number" />
+				<input type="text" placeholder="title, keyword, department, subject, or number" ng-model="search.text" />
 			</div>
 			
-			<details>
+			<details open>
 				<summary>Examples</summary>
-				<dl>
-					<dt>Find english courses</dt>
-					<dd><a href>english</a></dd>
-					<dd><a href>ENG</a></dd>
-					<dd><a href>ENG-W</a></dd>
-					<dt>Find a specific english course</dt>
-					<dd><a href>ENG-W 131</a></dd>
-					<dt>Find 200-level english courses</dt>
-					<dd><a href>ENG 2*</a></dd>
+				<dl ng-repeat="exampleGroup in searchExamples">
+					<dt>{{exampleGroup.label}}</dt>
+					<dd ng-repeat="example in exampleGroup.examples">
+						<a href ng-click="applySearchExample(example)">{{example}}</a>
+					</dd>
 				</dl>
 			</details>
 			

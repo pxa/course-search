@@ -187,6 +187,18 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
 	$scope.checkFacets();
 	
+	$scope.searchExamples = [
+		{ label: 'Find english courses', examples: [ 'english', 'ENG', 'ENG-W' ] },
+		{ label: 'Find a specific english course', examples: [ 'ENG-W 131' ] },
+		{ label: 'Find 200-level english courses', examples: [ 'ENG 2*' ] }
+	];
+	
+	$scope.search = { text: '' };
+	
+	$scope.applySearchExample = function(example) {
+		$scope.search.text = example;
+	};
+	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
 		

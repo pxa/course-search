@@ -198,12 +198,18 @@ html {
 	}
 	
 	details {
-		margin-top: 1em;
-		margin-bottom: 1em;
+		margin: 1em 0;
 		
-		&[open] summary {
-			//@include border-bottom-right-radius(0);
-			background-color: $cream;
+		&[open] {
+			@include border-radius;
+			background-color: $color-2;
+			border: 1px solid $color-3;
+			padding: 0 1em 1em;
+			
+			summary {
+				//@include border-bottom-right-radius(0);
+				background-color: $cream;
+			}
 		}
 	}
 	
@@ -227,10 +233,6 @@ html {
 	}
 	
 	dl {
-		@include border-radius;
-		background-color: $color-2;
-		border: 1px solid $color-3;
-		padding: 0 1em 1em;
 		margin: 0;
 	}
 	
