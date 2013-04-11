@@ -111,7 +111,9 @@ html {
 
 .initial-search { // nav
 	@include span-columns(9 omega);
-	margin: 3em 0 0 0;
+	@include box-sizing(border-box);
+	padding-right: 1em;
+	margin-top: 3em;
 	
 	h1 {
 		@include span-columns(3);
@@ -130,9 +132,8 @@ html {
 		margin: 0.5em 0 0 0.5em;
 	}
 	
-	> div > div {
+	> div:not(.searchBox) > div {
 		border-bottom: 1px solid $color-2;
-		//min-height: 3em;
 		padding: 1em 0 1em 0;
 	}
 	
@@ -182,19 +183,6 @@ html {
 		margin-right: 0.5em;
 	}
 	
-	input[type="text"] {
-		@include border-radius;
-		@include box-sizing(border-box);
-		border: 1px solid $color-2;
-		color: $color-6;
-		display: block;
-		font-size: em($l);
-		line-height: 1.5;
-		padding: 0.25em 0.5em;
-		margin: 1em 0;
-		width: 100%;
-	}
-	
 	button {
 		@extend .btn;
 		font-size: em($m);
@@ -207,6 +195,119 @@ html {
 		border-width: 0 0 1px;
 		margin: 0.5em auto 0.5em 0;
 		width: 10em;
+	}
+	
+	details {
+		margin-top: 1em;
+		margin-bottom: 1em;
+		
+		&[open] summary {
+			//@include border-bottom-right-radius(0);
+			background-color: $cream;
+		}
+	}
+	
+	summary { // Examples
+		@include border-right-radius;
+		@include box-sizing(border-box);
+		background-color: $color-2;
+		border: 1px solid $color-3;
+		color: $color-6;
+		cursor: pointer;
+		display: inline-block;
+		font-size: em($s);
+		line-height: 3rem;
+		padding: 0 0.5em;
+		position: absolute;
+		text-align: center;
+		text-decoration: none;
+		top: 0;
+		right: 0;
+		width: 6rem;
+	}
+	
+	dl {
+		@include border-radius;
+		background-color: $color-2;
+		border: 1px solid $color-3;
+		padding: 0 1em 1em;
+		margin: 0;
+	}
+	
+	dt {
+		color: $color-5;
+		font-size: em($r);
+		margin-top: 1em;
+	}
+	
+	dd {
+		margin: 0.5em 0 0;
+		
+		a {
+			@include border-radius;
+			@include box-shadow(inset 0 1px 2px $color-3);
+			background-color: #fff;
+			border: 1px solid $color-3;
+			color: $color-7;
+			display: block;
+			font-size: em($r);
+			line-height: 2;
+			padding: 0 0 0 0.5em;
+			position: relative;
+			text-decoration: none;
+			
+			$color: $violet;
+			$light: tint($color, 60%);
+				
+			&::after {
+
+				
+				background-color: $light;
+				color: #fff;
+				content: "try this search \2192";
+				float: right;
+				font-size: em($s);
+				line-height: em($m) * 2;
+				padding: 0 1em;
+			}
+			
+			&:hover {
+				border-color: $color-4;
+				
+				&::after {
+					background-color: $color;
+				}
+			}
+		}
+	}
+	
+	.searchBox { // div
+		margin: 2em 0 0;
+		position: relative;
+		
+		> div {
+			padding: 0 6em 0em 0;
+			position: relative;
+		}
+		
+		input[type="text"] {
+			@include border-left-radius;
+			@include box-shadow(inset 0 1px 2px $color-3);
+			@include box-sizing(border-box);
+			border: 1px solid $color-3;
+			border-right-width: 0;
+			color: $color-6;
+			display: block;
+			font-size: em($l);
+			height: px(3) + 2px; // Adjust for Firefox mishandling <input> line-height
+			line-height: 3rem;
+			padding: 0 0.5em;
+			width: 100%;
+			
+			&:focus {
+				border-color: $color-5;
+			}
+		}
 	}
 }
 

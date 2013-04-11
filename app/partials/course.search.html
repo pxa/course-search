@@ -4,15 +4,9 @@
 		<div ng-repeat="category in initSearch" ng-switch="category.selected != undefined">
 			<h1>{{category.label}}</h1>
 			<div ng-switch-when="true">
+			
 				<select ng-model="category.selected" ng-change="checkFacets()" ng-options="f.id as f.label group by f.group for f in selectize(category.facets)"></select>
-			<!--
-				<select ng-model="category.selected" ng-change="">
-					<option ng-repeat="facet in category.facets" value="{{facet.id}}">{{facet.label}}</option>
-					<optgroup ng-repeat="facetGroup in category.groups" label="{{facetGroup.label}}">
-						<option ng-repeat="facet in facetGroup.facets" value="{{facet.id}}">{{facet.label}}</option>
-					</optgroup>
-				</select>
-				-->
+				
 			</div>
 			<div ng-switch-default>
 			
@@ -65,9 +59,28 @@
 			-->
 			</div>
 		</div>
-		<div>
-			<input type="text" placeholder="title, keyword, department, subject, or number" />
+		<div class="searchBox">
+
+			<div>
+				<input type="text" placeholder="title, keyword, department, subject, or number" />
+			</div>
+			
+			<details>
+				<summary>Examples</summary>
+				<dl>
+					<dt>Find english courses</dt>
+					<dd><a href>english</a></dd>
+					<dd><a href>ENG</a></dd>
+					<dd><a href>ENG-W</a></dd>
+					<dt>Find a specific english course</dt>
+					<dd><a href>ENG-W 131</a></dd>
+					<dt>Find 200-level english courses</dt>
+					<dd><a href>ENG 2*</a></dd>
+				</dl>
+			</details>
+			
 			<button>Search</button>
+			
 		</div>
 	</nav>
 	
