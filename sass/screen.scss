@@ -120,6 +120,7 @@ html {
 		color: $color-5;
 		font-size: em($m);
 		left: 0;
+		margin-top: 1rem;
 		position: absolute;
 		text-align: right;
 	}
@@ -132,16 +133,33 @@ html {
 		margin: 0.5em 0 0 0.5em;
 	}
 	
+	small {
+		color: $color-6;
+		font-style: normal;
+	}
+	
+	.error { // p
+		$color: red;
+		$light: tint($color, 90%);
+		$dark: shade($color, 10%);
+		@include border-radius;
+		@include text-shadow;
+		background-color: $light;
+		color: $dark;
+		padding: 0.5em 1em;
+		margin: 1em 0 0;
+	}
+	
 	> div:not(.searchBox) > div {
 		border-bottom: 1px solid $color-2;
-		padding: 1em 0 1em 0;
+		padding: 1em 0;
 	}
 	
 	label {
 		//@include span-columns(4);
 		color: $color-6;
 		display: block;
-		padding: 0 0 0 0.5em;
+		padding: 0 0.5em;
 		//padding: 0.25em 0.5em 0.25em 2em;
 		//padding: 0;
 		//text-indent: -2em;
@@ -175,19 +193,22 @@ html {
 		//margin-left: 1.5em;
 	}
 	
-	label ~ div {
+	.child {
 		margin-left: 1.5em;
 	}
 	
-	input[type="checkbox"] {
+	input[type="checkbox"], input[type="radio"] {
 		margin-right: 0.5em;
 	}
 	
-	button {
-		@extend .btn;
-		font-size: em($m);
-		line-height: 2;
-		padding: 0 1em;
+	.radio {
+		//@extend %grid;
+		//margin-bottom: 1em;
+		
+		label {
+			//@extend %grid-item;
+			padding: 0 0.5em;
+		}
 	}
 	
 	hr {
@@ -283,6 +304,32 @@ html {
 		}
 	}
 	
+	input[type="text"] {
+		@include border-left-radius;
+		@include box-shadow(inset 0 1px 2px $color-3);
+		@include box-sizing(border-box);
+		border: 1px solid $color-3;
+		border-right-width: 0;
+		color: $color-6;
+		display: block;
+		font-size: em($l);
+		height: px(3) + 2px; // Adjust for Firefox mishandling <input> line-height
+		line-height: 3rem;
+		padding: 0 0.5em;
+		width: 100%;
+		
+		&:focus {
+			border-color: $color-5;
+		}
+	}
+
+	button {
+		@extend .btn;
+		font-size: em($m);
+		line-height: 2;
+		padding: 0 1em;
+	}
+	
 	.searchBox { // div
 		margin: 2em 0 0;
 		position: relative;
@@ -290,25 +337,6 @@ html {
 		> div {
 			padding: 0 6em 0em 0;
 			position: relative;
-		}
-		
-		input[type="text"] {
-			@include border-left-radius;
-			@include box-shadow(inset 0 1px 2px $color-3);
-			@include box-sizing(border-box);
-			border: 1px solid $color-3;
-			border-right-width: 0;
-			color: $color-6;
-			display: block;
-			font-size: em($l);
-			height: px(3) + 2px; // Adjust for Firefox mishandling <input> line-height
-			line-height: 3rem;
-			padding: 0 0.5em;
-			width: 100%;
-			
-			&:focus {
-				border-color: $color-5;
-			}
 		}
 	}
 }

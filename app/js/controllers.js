@@ -12,7 +12,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 			a.push({
 				label: key,
 				count: obj[key].count,
-				checked: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
+				value: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
 			});
 		}
 		return a;
@@ -23,7 +23,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	var labelize = function(arr) {
 		var a = [];
 		for( var i = 0, n = arr.length; i < n; i++, ++k ) {
-			a.push({ label: arr[i], checked: false, id: k });
+			a.push({ label: arr[i], value: false, id: k });
 		}
 		return a;
 	};
@@ -49,6 +49,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		'Professional'
 	]);
 	
+	degrees[0].value = true;
 	degrees[2].includeWhen = "0||1"; // BL or IUPUI
 	
 	var scheduledTerms = labelize([
@@ -74,7 +75,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	// `facets` and `groups` must be separated,
 	// instead of smartly deriving object types.
 	// Not sufficient flexibility, unfortunately.
-	$scope.initSearch = [
+	var searchFacets = [
 		{
 			label: 'Campus',
 			selected: 0, // facet id
@@ -83,34 +84,46 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 				{ label: ' ', facets: labelize(['Online']) }
 			]
 		},
-		{ label: 'Degree Level', facets: degrees },
+		{
+			label: 'Degree Level',
+			error: { message: 'Select a degree level.', condition: "!(9||10||11)" },
+			facets: degrees
+		},
 		{
 			label: 'Offered',
+			error: { message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" },
 			facets: [
-				{ label: 'Any term', id: (++k), checked: true, expanded: false, facets: [
+				{ id: (++k),
+				  value: 1,
+				  expanded: 0, // Intention to conditionally show child facets
+				  radio: [
+					{ label: 'Any term', value: 1 },
+					{ label: 'Specific term', value: 0 } ],
+				  facets: [
 					{ label: 'Scheduled classes', facets: scheduledTerms },
-					{ label: 'All courses', facets: projectedTerms }
-				] },
-				{ label: 'More than 10 years ago', id: (++k) }	
+					{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
+				] }
+					
 			]
-			/*
-			selectAll: { label: 'Any term', checked: true },
-			*/
+		},
+		{
+			facets: [ { label: 'More than 10 years ago', id: (++k) } ]
 		}
 	];
 	
-	// Flattens the source facet array to prepare for <select>'s ng-option
-	$scope.selectize = function(source) {
-		var array = [];
-		for( var i = 0, n = source.length; i < n; i++ ) {
-			var a = source[i];
-			for( var j = 0, m = a.facets.length; j < m; j++ ) {
-				var b = a.facets[j];
-				b.group = a.label;
-				array.push(b);
-			}
-		}
-		return array;	
+	var searchExamples = [
+		{ label: 'Find english courses', examples: [ 'english', 'ENG', 'ENG-W' ] },
+		{ label: 'Find a specific english course', examples: [ 'ENG-W 131' ] },
+		{ label: 'Find 200-level english courses', examples: [ 'ENG 2*' ] }
+	];
+	
+	$scope.search = {
+		
+		query: '',
+		placeholder: 'title, keyword, department, subject, or number',
+		examples: searchExamples,
+		facets: searchFacets
+		
 	};
 	
 	var selectedFacetIds = function(source, arr) {
@@ -128,7 +141,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 				arr.push(facet.selected);
 				
 			// Or add this facet's id if checked
-			else if( angular.isDefined(facet.id) && facet.checked == true )
+			else if( angular.isDefined(facet.id) && facet.value == true )
 				arr.push(facet.id);
 				
 			// Recursively find child facet ids
@@ -139,64 +152,122 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		return arr;
 	};
 	
-	var checkFacet = function(source, ids) {
+	var checkCondition = function(condition, ids) {
+
+		// Converts something like this:
+		// "10&&(0||1)" => "false&&(true||false)" => false
+		
+		// Split the string, matching ids
+		var conditional = condition.split(/(\d+)/g);
+		
+		// Process ids
+		for( var i = 0, n = conditional.length; i < n; i++) {
+			var a = conditional[i];
+			
+			// Ignore empty, non-numeric strings
+			if( a.length > 0 && !isNaN(a) )
+				// Replace with a bool indicating a match in the source ids
+				conditional[i] = ids.indexOf(Number(a)) != -1;
+		}
+		
+		// Rejoin
+		conditional = conditional.join('');
+
+		return $scope.$eval(conditional);
+	};
+	
+	var checkFacets = function(source, ids) {
+	
+		// Determine the default facet source, if not supplied
+		if( !angular.isArray(source) )
+			source = $scope.search.facets;
+	
+		// Determine the selected facet ids, if not supplied
+		if( !angular.isArray(ids) )
+			ids = selectedFacetIds($scope.search.facets);
 	
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var facet = source[i];
 			
-			// Ignore, if not a string, such as undefined
 			if( angular.isString(facet.includeWhen) ) {
-			
-				// Converts something like this:
-				// "10&&(0||1)" => "false&&(true||false)" => false
-				
-				// Split the string, matching ids
-				var includes = facet.includeWhen.split(/(\d+)/g);
-				
-				// Process ids
-				for( var j = 0, m = includes.length; j < m; j++) {
-					var a = includes[j];
-					
-					// Ignore empty, non-numeric strings
-					if( a.length > 0 && !isNaN(a) )
-						// Replace with a bool indicating a match in the source ids
-						includes[j] = ids.indexOf(Number(a)) != -1;
-				}
-				
-				// Rejoin
-				includes = includes.join('');
-				
-				// Easier to template, if thinking of excluding
-				if( $scope.$eval(includes) )
+				if( checkCondition(facet.includeWhen, ids) )
 					delete facet.exclude;
 				else
-					facet.exclude = true;
-				
-				//console.log(ids + ' - ' + facet.label + ' => ' + facet.includeWhen + ' - ' + includes + ' => ' + facet.exclude);
+					facet.exclude = true;	
 			}
-			
+
 			// Recursively check all child facets
 			if( angular.isArray(facet.facets) )
-				checkFacet(facet.facets, ids);
+				checkFacets(facet.facets, ids);
 		}
 	};
 	
-	$scope.checkFacets = function() {
-		checkFacet($scope.initSearch, selectedFacetIds($scope.initSearch));
+	var validate = function(source, ids) {
+	
+		// Determine the default facet source, if not supplied
+		if( !angular.isArray(source) )
+			source = $scope.search.facets;
+	
+		// Determine the selected facet ids, if not supplied
+		if( !angular.isArray(ids) )
+			ids = selectedFacetIds($scope.search.facets);
+		
+		// Assume valid, until proven otherwise
+		var valid = true;
+		
+		for( var i = 0, n = source.length; i < n; i++ ) {
+			var facet = source[i];
+			
+			// Only bother if a conditional error is provided
+			if( angular.isDefined(facet.error) && angular.isString(facet.error.condition) ) {
+				var condition = checkCondition(facet.error.condition, ids);
+				facet.error.show = condition; // If error is found
+				valid &= !condition; // Globally determine if there are any errors
+			}
+
+			// Recursively check all child facets
+			if( angular.isArray(facet.facets) )
+				valid &= validate(facet.facets, ids);
+		}
+		
+		return valid;
 	};
 	
+	$scope.valid = true;
+	
+	$scope.validate = function() {
+		$scope.valid = validate();
+	};
+	
+	$scope.searchCourses = function() {
+		$scope.validate();
+	};
+	
+	$scope.checkFacets = function() {
+		checkFacets();
+	};
+	
+	// Check facets, based on supplied defaults
 	$scope.checkFacets();
 	
-	$scope.searchExamples = [
-		{ label: 'Find english courses', examples: [ 'english', 'ENG', 'ENG-W' ] },
-		{ label: 'Find a specific english course', examples: [ 'ENG-W 131' ] },
-		{ label: 'Find 200-level english courses', examples: [ 'ENG 2*' ] }
-	];
-	
-	$scope.search = { text: '' };
-	
+	// Because ng-repeat creates a new scope,
+	// we have to access the query property via a function, not inline
 	$scope.applySearchExample = function(example) {
-		$scope.search.text = example;
+		$scope.search.query = example;
+	};
+	
+	// Flattens the source facet array to prepare for <select>'s ng-option
+	$scope.selectize = function(source) {
+		var array = [];
+		for( var i = 0, n = source.length; i < n; i++ ) {
+			var a = source[i];
+			for( var j = 0, m = a.facets.length; j < m; j++ ) {
+				var b = a.facets[j];
+				b.group = a.label;
+				array.push(b);
+			}
+		}
+		return array;	
 	};
 	
 	$http.get('json/facetValues.json').success(function(data) {
