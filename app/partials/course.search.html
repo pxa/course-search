@@ -13,14 +13,14 @@
 			</div>
 			<div ng-switch-default>
 			
-				<div ng-repeat="facetA in category.facets" ng-init="hasExpanded = facetA.expanded != undefined">
+				<div ng-repeat="facetA in category.facets" ng-init="hasOpen = facetA.open != undefined">
 			
 					<div ng-switch="facetA.radio == undefined" ui-if="!facetA.exclude">
 						<label ng-switch-when="true" ng-class="{ active: facetA.value }">
 							<input type="checkbox" ng-model="facetA.value" ng-click="checkFacets()" />
 							{{facetA.label}}
 						</label>
-						<div ng-switch-default class="radio">
+						<div ng-switch-default>
 							<label ng-repeat="radio in facetA.radio" ng-class="{ active: facetA.value == radio.value }">
 								<input type="radio" ng-model="facetA.value" value="{{radio.value}}" name="facet-{{facetA.id}}" ng-click="checkFacets()" />
 								{{radio.label}}
@@ -28,17 +28,17 @@
 						</div>
 					</div>
 					
-					<div ui-if="!hasExpanded || facetA.value == false" class="child">
+					<div ui-if="!hasOpen || facetA.value == facetA.open" class="child">
 						<div ng-repeat="facetB in facetA.facets"
-							ng-init="hasCheck = facetB.value != undefined;
+							ng-init="hasValue = facetB.value != undefined;
 									hasLabel = facetB.label != undefined && facetB.label.length > 0;
 									hasSmallLabel = facetB.small != undefined">
-							<label ui-if="hasCheck && hasLabel" ng-class="{ active: facetB.value }">
+							<label ui-if="hasValue && hasLabel" ng-class="{ active: facetB.value }">
 								<input type="checkbox" ng-model="facetB.value" ng-click="checkFacets()" />
 								{{facetB.label}}
 							</label>
-							<h2 ui-if="!hasCheck && hasLabel">{{facetB.label}} <small ui-if="hasSmallLabel">{{facetB.small}}</small></h2>
-							<hr ui-if="!hasCheck && !hasLabel && !$first" />
+							<h2 ui-if="!hasValue && hasLabel">{{facetB.label}} <small ui-if="hasSmallLabel">{{facetB.small}}</small></h2>
+							<hr ui-if="!hasValue && !hasLabel && !$first" />
 							<div ng-repeat="facetC in facetB.facets">
 								<label ui-if="!facetC.exclude" ng-class="{ active: facetC.value }">
 									<input type="checkbox" ng-model="facetC.value" ng-click="checkFacets()" />

@@ -120,7 +120,7 @@ html {
 		color: $color-5;
 		font-size: em($m);
 		left: 0;
-		margin-top: 1rem;
+		margin-top: 0;
 		position: absolute;
 		text-align: right;
 	}
@@ -146,13 +146,14 @@ html {
 		@include text-shadow;
 		background-color: $light;
 		color: $dark;
+		margin: 1em 0;
 		padding: 0.5em 1em;
-		margin: 1em 0 0;
 	}
 	
 	> div:not(.searchBox) > div {
 		border-bottom: 1px solid $color-2;
-		padding: 1em 0;
+		padding-bottom: 1em;
+		margin-bottom: 1em;
 	}
 	
 	label {
@@ -199,16 +200,6 @@ html {
 	
 	input[type="checkbox"], input[type="radio"] {
 		margin-right: 0.5em;
-	}
-	
-	.radio {
-		//@extend %grid;
-		//margin-bottom: 1em;
-		
-		label {
-			//@extend %grid-item;
-			padding: 0 0.5em;
-		}
 	}
 	
 	hr {

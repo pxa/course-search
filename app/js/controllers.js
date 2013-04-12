@@ -40,9 +40,6 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		'IU Southeast'
 	]);
 	
-	//for( var i = 2, n = campuses.length; i < n; i++ )
-	//	campuses[i].exclude = [11];
-	
 	var degrees = labelize([
 		'Undergraduate',
 		'Graduate', // id: 10
@@ -50,7 +47,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	]);
 	
 	degrees[0].value = true;
-	degrees[2].includeWhen = "0||1"; // BL or IUPUI
+	degrees[2].condition = "0||1"; // BL or IUPUI
 	
 	var scheduledTerms = labelize([
 		'Spring 2013',
@@ -63,7 +60,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	// "(0&10)|(1&10)"
 	// Grad & (BL or IUPUI)
 	// "10&(0|1)"
-	scheduledTerms[3].includeWhen = "10&&(0||1)";
+	scheduledTerms[3].condition = "10&&(0||1)";
 	
 	var projectedTerms = labelize([
 		'Fall',
@@ -94,8 +91,8 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 			error: { message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" },
 			facets: [
 				{ id: (++k),
-				  value: 1,
-				  expanded: 0, // Intention to conditionally show child facets
+				  value: true,
+				  open: false, // Show child facets when the facet value equals the open value
 				  radio: [
 					{ label: 'Any term', value: 1 },
 					{ label: 'Specific term', value: 0 } ],
@@ -176,7 +173,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		return $scope.$eval(conditional);
 	};
 	
-	var checkFacets = function(source, ids) {
+	var checkFacets = function(source, ids, value) {
 	
 		// Determine the default facet source, if not supplied
 		if( !angular.isArray(source) )
@@ -189,18 +186,27 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var facet = source[i];
 			
-			if( angular.isString(facet.includeWhen) ) {
-				if( checkCondition(facet.includeWhen, ids) )
+			// Conditionally determine to show a facet
+			if( angular.isString(facet.condition) ) {
+				if( checkCondition(facet.condition, ids) )
 					delete facet.exclude;
 				else {
 					facet.exclude = true;
-					facet.value = 0; // Reset value when excluded
+					facet.value = false; // Reset value when excluded
 				}		
 			}
+			
+			// Override value, if one is provided
+			if( angular.isDefined(facet.value) && angular.isDefined(value) )
+				facet.value = value;
+			
+			// Cascade values only down, not across sibling facets.
+			// Clear child facet values once they hide.
+			var childValues = angular.isDefined(value) ? value : ( angular.isDefined(facet.open) && facet.value != facet.open ? false : undefined );
 
 			// Recursively check all child facets
 			if( angular.isArray(facet.facets) )
-				checkFacets(facet.facets, ids);
+				checkFacets(facet.facets, ids, childValues);
 		}
 	};
 	
