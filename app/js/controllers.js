@@ -83,12 +83,12 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		},
 		{
 			label: 'Degree Level',
-			error: { message: 'Select a degree level.', condition: "!(9||10||11)" },
+			alerts: [ { type: 'error', message: 'Select a degree level.', condition: "!(9||10||11)" } ],
 			facets: degrees
 		},
 		{
 			label: 'Offered',
-			error: { message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" },
+			alerts: [ { type: 'error', message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" } ],
 			facets: [
 				{ id: (++k),
 				  value: true,
@@ -226,13 +226,28 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var facet = source[i];
 			
-			// Only bother if a conditional error is provided
+			// Only bother if a conditional is provided
+			
+			if( angular.isArray(facet.alerts) ) {
+				
+				for( var j = 0, m = facet.alerts.length; j < m; j++ ) {
+					var alert = facet.alerts[j];
+					
+					if( angular.isString(alert.condition) ) {
+						var condition = checkCondition(alert.condition, ids);
+						alert.show = condition; // If error is found
+						valid &= !condition; // Globally determine if there are any errors
+					}
+				}
+			}
+			
+			/*
 			if( angular.isDefined(facet.error) && angular.isString(facet.error.condition) ) {
 				var condition = checkCondition(facet.error.condition, ids);
 				facet.error.show = condition; // If error is found
 				valid &= !condition; // Globally determine if there are any errors
 			}
-
+*/
 			// Recursively check all child facets
 			if( angular.isArray(facet.facets) )
 				valid &= _validate(facet.facets, ids);

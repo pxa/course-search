@@ -1,10 +1,11 @@
 <div ng-switch="0" class="search">
 
 	<nav ng-switch-when="0" class="initial-search">
+
 		<div ng-repeat="category in search.facets" ng-switch="category.selected != undefined">
 			<h1 ui-if="category.label != undefined">{{category.label}}</h1>
 			
-			<p ui-if="category.error.show" class="error">{{category.error.message}}</p>
+			<p ng-repeat="alert in category.alerts | filter:{ show: true }" ng-class="{ error: alert.type == 'error' }">{{alert.message}}</p>
 			
 			<div ng-switch-when="true">
 			
