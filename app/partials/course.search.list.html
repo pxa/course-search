@@ -1,0 +1,55 @@
+<nav class="search-results">
+	
+	<div class="criteria">
+	
+		<div ng-repeat="criteria in search.criteria">
+			<h3 ui-if="criteria.label.length > 0">{{criteria.label}}</h3>
+			<p ng-repeat="facet in criteria.facets">{{facet.label}}</p>
+		</div>
+		
+		<div>
+			<label for="searchInput">Search</label>
+			<input id="searchInput" ng-model="query" placeholder="Search" />
+		</div>
+	
+		<a href="#/search">Change search criteria</a>
+	
+	</div>
+	
+	<div class="filters">
+		<div ng-repeat="facetGroup in search.facets">
+			<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
+			<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">
+				<input type="checkbox" ng-model="facet.value" />
+				{{facet.label}}
+				<small>{{facet.count}}</small>
+			</label>
+		</div>
+	</div>
+	
+</nav>
+
+<div ng-switch="course.count">
+
+	<div ng-switch-when="0" class="empty">
+		<h1>No results</h1>
+		<p>Try widening your search or <a href="#/search">start over</a>.</p>
+	</div>
+
+	<div ng-switch-default class="results">
+	
+		<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{search.count}}
+			<span ng-pluralize count="courses.count" when="{ 'one': 'result', 'other': 'results' }"></span>
+		</p>
+		
+		<ol>
+			<li ng-repeat="course in search.results">
+				<div ng-include="'partials/course.item.html'"></div>
+			</li>
+		</ol>
+	
+		<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
+	
+	</div>
+	
+</div>

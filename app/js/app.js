@@ -13,10 +13,29 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				//controller: CourseSearchCtrl
 			})
 			.state('course.search', {
-				url: '/search',
-				//abstact: true,
+				abstact: true,
 				templateUrl: 'partials/course.search.html'
 			})
+			.state('course.search.query', {
+				url: '/search',
+				templateUrl: 'partials/course.search.query.html'
+			})
+			.state('course.search.list', {
+				url: '/search/{query}',
+				templateUrl: 'partials/course.search.list.html'
+			})
+			.state('course.bookmarks', {
+				url: '/bookmarks',
+				templateUrl: 'partials/course.bookmarks.html',
+				controller: BookmarksCtrl
+			})
+			/*
+			.state('course.search.list', {
+				url: '/search/list',
+				//abstact: true,
+				templateUrl: 'partials/course.list.html'
+			})
+			*/
 			/*
 			.state('course.search.list', {
 				url: '/search',
@@ -30,11 +49,6 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 			.state('course.plan', {
 				url: '/plan',
 				templateUrl: 'partials/course.plan.html'
-			})
-			.state('course.bookmarks', {
-				url: '/bookmarks',
-				templateUrl: 'partials/course.bookmarks.html',
-				controller: BookmarksCtrl
 			})
 			.state('course.detail', {
 				url: '/courses/{courseId}',
@@ -56,7 +70,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 		//$rootScope.dueDate = '2013-04-11';
 		//$rootScope.dueDateString = $filter('date')($rootScope.dueDate, 'MMM d');
 
-		$state.transitionTo('course.search');
+		//$state.transitionTo('course.search');
 	}]);
 	
 /*

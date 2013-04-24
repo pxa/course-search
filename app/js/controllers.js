@@ -40,6 +40,8 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		'IU Southeast'
 	]);
 	
+	campuses[0].value = true;
+	
 	var degrees = labelize([
 		'Undergraduate',
 		'Graduate', // id: 10
@@ -72,10 +74,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	// `facets` and `groups` must be separated,
 	// instead of smartly deriving object types.
 	// Not sufficient flexibility, unfortunately.
-	var searchFacets = [
+	var searchCriteria = [
 		{
 			label: 'Campus',
-			selected: 0, // facet id
+			select: true, // Only one facet may be selected
 			facets: [
 				{ label: 'Campuses', facets: campuses },
 				{ label: ' ', facets: labelize(['Online']) }
@@ -119,11 +121,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		query: '',
 		placeholder: 'title, keyword, department, subject, or number',
 		examples: searchExamples,
-		facets: searchFacets
+		criteria: searchCriteria
 		
 	};
 	
-	var selectedFacetIds = function(source, arr) {
+	var selectedFacets = function(source, arr) {
 	
 		// Generate an array, if one is not provided
 		if( !angular.isArray(arr) )
@@ -132,21 +134,27 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		// Loop through facets
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var facet = source[i];
-			
-			// Add the <select> id, if available
-			if( angular.isDefined(facet.selected) )
-				arr.push(facet.selected);
 				
 			// Or add this facet's id if checked
-			else if( angular.isDefined(facet.id) && facet.value == true )
-				arr.push(facet.id);
+			if( angular.isDefined(facet.id) && facet.value == true )
+				arr.push(facet);
 				
 			// Recursively find child facet ids
 			if( angular.isArray(facet.facets) )
-				selectedFacetIds(facet.facets, arr);
+				selectedFacets(facet.facets, arr);
 		}
 		
 		return arr;
+	};
+	
+	var ids = function(source) {
+		for( var i = 0, n = source.length, a = []; i < n; i++ )
+			a.push(source[i].id);
+		return a;
+	};
+	
+	var selectedFacetIds = function() {
+		return ids(selectedFacets($scope.search.criteria));
 	};
 	
 	var checkCondition = function(condition, ids) {
@@ -177,11 +185,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
 		// Determine the default facet source, if not supplied
 		if( !angular.isArray(source) )
-			source = $scope.search.facets;
+			source = $scope.search.criteria;
 	
 		// Determine the selected facet ids, if not supplied
 		if( !angular.isArray(ids) )
-			ids = selectedFacetIds($scope.search.facets);
+			ids = selectedFacetIds();
 	
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var facet = source[i];
@@ -214,11 +222,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
 		// Determine the default facet source, if not supplied
 		if( !angular.isArray(source) )
-			source = $scope.search.facets;
+			source = $scope.search.criteria;
 	
 		// Determine the selected facet ids, if not supplied
 		if( !angular.isArray(ids) )
-			ids = selectedFacetIds($scope.search.facets);
+			ids = selectedFacetIds();
 		
 		// Assume valid, until proven otherwise
 		var valid = true;
@@ -276,6 +284,42 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	// Check facets, based on supplied defaults
 	$scope.checkFacets();
 	
+	// Apply a conditional value to facets
+	var setFacetValue = function(source, funct) {
+		// Loop through facets
+		for( var i = 0, n = source.length; i < n; i++ ) {
+			var facet = source[i];
+			// Apply the transform
+			if( angular.isDefined(facet.value) )
+				facet.value = funct(facet);
+			// Recursively work through child facets
+			if( angular.isArray(facet.facets) )
+				setFacetValue(facet.facets, funct);
+		}
+	};
+	
+	$scope.selectOne = function(source) {
+		
+		// Attempt to find and pre-select the appropriate facet, if not set
+		if( angular.isUndefined(source.selected) ) {
+			// Get the first of any selected child facets.
+			var facets = selectedFacets(source.facets);
+			// Check there's at least one returned.
+			if( facets.length )
+				// There will be an id and value for any of these facets.
+				source.selected = facets[0].id;
+		}
+		// Otherwise, change all child facet values to match single selection
+		else {
+			// Function to check all facets against
+			var transformValue = function(facet) {
+				return facet.id == source.selected;
+			};
+			// Apply
+			setFacetValue(source.facets, transformValue);
+		}
+	};
+	
 	// Because ng-repeat creates a new scope,
 	// we have to access the query property via a function, not inline
 	$scope.applySearchExample = function(example) {
@@ -288,7 +332,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var a = source[i];
 			for( var j = 0, m = a.facets.length; j < m; j++ ) {
-				var b = a.facets[j];
+				var b = angular.copy(a.facets[j]);
 				b.group = a.label;
 				array.push(b);
 			}
@@ -296,12 +340,20 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		return array;	
 	};
 	
+	$scope.selectedCriteria = function(source) {
+		var a = [];
+		
+		//for( var i = 0, n = source.length
+		
+		return a;	
+	};
+	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
 		
 		var facetGroups = [
-			{ label: 'Campus', facets: convert(data.oFacetState.facet_campus) },
-			{ label: 'Terms', facets: convert(data.oFacetState.facet_terms, 2) },
+			//{ label: 'Campus', facets: convert(data.oFacetState.facet_campus) },
+			//{ label: 'Terms', facets: convert(data.oFacetState.facet_terms, 2) },
 			{ label: 'Gen Ed', facets: convert(data.oFacetState.facet_gened, 1) },
 			{ label: 'Credits', facets: convert(data.oFacetState.facet_credits, 10) },
 			{ label: 'Class Level', facets: convert(data.oFacetState.facet_level, 4) },
@@ -309,7 +361,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 			{ label: 'Keywords', facets: convert(data.oFacetState.facet_keywords, 8) }
 		];
 		
-		$scope.facetGroups = facetGroups;
+		$scope.search.facets = facetGroups;
 	});
 
 	$http.get('json/search.json').success(function(data) {
@@ -394,9 +446,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 			});
 		}
 	
-		$scope.courses = courses;
+		$scope.search.count = courses.count;
+		$scope.search.results = courses.results;
 		
-		$scope.numberOfPages = Math.ceil($scope.courses.count / $scope.resultsPerPage);
+		$scope.numberOfPages = Math.ceil($scope.search.count / $scope.resultsPerPage);
 		$scope.currentPage = 1;
 		$scope.maxPageSize = 5;
 	});
@@ -470,7 +523,7 @@ function BookmarksCtrl($scope, $routeParams, $http, $dialog) {
 		results: []
 	};
 	
-	angular.forEach($scope.$parent.$parent.courses.results, function(value, key) {
+	angular.forEach($scope.$parent.$parent.search.results, function(value, key) {
 		if( value.bookmarked )
 			bookmarks.results.push(value);
 	});

@@ -333,28 +333,40 @@ html {
 }
 
 .search-results { // nav
-	@include box-shadow(0 0 0 1px $color-2);
-	@include box-sizing(border-box);
 	@include span-columns(3);
-	background-color: white;
-	padding-bottom: 1em;
 	
 	> div {
-		padding: 0 1em;
+		@include box-shadow(0 0 0 1px $color-2);
+		@include box-sizing(border-box);
+		background-color: white;
+		margin-bottom: 1em;
 	}
 	
-	> div:first-child {
+	.criteria {
 		background-color: #fff;
-		border-bottom: 1px solid $color-2;
-		padding: 0.5em 1em 1em;
+		padding: 1em;
 		
-		label {
+		h3, label {
 			display: block;
 			color: $color-4;
 			font-size: em($s);
+			font-weight: bold;
+			margin: 0;
 			text-transform: uppercase;
 		}
-			
+		
+		> div + div {
+		
+			> h3, > label {
+				margin-top: 1em;
+			}
+		}
+		
+		p {
+			margin: 0;
+			padding: 0;
+		}
+		
 		input {
 			@include border-radius;
 			@include box-shadow(inset 0 1px 2px $color-3);
@@ -366,72 +378,77 @@ html {
 		}
 	}
 	
-	& + div {
-		@include span-columns(9 omega);
-	}
-}
-
-.facet {
-	
-	h3 {
-		@include adjust-font-size-to($r, 1);
-		@include border-top-radius;
-		@extend %interactive;
-		margin: 1em 0 0;
-		padding: 0 0.5em;
+	.filters {
+		padding: 1em 1em 0;
 		
-		&::before {
-			content: 'select';
-			float: right;
-			font-size: em($s);
-			font-style: italic;
-			font-weight: normal;
+		> div {
+			padding-bottom: 1em;
 		}
 		
-		& + label {
-			border-top: 1px solid transparent;
-		}
-	}
-	
-	label {
-		border-bottom: 1px solid $color-2;
-		color: $color-6;
-		cursor: pointer;
-		display: block;
-		padding-left: 0.5em;
-		
-		&:hover {
-			background-color: $color-2;
-			color: $color-7;
+		h3 {
+			@include adjust-font-size-to($r, 1);
+			@include border-top-radius;
+			@extend %interactive;
+			margin: 0em 0 0;
+			padding: 0 0.5em;
 			
 			&::before {
-				@include box-shadow(0 -1px $color-3, 0 1px $color-3);
-				background-color: $color-3;
-				color: white;
+				content: 'select';
+				float: right;
+				font-size: em($s);
+				font-style: italic;
+				font-weight: normal;
+			}
+			
+			& + label {
+				border-top: 1px solid transparent;
 			}
 		}
 		
-		&::before {
-			color: $border-color;
-			content: '\2715';
-			float: right;
-			padding: 0 0.5em;
+		label {
+			border-bottom: 1px solid $color-2;
+			color: $color-6;
+			cursor: pointer;
+			display: block;
+			padding-left: 0.5em;
+			
+			&:hover {
+				background-color: $color-2;
+				color: $color-7;
+				
+				&::before {
+					@include box-shadow(0 -1px $color-3, 0 1px $color-3);
+					background-color: $color-3;
+					color: white;
+				}
+			}
+			
+			&::before {
+				color: $border-color;
+				content: '\2715';
+				float: right;
+				padding: 0 0.5em;
+			}
+			
+			&.active {
+				background-color: $color-2;
+			}
 		}
 		
-		&.active {
-			background-color: $color-2;
+		small {
+			color: $color-6;
+			float: right;
+			margin-right: 1em;
+			text-align: right;
+		}
+		
+		input {
+			display: none;
 		}
 	}
 	
-	small {
-		color: $color-6;
-		float: right;
-		margin-right: 1em;
-		text-align: right;
-	}
-	
-	input {
-		display: none;
+	& + div {
+		@include span-columns(9 omega);
 	}
 }
 
