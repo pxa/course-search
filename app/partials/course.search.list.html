@@ -1,22 +1,18 @@
 <nav class="search-results">
 	
-	<div class="criteria">
-	
-		<div ng-repeat="criteria in search.criteria">
-			<h3 ui-if="criteria.label.length > 0">{{criteria.label}}</h3>
-			<p ng-repeat="facet in criteria.facets">{{facet.label}}</p>
-		</div>
-		
-		<div>
-			<label for="searchInput">Search</label>
-			<input id="searchInput" ng-model="query" placeholder="Search" />
-		</div>
-	
+	<div>
+		<h2>Criteria</h2>
+		<p ng-repeat="facet in selectedFacets">{{facet.label}}</p>
 		<a href="#/search">Change search criteria</a>
-	
 	</div>
 	
-	<div class="filters">
+	<div>
+		<h2>Search</h2>
+		<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" />
+	</div>
+	
+	<div>
+		<h2>Filters</h2>
 		<div ng-repeat="facetGroup in search.facets">
 			<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
 			<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">

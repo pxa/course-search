@@ -76,6 +76,8 @@
 			<input type="text" placeholder="{{search.placeholder}}" ng-model="search.query" />
 		</div>
 		
+		<button ng-click="searchCourses()">Go</button>
+		
 		<details>
 			<summary>Examples</summary>
 			<dl ng-repeat="group in search.examples">
@@ -85,8 +87,6 @@
 				</dd>
 			</dl>
 		</details>
-		
-		<button ng-click="searchCourses()">Search</button>
 		
 	</div>
 </nav>

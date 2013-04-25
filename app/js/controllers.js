@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
+function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $location) {
 	
 	// Higher `chance`, fewer random items
 	var convert = function(obj, chance) {
@@ -144,9 +144,12 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 				selectedFacets(facet.facets, arr);
 		}
 		
+		// Save for ease of access
+		$scope.selectedFacets = arr;
+		
 		return arr;
 	};
-	
+
 	var ids = function(source) {
 		for( var i = 0, n = source.length, a = []; i < n; i++ )
 			a.push(source[i].id);
@@ -268,10 +271,12 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 	
 	var validate = function() {
 		valid = _validate();
+		return valid;
 	};
 	
 	$scope.searchCourses = function() {
-		validate();
+		if( validate() && $scope.search.query.length )
+			$location.path('/search/' + $scope.search.query);
 	};
 	
 	$scope.checkFacets = function() {
@@ -339,15 +344,14 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout) {
 		}
 		return array;	
 	};
-	
-	$scope.selectedCriteria = function(source) {
-		var a = [];
-		
-		//for( var i = 0, n = source.length
-		
-		return a;	
-	};
-	
+
+	/*
+	$http.get('https://test.uisapp2.iu.edu/sissrarm-unt/arm-ks/myplan/course/find/json').success(function(data) {
+		console.log(data);
+	}).error(function(data, status, headers, config) {
+		console.log(data, '|', status, '|', headers, '|', config);
+	});
+	*/
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
 		
