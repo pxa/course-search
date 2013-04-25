@@ -38,6 +38,90 @@ html {
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
+body > header {
+	background-color: $color-2;
+	line-height: 3.5em;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+	
+	> div {
+		@include container;
+		@extend %grid;
+		
+		> * {
+			@extend %grid-item;
+		}
+	}
+	
+	.brand { // a
+		background-image: url('data:image/svg+xml,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="50px" height="60px" viewBox="0 0 50 60" enable-background="new 0 0 50 60" xml:space="preserve">
+				<polygon points="10,16 10,19 12,19 12,37 16,41 22,41 22,45 20,45 20,49 30,49 30,45 28,45 28,41 34,41 38,37 38,19 40,19 40,16 
+					30,16 30,19 32,19 32,35 28,35 28,14 30,14 30,11 20,11 20,14 22,14 22,35 18,35 18,19 20,19 20,16 " fill="#{$crimson}" />
+				</svg>');
+		background-position: 0 50%;
+		background-repeat: no-repeat;
+		display: inline-block;
+		//background-color: $color-;
+		color: $color-6;
+		font-size: em($m);
+		font-weight: bold;
+		padding: 0 1em 0 50px;
+		position: relative;
+		text-decoration: none;
+		vertical-align: top;
+		
+		&:hover {
+			background-color: $color-3;
+		}
+	}
+	
+	.notifications { // a
+		@include border-radius(100% 0 100% 100%);
+		@include rotate(45deg);
+		@include text-shadow(0 -1px shade($leather, 40%));
+		background-color: $leather;
+		color: $color-2;
+		line-height: 2;
+		margin: 0 1em;
+		min-width: 2em;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		z-index: 2;
+		vertical-align: baseline;
+		
+		&:hover {
+			background-color: shade($leather, 10%);
+		}
+		
+		span {
+			@include rotate(-45deg);
+			display: block;
+		}
+	}
+	
+	.account { // div
+		line-height: 1;
+		
+		> a {
+			color: $color-7;
+			line-height: 2;
+			text-decoration: none;
+		}
+		
+		p {
+			font-size: em($s);
+			margin: 0;
+			
+			a {
+				color: $color-6;
+			}
+		}
+	}
+}
+
 #courseSearch { // section
 	
 	header {
@@ -47,9 +131,9 @@ html {
 		
 		@include box-shadow(0 4px $color-2, 0 5px $color-3);
 		background-color: #fff;
-		line-height: 3rem;
+		line-height: 3.5em;
 		position: fixed;
-		top: 0;
+		top: 3.5em;
 		width: 100%;
 		z-index: 1;
 		
@@ -101,7 +185,7 @@ html {
 		@include container;
 		background-color: $color-1;
 		padding-bottom: 1em;
-		padding-top: px(3) + 5px;
+		padding-top: px(7) + 5px;
 	}
 }
 

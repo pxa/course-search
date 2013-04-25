@@ -70,7 +70,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 		//$rootScope.dueDate = '2013-04-11';
 		//$rootScope.dueDateString = $filter('date')($rootScope.dueDate, 'MMM d');
 
-		//$state.transitionTo('course.search');
+		$state.transitionTo('course.search.query');
 	}]);
 	
 /*
