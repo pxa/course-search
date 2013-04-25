@@ -8,7 +8,10 @@
 	
 	<div>
 		<h2>Search</h2>
-		<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" />
+		<div class="searchbox">
+			<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" />
+			<button ng-click="searchCourses()">Go</button>
+		</div>
 	</div>
 	
 	<div>
