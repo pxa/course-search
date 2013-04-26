@@ -345,13 +345,12 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		return array;	
 	};
 
-	/*
-	$http.get('https://test.uisapp2.iu.edu/sissrarm-unt/arm-ks/myplan/course/find/json').success(function(data) {
-		console.log(data);
+	$http.get('/sissrarm-cs-kart/myplan/course/s/json').success(function(data) {
+		console.log($scope.search, data);
 	}).error(function(data, status, headers, config) {
 		console.log(data, '|', status, '|', headers, '|', config);
 	});
-	*/
+	
 	$http.get('json/facetValues.json').success(function(data) {
 		$scope.query = data.sQuery;
 		

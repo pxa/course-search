@@ -6,6 +6,12 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 
 	.config(['$stateProvider', '$routeProvider', '$urlRouterProvider', function($stateProvider, $routeProvider, $urlRouterProvider) {
 
+		var dynamicStateController = function(stateName) {
+			return function($rootScope, $state) {
+				$rootScope.state[stateName] = $state.current;
+			};
+		};
+
 		$stateProvider
 			.state('course', {
 				abstract: true,
@@ -14,25 +20,18 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 			})
 			.state('course.search', {
 				abstract: true,
-				url: '/search',
-				templateUrl: 'partials/course.search.html',
-				controller: function($state, $rootScope) {
-					$state.transitionTo($rootScope.lastActiveCourseSearchView || 'course.search.query');
-				}
+				//url: '/search',
+				templateUrl: 'partials/course.search.html'
 			})
 			.state('course.search.query', {
-				url: '',
+				url: '/search/query',
 				templateUrl: 'partials/course.search.query.html',
-				controller: function($state, $rootScope) {
-					$rootScope.lastActiveCourseSearchView = $state.current.name;
-				}
+				controller: dynamicStateController('course.search')
 			})
 			.state('course.search.list', {
-				url: '',
+				url: '/search/results',
 				templateUrl: 'partials/course.search.list.html',
-				controller: function($state, $rootScope) {
-					$rootScope.lastActiveCourseSearchView = $state.current.name;
-				}
+				controller: dynamicStateController('course.search')
 			})
 			
 			/*
@@ -95,6 +94,11 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 		$rootScope.title = function(t) {
 			return (t ? t + ' - ' : '') + 'Billing';
 		}
+		
+		// For primarily assigning dynamic urls to parent states
+		$rootScope.state = [];
+		
+		$state.transitionTo('course.search.query');
 		
 		//$rootScope.dueDate = '2013-04-11';
 		//$rootScope.dueDateString = $filter('date')($rootScope.dueDate, 'MMM d');
