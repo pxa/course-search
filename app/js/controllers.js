@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $location) {
+function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state) {
 	
 	// Higher `chance`, fewer random items
 	var convert = function(obj, chance) {
@@ -276,7 +276,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $locat
 	
 	$scope.searchCourses = function() {
 		if( validate() && $scope.search.query.length )
-			$location.path('/search/' + $scope.search.query);
+			$state.transitionTo('course.search.list');
 	};
 	
 	$scope.checkFacets = function() {
