@@ -3,8 +3,8 @@
 		<h1>Select {{facetGroup.label}}</h1>
 	</header>
 	<div>
-		<label ng-repeat="facet in facetGroup.facets" ng-class="{ active:facet.checked }">
-			<input type="checkbox" ng-model="facet.checked" />
+		<label ng-repeat="facet in facetGroup.facets" ng-class="{ active: facet.value }">
+			<input type="checkbox" ng-model="facet.value" />
 			{{facet.label}}
 		</label>
 	</div>

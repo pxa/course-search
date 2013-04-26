@@ -49,6 +49,7 @@ body > header {
 	> div {
 		@include container;
 		@extend %grid;
+		position: relative;
 		
 		> * {
 			@extend %grid-item;
@@ -56,15 +57,19 @@ body > header {
 	}
 	
 	.brand { // a
+		@include text-shadow;
 		background-image: url('data:image/svg+xml,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="50px" height="60px" viewBox="0 0 50 60" enable-background="new 0 0 50 60" xml:space="preserve">
-				<polygon points="10,16 10,19 12,19 12,37 16,41 22,41 22,45 20,45 20,49 30,49 30,45 28,45 28,41 34,41 38,37 38,19 40,19 40,16 
-					30,16 30,19 32,19 32,35 28,35 28,14 30,14 30,11 20,11 20,14 22,14 22,35 18,35 18,19 20,19 20,16 " fill="#{$crimson}" />
+	<polygon style="fill:#{$crimson};" points="15,42 18,42 18,50 32,50 32,42 35,42 40,37 40,20 42,20 42,14 32,14 32,10 32,10 18,10 
+		18,14 8,14 8,20 10,20 10,37"/>
+	<polyline style="fill:#{white};" points="30,12 30,14 28,14 28,44 30,44 30,48 20,48 20,44 22,44 22,14 20,14 20,12 30,12"/>
+	<polyline style="fill:#{white};" points="40,16 40,18 38,18 38,36 34,40 29,40 29,34 32,34 32,18 30,18 30,16 40,16"/>
+	<polyline style="fill:#{white};" points="20,16 20,18 18,18 18,34 21,34 21,40 16,40 12,36 12,18 10,18 10,16 20,16"/>
 				</svg>');
 		background-position: 0 50%;
 		background-repeat: no-repeat;
 		display: inline-block;
 		//background-color: $color-;
-		color: $color-6;
+		color: $crimson;
 		font-size: em($m);
 		font-weight: bold;
 		padding: 0 1em 0 50px;
@@ -80,9 +85,9 @@ body > header {
 	.notifications { // a
 		@include border-radius(100% 0 100% 100%);
 		@include rotate(45deg);
-		@include text-shadow(0 -1px shade($leather, 40%));
-		background-color: $leather;
-		color: $color-2;
+		@include text-shadow(0 -1px shade($violet, 40%));
+		background-color: $violet;
+		color: #fff;
 		line-height: 2;
 		margin: 0 1em;
 		min-width: 2em;
@@ -93,7 +98,7 @@ body > header {
 		vertical-align: baseline;
 		
 		&:hover {
-			background-color: shade($leather, 10%);
+			background-color: shade($violet, 10%);
 		}
 		
 		span {
@@ -102,8 +107,17 @@ body > header {
 		}
 	}
 	
+	.avatar {
+		height: 40px;
+		margin-top: -20px;
+		position: absolute;
+		top: 50%;
+		width: 40px;
+	}
+	
 	.account { // div
 		line-height: 1;
+		margin-left: px(1) + 40px;
 		
 		> a {
 			color: $color-7;
@@ -300,13 +314,13 @@ body > header {
 		cursor: pointer;
 		display: inline-block;
 		font-size: em($s);
-		line-height: 2rem;
+		line-height: 3rem;
 		padding: 0 0.5em;
 		position: absolute;
 		text-align: center;
 		text-decoration: none;
-		//top: 0;
-		right: 0;
+		top: 0rem;
+		right: 0rem;
 		width: 6rem;
 	}
 	
@@ -394,7 +408,7 @@ body > header {
 		padding: 1px 0.5em;
 		position: absolute;
 		top: 0;
-		right: 0;
+		right: 7rem;
 		width: 4rem;
 	}
 	
@@ -403,7 +417,7 @@ body > header {
 		position: relative;
 		
 		> div {
-			padding: 0 4em 0em 0;
+			padding: 0 11em 0em 0;
 			position: relative;
 		}
 	}
@@ -558,29 +572,21 @@ body > header {
 		@extend .facet;
 		
 		label {
-			
-			&:hover {
-				@include box-shadow(0 -1px $color-3);
-				background-color: $color-3;
-				border-color: $color-3;
-			}
-			
-			&::before {
-				display: none;
-			}
-			
-			&.active:hover {
-				//background-color: $color-3;
-			}
+			cursor: pointer;
+			display: block;
 			
 			&.active {
-				//background-color: blue;
+				background-color: $cream;
+			}
+			
+			&:hover {
+				background-color: $color-2;
 			}
 		}
 		
 		input {
 			display: inline-block;
-			margin-right: 0.5em;
+			margin: 0 0.5em;
 		}
 	}
 }
