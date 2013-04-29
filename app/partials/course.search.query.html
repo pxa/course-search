@@ -73,7 +73,7 @@
 	<div class="searchBox">
 
 		<div>
-			<input type="text" placeholder="{{search.placeholder}}" ng-model="search.query" />
+			<input type="text" placeholder="{{search.placeholder}}" ng-model="search.query" ui-keydown="{ 'enter': 'searchCourses($event)' }" />
 		</div>
 		
 		<button ng-click="searchCourses()">Go</button>

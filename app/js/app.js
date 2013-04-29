@@ -8,6 +8,9 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 
 		var dynamicStateController = function(stateName) {
 			return function($rootScope, $state) {
+				// Inject the literal path, because $state doesn't naturally provide it,
+				// and because the $state.transitionTo() approach would hide link URLs.
+				$state.current.path = $rootScope.$location.path();
 				$rootScope.state[stateName] = $state.current;
 			};
 		};
@@ -24,12 +27,12 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				templateUrl: 'partials/course.search.html'
 			})
 			.state('course.search.query', {
-				url: '/search/query',
+				url: '/search',
 				templateUrl: 'partials/course.search.query.html',
 				controller: dynamicStateController('course.search')
 			})
 			.state('course.search.list', {
-				url: '/search/results',
+				url: '/search/{query}',
 				templateUrl: 'partials/course.search.list.html',
 				controller: dynamicStateController('course.search')
 			})
@@ -84,9 +87,10 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 			});
 	}])
 	
-	.run([ '$rootScope', '$state', '$stateParams', '$filter', function($rootScope, $state, $stateParams, $filter) {
+	.run([ '$rootScope', '$state', '$stateParams', '$filter', '$location', function($rootScope, $state, $stateParams, $filter, $location) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
+		$rootScope.$location = $location;
 		
 		$rootScope.resultsPerPage = 20;
 		$rootScope.bookmarkAdded = false;

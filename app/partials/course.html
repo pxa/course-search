@@ -2,7 +2,7 @@
 	<div>
 		<h1>Courses</h1>
 		<nav>
-			<a ng-href="#{{state['course.search'].url}}" ng-class="{ active: $state.includes('course.search') }">Search</a>
+			<a ng-href="#{{state['course.search'].path}}" ng-class="{ active: $state.includes('course.search') }">Search</a>
 			<a href="#/bookmarks" ng-class="{ active: $state.includes('course.bookmarks') }">
 				<span ng-class="{ bookmarkAdded: bookmarkAdded, bookmarkRemoved: bookmarkRemoved }">Bookmarks</span>
 			</a>

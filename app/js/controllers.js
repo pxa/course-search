@@ -274,9 +274,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		return valid;
 	};
 	
-	$scope.searchCourses = function() {
+	$scope.searchCourses = function($event) {
+		if( $event )
+			$event.preventDefault();
 		if( validate() && $scope.search.query.length )
-			$state.transitionTo('course.search.list');
+			$state.transitionTo('course.search.list', { query: $scope.search.query });
 	};
 	
 	$scope.checkFacets = function() {
