@@ -1,4 +1,11 @@
-<h1>{{$state.params.courseId}}</h1>
+<p><span ng-show="numberOfPages > 1">Course {{currentPage}} of </span>{{search.count}}
+	<span ng-pluralize count="search.count" when="{ 'one': 'result', 'other': 'results' }"></span>
+	<nav class="pagination">
+		<a ng-class="{ disabled: course.prev == null }" ng-href="{{course.prev.url}}">Previous</a>
+		<a ng-class="{ disabled: course.next == null }" ng-href="{{course.next.url}}">Next</a>
+	</nav>
+</p>
+<div ng-include="'partials/course.item.html'"></div>
 
 <!--
 <div id="edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail_popup" class="myplan-quick-detail"> 

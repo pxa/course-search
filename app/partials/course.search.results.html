@@ -28,27 +28,4 @@
 	
 </nav>
 
-<div ng-switch="course.count">
-
-	<div ng-switch-when="0" class="empty">
-		<h1>No results</h1>
-		<p>Try widening your search or <a href="#/search">start over</a>.</p>
-	</div>
-
-	<div ng-switch-default class="results">
-	
-		<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{search.count}}
-			<span ng-pluralize count="courses.count" when="{ 'one': 'result', 'other': 'results' }"></span>
-		</p>
-		
-		<ol>
-			<li ng-repeat="course in search.results">
-				<div ng-include="'partials/course.item.html'"></div>
-			</li>
-		</ol>
-	
-		<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
-	
-	</div>
-	
-</div>
+<div ui-view></div>

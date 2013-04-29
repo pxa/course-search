@@ -23,7 +23,6 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 			})
 			.state('course.search', {
 				abstract: true,
-				//url: '/search',
 				templateUrl: 'partials/course.search.html'
 			})
 			.state('course.search.query', {
@@ -31,12 +30,51 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				templateUrl: 'partials/course.search.query.html',
 				controller: dynamicStateController('course.search')
 			})
-			.state('course.search.list', {
+			.state('course.search.results', {
+				abstract: true,
+				templateUrl: 'partials/course.search.results.html',
+				controller: function($scope, $state) {
+					// Override the query based on the parameter, once the controller initiates
+					$scope.search.query = $state.params.query;
+				}
+			})
+			.state('course.search.results.list', {
 				url: '/search/{query}',
-				templateUrl: 'partials/course.search.list.html',
+				templateUrl: 'partials/course.search.results.list.html',
 				controller: dynamicStateController('course.search')
 			})
-			
+			.state('course.search.results.detail', {
+				url: '/search/{query}/{courseId}',
+				templateUrl: 'partials/course.search.results.detail.html',
+				controller: function($scope, $state, $document, $location, $rootScope) {
+					// Find the course for the given parameter
+					$scope.course = $scope.results[$state.params.courseId];
+					
+					// Save the state
+					dynamicStateController('course.search')($rootScope, $state);
+					
+					/*
+					$document.bind('keydown', function(e) {
+					
+						var c = null;
+						switch(e.which) {
+							case 39: // right
+								//$location.path($scope.course.next.url);
+								//console.log('work');
+								//$location.url('/search/math/MATH 101');
+								
+								break;
+							case 37: // left
+								break;
+						}
+						
+						$state.params.courseId = $scope.course.next.subject;
+						$state.transitionTo('course.search.results.detail', $state.params);
+						console.log(e.which, $state.params, $scope.course.next.url);
+					});
+					*/
+				}
+			})
 			/*
 			.state('course.search', {
 				url: '/search',

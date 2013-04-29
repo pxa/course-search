@@ -14,7 +14,7 @@
 		<ol>
 			<li ng-repeat="course in bookmarks.results | orderBy:'-_bookmark'" ng-switch="course.bookmarked">
 			
-				<div ng-switch-when="false" class="undo">
+				<div ng-switch-when="false" class="course undo">
 					<a ng-click="bookmarks.restore(course)" title="Restore bookmark" href>
 						<h2>
 								<span>{{course.campus}}</span>

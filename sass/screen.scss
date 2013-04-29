@@ -623,102 +623,64 @@ body > header {
 	}
 }
 
-.results {
+.course {
 	
-	> p {
-		border-bottom: 1px solid $color-2;
-		color: $color-5;
+	> a h2:hover {
+		border-color: $color-3;
 	}
 	
-	ol {
-		list-style-type: none;
-		margin: 0 1em 0 0;
-		padding: 0;
-	}
-	
-	li {
-		
-		+ li {
-			margin-top: 1em;
-		}
+	> div {
+		@include border-bottom-radius;
+		border: 1px solid $color-2;
+		border-top-width: 0;
+		padding: 1em;
 		
 		> div {
-		
-			> div {
-				@include border-bottom-radius;
-				border: 1px solid $color-2;
-				border-top-width: 0;
-				padding: 1em;
+			float: right;
+			
+			label {
+				@extend %bookmark;
+			}
+			
+			a {
+				$color: $violet;
+				$dark: shade($color, 30%);
+				$light: tint($color, 60%);
 				
-				> div {
-					float: right;
+				@include border-radius;
+				@include inline-block;
+				border: 1px solid $light;
+				color: $dark;
+				font-size: em($s);
+				padding: 0 0.5em;
+				text-decoration: none;
+				vertical-align: top;
 					
-					label {
-						@extend %bookmark;
-					}
+				&:hover {
+					background-color: $light;
+					cursor: pointer;
 					
-					a {
-						$color: $violet;
-						$dark: shade($color, 30%);
-						$light: tint($color, 60%);
-						
-						@include border-radius;
-						@include inline-block;
-						border: 1px solid $light;
-						color: $dark;
-						font-size: em($s);
-						padding: 0 0.5em;
-						text-decoration: none;
-						vertical-align: top;
-							
-						&:hover {
-							background-color: $light;
-							cursor: pointer;
-							
-							&::before {
-								@include text-shadow(none);
-								color: #FFF;
-							}
-						}
-						
-						&::before {
-							@include text-shadow;
-							content: '+';
-							color: $light;
-							font-weight: bold;
-							margin-right: 0.25em;
-							position: relative;
-							top: -1px; // Vertical align does seem quite right
-							vertical-align: top;
-						}
+					&::before {
+						@include text-shadow(none);
+						color: #FFF;
 					}
-					
-					> * + * {
-						margin-left: 0.5em;
-					}
+				}
+				
+				&::before {
+					@include text-shadow;
+					content: '+';
+					color: $light;
+					font-weight: bold;
+					margin-right: 0.25em;
+					position: relative;
+					top: -1px; // Vertical align does seem quite right
+					vertical-align: top;
 				}
 			}
 			
-			> a h2:hover {
-				//@include box-shadow(0 0 0 1px $color-3);
-				//background-color: $cream;
-				//border-color: $violet;
-				border-color: $color-3;
-				
-				span:first-child {
-					//background-color: $color-3;
-				}
-				
-				> * {
-					//color: $violet;
-				}
+			> * + * {
+				margin-left: 0.5em;
 			}
-		}
-		
-		p {
-			font-size: em($s);
-			line-height: 1.5;
-			margin: 1rem 0 0 0;
 		}
 	}
 	
@@ -816,28 +778,52 @@ body > header {
 			width: 100%;
 		}
 	}
+
+	p {
+		font-size: em($s);
+		line-height: 1.5;
+		margin: 1rem 0 0 0;
+	}
+}
+
+.undo {
 	
-	.undo {
+	a {
 		
-		a {
-			
-			&:hover h2 {
-				background-color: #fff;
-			}
+		&:hover h2 {
+			background-color: #fff;
+		}
+	}
+	
+	h2 {
+		@include border-radius;
+		background-color: transparent;
+		
+		> *, > *:first-child {
+			color: $color-3;
 		}
 		
-		h2 {
-			@include border-radius;
-			background-color: transparent;
-			
-			> *, > *:first-child {
-				color: $color-3;
-			}
-			
-			small {
-				color: $violet;
-			}
+		small {
+			color: $violet;
 		}
+	}
+}
+
+.results {
+	
+	> p {
+		border-bottom: 1px solid $color-2;
+		color: $color-5;
+	}
+	
+	ol {
+		list-style-type: none;
+		margin: 0 1em 0 0;
+		padding: 0;
+	}
+	
+	li + li {
+		margin-top: 1em;
 	}
 }
 

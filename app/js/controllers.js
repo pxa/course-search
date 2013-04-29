@@ -4,6 +4,10 @@
 
 function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state) {
 	
+	$scope.keyup = function($event) {
+		console.log($event);	
+	};
+	
 	// Higher `chance`, fewer random items
 	var convert = function(obj, chance) {
 		chance = chance ? chance : 0;
@@ -278,7 +282,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		if( $event )
 			$event.preventDefault();
 		if( validate() && $scope.search.query.length )
-			$state.transitionTo('course.search.list', { query: $scope.search.query });
+			$state.transitionTo('course.search.results.list', { query: $scope.search.query });
 	};
 	
 	$scope.checkFacets = function() {
@@ -347,6 +351,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		return array;	
 	};
 
+	$scope.results = [];
+	$scope.currentPage = 1;
+	$scope.maxPageSize = 5;
+	
 	$http.get('/sissrarm-cs-kart/myplan/course/s/json').success(function(data) {
 		console.log($scope.search, data);
 	}).error(function(data, status, headers, config) {
@@ -395,8 +403,9 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			var bookmark = getRandomInt(0,1) == 0 ? null : Date.now();
 			//bookmark = null;
 			
-			courses.results.push({
+			var course = {
 				id: i,
+				index: i + ($scope.resultsPerPage * ($scope.currentPage - 1)),
 				campus: r[0],
 				subject: r[1],
 				title: title,
@@ -447,16 +456,29 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 						offering: getRandomInt(0,2)
 					},
 				],
-				description: 'An exploration of the relationships among musics of West and Central African people and their descendants in the United States, Latin America, and the Caribbean. Emphasis placed on the conceptual and aesthetic continuities between musical expression in Old and New World contexts—a uniformity which exists because of shared African cultural ancestry. Credit given for only one of AAAD A112, FOLK E112, or FOLK F112.'
-			});
+				description: 'An exploration of the relationships among musics of West and Central African people and their descendants in the United States, Latin America, and the Caribbean. Emphasis placed on the conceptual and aesthetic continuities between musical expression in Old and New World contexts—a uniformity which exists because of shared African cultural ancestry. Credit given for only one of AAAD A112, FOLK E112, or FOLK F112.',
+				get next() {
+					return $scope.results[this.index + 1] || null;
+				},
+				get prev() { // Can't use `previous()`, for whatever reason.
+					return this.index == 0 ? null : ($scope.results[this.index - 1] || null);
+				},
+				get url() {
+					return ['#/search', $scope.search.query, this.subject].join('/');
+				}
+			};
+			
+			// Load the course to the view
+			courses.results.push(course);
+			
+			// Load the course into cache, indexed by index and unique id
+			$scope.results[course.index.toString()] = course;
+			$scope.results[course.subject] = course;
 		}
-	
+	//console.log($scope.results['MATH 00200']);
 		$scope.search.count = courses.count;
 		$scope.search.results = courses.results;
-		
 		$scope.numberOfPages = Math.ceil($scope.search.count / $scope.resultsPerPage);
-		$scope.currentPage = 1;
-		$scope.maxPageSize = 5;
 	});
 	
 	$scope.openFacetGroupDialog = function(facetGroup) {
