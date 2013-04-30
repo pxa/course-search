@@ -9,14 +9,14 @@
 	<div>
 		<h2>Search</h2>
 		<div class="searchbox">
-			<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" />
+			<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" ui-keydown="{ 'enter': 'searchCourses($event)' }" />
 			<button ng-click="searchCourses()">Go</button>
 		</div>
 	</div>
 	
 	<div>
 		<h2>Filters</h2>
-		<div ng-repeat="facetGroup in search.facets">
+		<div ng-repeat="facetGroup in search.filters">
 			<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
 			<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">
 				<input type="checkbox" ng-model="facet.value" />

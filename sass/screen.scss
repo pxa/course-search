@@ -811,11 +811,6 @@ body > header {
 
 .results {
 	
-	> p {
-		border-bottom: 1px solid $color-2;
-		color: $color-5;
-	}
-	
 	ol {
 		list-style-type: none;
 		margin: 0 1em 0 0;
@@ -824,6 +819,42 @@ body > header {
 	
 	li + li {
 		margin-top: 1em;
+	}
+}
+
+.pager { // nav
+	border-bottom: 1px solid $color-2;
+	color: $color-5;
+	margin: 1em 0;
+	position: relative;
+	
+	p {
+		margin: 0;
+		padding: 0;
+	}
+	
+	div {
+		@extend %grid;
+		position: absolute;
+		right: 0;
+		top: 0;
+		
+		> * {
+			@extend %grid-item;
+		}
+	}
+	
+	a {
+		color: $violet;
+		
+		& + a {
+			margin-left: 1em;
+		}
+	}
+	
+	.disabled {
+		color: $color-5;
+		cursor: default;
 	}
 }
 

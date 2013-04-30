@@ -648,16 +648,17 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap-prettify.min.min.js",
       "fileType" : 64
     },
-    "\/config\/testacular.conf.js" : {
-      "ignoreWasSetByUser" : 1,
+    "\/sass\/lib\/susy\/_grid.scss" : {
+      "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/config\/testacular.conf.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/config\/testacular.conf.min.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_grid.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_grid.css",
+      "fileType" : 4,
+      "debugStyle" : 0
     },
     "\/app\/partials\/course.bookmarks.html" : {
       "ignoreWasSetByUser" : 0,
@@ -668,14 +669,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/app\/template\/dialog\/message.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+    "\/config\/testacular.conf.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/template\/dialog\/message.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/config\/testacular.conf.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/config\/testacular.conf.min.js",
+      "fileType" : 64
     },
     "\/app\/template\/typeahead\/typeahead.html" : {
       "ignoreWasSetByUser" : 0,
@@ -706,6 +709,15 @@
       "outputAbbreviatedPath" : "\/app\/js\/services.min.js",
       "fileType" : 64
     },
+    "\/app\/template\/dialog\/message.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/template\/dialog\/message.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/scripts\/web-server.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
@@ -726,18 +738,6 @@
       "outputStyle" : 2,
       "shouldRunBless" : 0,
       "outputAbbreviatedPath" : "\/app\/css\/_units.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
-    "\/sass\/lib\/susy\/_grid.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_grid.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_grid.css",
       "fileType" : 4,
       "debugStyle" : 0
     },

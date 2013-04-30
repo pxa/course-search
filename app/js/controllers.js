@@ -352,7 +352,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	};
 
 	$scope.results = [];
-	$scope.currentPage = 1;
+	//$scope.currentPage = 1;
 	$scope.maxPageSize = 5;
 	
 	$http.get('/sissrarm-cs-kart/myplan/course/s/json').success(function(data) {
@@ -374,7 +374,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			{ label: 'Keywords', facets: convert(data.oFacetState.facet_keywords, 8) }
 		];
 		
-		$scope.search.facets = facetGroups;
+		$scope.search.filters = facetGroups;
 	});
 
 	$http.get('json/search.json').success(function(data) {
@@ -405,7 +405,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			
 			var course = {
 				id: i,
-				index: i + ($scope.resultsPerPage * ($scope.currentPage - 1)),
+				index: i + ($scope.resultsPerPage * (($scope.currentPage||1) - 1)),
 				campus: r[0],
 				subject: r[1],
 				title: title,

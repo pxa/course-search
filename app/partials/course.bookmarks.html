@@ -7,9 +7,11 @@
 	
 	<div ng-switch-default class="results">
 	
-		<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{bookmarks.active}}
-			<span ng-pluralize count="bookmarks.active" when="{ 'one': 'bookmark', 'other': 'bookmarks' }"></span>
-		</p>
+		<div class="pager">
+			<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{bookmarks.active}}
+				<span ng-pluralize count="bookmarks.active" when="{ 'one': 'bookmark', 'other': 'bookmarks' }"></span>
+			</p>
+		</div>
 		
 		<ol>
 			<li ng-repeat="course in bookmarks.results | orderBy:'-_bookmark'" ng-switch="course.bookmarked">

@@ -10,7 +10,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 			return function($rootScope, $state) {
 				// Inject the literal path, because $state doesn't naturally provide it,
 				// and because the $state.transitionTo() approach would hide link URLs.
-				$state.current.path = $rootScope.$location.path();
+				$state.current.url = $rootScope.$location.url();
 				$rootScope.state[stateName] = $state.current;
 			};
 		};
@@ -39,14 +39,53 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				}
 			})
 			.state('course.search.results.list', {
-				url: '/search/{query}',
+				url: '/search/{query}?page',
 				templateUrl: 'partials/course.search.results.list.html',
-				controller: dynamicStateController('course.search')
+				controller: function($scope, $state, $rootScope, $location, $anchorScroll, $timeout, $window) {
+				
+					// Current page default
+					$scope.currentPage = parseInt($state.params.page) || 1;
+					
+					// Pagination handler
+					$scope.selectPage = function(page) {
+						
+						// Since page defaults to `1`, clear it to clean the url
+						page = page == 1 ? null : page;
+						$state.params.page = page;
+						
+						// Because `$state.transitionTo()` wrongly thinks we aren't navigating with different parameters,
+						// we have to manually transition.
+				
+						// Transition
+						$location.url($state.$current.navigable.url.format($state.params));
+						// Save the state for dynamic urls
+						dynamicStateController('course.search')($rootScope, $state);
+						// Scroll to the top
+						$anchorScroll();
+						
+						// Get new set of $scope.search.results
+					};
+					
+					/*
+					$location.hash('course-3');
+					$timeout(function() {
+						$anchorScroll();
+					}, 50);
+					$timeout(function() {
+						$window.scrollBy(0, -133);
+					}, 400);
+					*/
+					
+					dynamicStateController('course.search')($rootScope, $state);
+				}
 			})
 			.state('course.search.results.detail', {
 				url: '/search/{query}/{courseId}',
 				templateUrl: 'partials/course.search.results.detail.html',
 				controller: function($scope, $state, $document, $location, $rootScope) {
+				
+					$scope.resultsListUrl = ['#/search', $state.params.query].join('/');
+				
 					// Find the course for the given parameter
 					$scope.course = $scope.results[$state.params.courseId];
 					

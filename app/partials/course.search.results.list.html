@@ -7,9 +7,11 @@
 
 	<div ng-switch-default class="results">
 	
-		<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{search.count}}
-			<span ng-pluralize count="search.count" when="{ 'one': 'result', 'other': 'results' }"></span>
-		</p>
+		<div class="pager">
+			<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{search.count}}
+				<span ng-pluralize count="search.count" when="{ 'one': 'result', 'other': 'results' }"></span>
+			</p>
+		</div>
 		
 		<ol>
 			<li ng-repeat="course in search.results">
@@ -17,7 +19,7 @@
 			</li>
 		</ol>
 	
-		<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize"></pagination>
+		<pagination boundary-links="true" num-pages="numberOfPages" current-page="currentPage" max-size="maxPageSize" on-select-page="selectPage(page)"></pagination>
 	
 	</div>
 	

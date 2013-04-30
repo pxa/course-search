@@ -1,11 +1,21 @@
-<p><span ng-show="numberOfPages > 1">Course {{currentPage}} of </span>{{search.count}}
-	<span ng-pluralize count="search.count" when="{ 'one': 'result', 'other': 'results' }"></span>
-	<nav class="pagination">
-		<a ng-class="{ disabled: course.prev == null }" ng-href="{{course.prev.url}}">Previous</a>
-		<a ng-class="{ disabled: course.next == null }" ng-href="{{course.next.url}}">Next</a>
-	</nav>
-</p>
+<nav class="pager">
+	<p><span ng-show="numberOfPages > 1">Course {{course.index + 1}} of </span>{{search.count}}
+		<span ng-pluralize count="search.count" when="{ 'one': 'result', 'other': 'results' }"></span>
+		&bull;
+		<a ng-href="{{resultsListUrl}}">Back to results</a>
+	</p>
+	<div>
+		<a ng-href="{{course.prev.url}}" class="page" ng-class="{ disabled: course.prev == null }">Previous</a>
+		<a ng-href="{{course.next.url}}" class="page" ng-class="{ disabled: course.next == null }">Next</a>
+	</div>
+</nav>
+
 <div ng-include="'partials/course.item.html'"></div>
+
+<nav class="pagination">
+	<a ng-href="{{course.prev.url}}" class="page" ng-class="{ disabled: course.prev == null }">Previous</a>
+	<a ng-href="{{course.next.url}}" class="page" ng-class="{ disabled: course.next == null }">Next</a>
+</nav>
 
 <!--
 <div id="edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail_popup" class="myplan-quick-detail"> 
