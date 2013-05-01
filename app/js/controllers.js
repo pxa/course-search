@@ -2,132 +2,14 @@
 
 /* Controllers */
 
-function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state) {
+function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state, searchService) {
 	
 	$scope.keyup = function($event) {
 		console.log($event);	
 	};
 	
-	// Higher `chance`, fewer random items
-	var convert = function(obj, chance) {
-		chance = chance ? chance : 0;
-		var a = [];
-		for( var key in obj ) {
-			a.push({
-				label: key,
-				count: obj[key].count,
-				value: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
-			});
-		}
-		return a;
-	};
-	
-	var k = 0;
-	
-	var labelize = function(arr) {
-		var a = [];
-		for( var i = 0, n = arr.length; i < n; i++, ++k ) {
-			a.push({ label: arr[i], value: false, id: k });
-		}
-		return a;
-	};
-	
-	var campuses = labelize([
-		'IU Bloomington', // id: 0
-		'IUPUI Indianapolis', // id: 1
-		'IUPUC Columbus',
-		'IU East',
-		'IPFW Fort Wayne',
-		'IU Kokomo',
-		'IU Northwest',
-		'IU South Bend',
-		'IU Southeast'
-	]);
-	
-	campuses[0].value = true;
-	
-	var degrees = labelize([
-		'Undergraduate',
-		'Graduate', // id: 10
-		'Professional'
-	]);
-	
-	degrees[0].value = true;
-	degrees[2].condition = "0||1"; // BL or IUPUI
-	
-	var scheduledTerms = labelize([
-		'Spring 2013',
-		'Summer 2013',
-		'Fall 2013',
-		'Winter 2013'
-	]);
-	
-	// (BL & Grad) or (IUPUI & Grad)
-	// "(0&10)|(1&10)"
-	// Grad & (BL or IUPUI)
-	// "10&(0|1)"
-	scheduledTerms[3].condition = "10&&(0||1)";
-	
-	var projectedTerms = labelize([
-		'Fall',
-		'Spring',
-		'Summer'
-	]);
-	
-	// Until AngularJS supports comment repeaters,
-	// `facets` and `groups` must be separated,
-	// instead of smartly deriving object types.
-	// Not sufficient flexibility, unfortunately.
-	var searchCriteria = [
-		{
-			label: 'Campus',
-			select: true, // Only one facet may be selected
-			facets: [
-				{ label: 'Campuses', facets: campuses },
-				{ label: ' ', facets: labelize(['Online']) }
-			]
-		},
-		{
-			label: 'Degree Level',
-			alerts: [ { type: 'error', message: 'Select a degree level.', condition: "!(9||10||11)" } ],
-			facets: degrees
-		},
-		{
-			label: 'Offered',
-			alerts: [ { type: 'error', message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" } ],
-			facets: [
-				{ id: (++k),
-				  value: true,
-				  open: false, // Show child facets when the facet value equals the open value
-				  radio: [
-					{ label: 'Any term', value: 1 },
-					{ label: 'Specific term', value: 0 } ],
-				  facets: [
-					{ label: 'Scheduled classes', facets: scheduledTerms },
-					{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
-				] }
-					
-			]
-		},
-		{
-			facets: [ { label: 'More than 10 years ago', id: (++k) } ]
-		}
-	];
-	
-	var searchExamples = [
-		{ label: 'Find english courses', examples: [ 'english', 'ENG', 'ENG-W' ] },
-		{ label: 'Find a specific english course', examples: [ 'ENG-W 131' ] },
-		{ label: 'Find 200-level english courses', examples: [ 'ENG 2*' ] }
-	];
-	
-	$scope.search = {
-		
-		query: '',
-		placeholder: 'title, keyword, department, subject, or number',
-		examples: searchExamples,
-		criteria: searchCriteria
-		
-	};
+	console.log(searchService);
+	$scope.search = searchService;
 	
 	var selectedFacets = function(source, arr) {
 	
@@ -359,22 +241,6 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		console.log($scope.search, data);
 	}).error(function(data, status, headers, config) {
 		console.log(data, '|', status, '|', headers, '|', config);
-	});
-	
-	$http.get('json/facetValues.json').success(function(data) {
-		$scope.query = data.sQuery;
-		
-		var facetGroups = [
-			//{ label: 'Campus', facets: convert(data.oFacetState.facet_campus) },
-			//{ label: 'Terms', facets: convert(data.oFacetState.facet_terms, 2) },
-			{ label: 'Gen Ed', facets: convert(data.oFacetState.facet_gened, 1) },
-			{ label: 'Credits', facets: convert(data.oFacetState.facet_credits, 10) },
-			{ label: 'Class Level', facets: convert(data.oFacetState.facet_level, 4) },
-			{ label: 'Subject', facets: convert(data.oFacetState.facet_subject, 8) },
-			{ label: 'Keywords', facets: convert(data.oFacetState.facet_keywords, 8) }
-		];
-		
-		$scope.search.filters = facetGroups;
 	});
 
 	$http.get('json/search.json').success(function(data) {
