@@ -31,7 +31,7 @@ angular.module('courseSearchApp.services', ['ngResource'])
 	var labelize = function(arr) {
 		var a = [];
 		for( var i = 0, n = arr.length; i < n; i++, ++k ) {
-			a.push({ label: arr[i], value: false, id: k });
+			a.push({ label: arr[i], value: false, id: k.toString() });
 		}
 		return a;
 	};
@@ -98,26 +98,60 @@ angular.module('courseSearchApp.services', ['ngResource'])
 		},
 		{
 			label: 'Offered',
+			alerts: [ { type: 'error', message: 'Select a term.', condition: "!ANY&&!(12||13||14||15||16||17||18)" } ],
+			radio: true, // Only one facet may be selected
+			facets: [
+			  	{ label: 'Any term', id: 'ANY', value: true },
+				{
+					label: 'Specific term',
+					id: '',
+					value: false,
+					facets: [
+						{ label: 'Scheduled classes', facets: scheduledTerms },
+						{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
+					]
+				}
+			]
+		},
+		{
+			facets: [ { label: 'More than 10 years ago', id: (++k).toString() } ]
+		}
+	];
+	/*
+			{
+			label: 'Offered',
 			alerts: [ { type: 'error', message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" } ],
+			
 			facets: [
 				{ id: (++k),
-				  value: true,
+				  value: 'any',
 				  open: false, // Show child facets when the facet value equals the open value
+				  radio: true,
+				  facets: [
+				  	{ label: 'Any term', value: 'any' },
+					{
+						label: 'Specific term',
+						value: '',
+						facets: [
+							{ label: 'Scheduled classes', facets: scheduledTerms },
+							{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
+						]
+					}
+				//],
+				  ]
+				  
 				  radio: [
 					{ label: 'Any term', value: 1 },
 					{ label: 'Specific term', value: 0 } ],
 				  facets: [
 					{ label: 'Scheduled classes', facets: scheduledTerms },
 					{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
-				] }
+					
+				}
 					
 			]
 		},
-		{
-			facets: [ { label: 'More than 10 years ago', id: (++k) } ]
-		}
-	];
-	
+	*/
 	var searchExamples = [
 		{ label: 'Find english courses', examples: [ 'english', 'ENG', 'ENG-W' ] },
 		{ label: 'Find a specific english course', examples: [ 'ENG-W 131' ] },

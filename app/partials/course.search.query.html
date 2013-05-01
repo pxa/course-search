@@ -7,27 +7,29 @@
 		
 		<div ng-switch-when="true">
 		
-			<select ng-model="category.selected" ng-init="selectOne(category)" ng-change="selectOne(category); checkFacets()" ng-options="f.id as f.label group by f.group for f in selectize(category.facets)"></select>
+			<select ng-model="category.value" ng-init="selectOne(category)" ng-change="selectOne(category); checkFacets()" ng-options="f.id as f.label group by f.group for f in selectize(category.facets)"></select>
 			
 		</div>
+		
 		<div ng-switch-default>
 		
-			<div ng-repeat="facetA in category.facets" ng-init="hasOpen = facetA.open != undefined">
+			<div ng-repeat="facetA in category.facets">
 		
-				<div ng-switch="facetA.radio == undefined" ui-if="!facetA.exclude">
-					<label ng-switch-when="true" ng-class="{ active: facetA.value }">
-						<input type="checkbox" ng-model="facetA.value" ng-click="checkFacets()" />
-						{{facetA.label}}
-					</label>
+				<div ng-switch="category.radio">
+					<div ng-switch-when="true">
+						<label ng-init="selectOne(category)" ng-class="{ active: category.value == facetA.id }">
+							<input type="radio" ng-model="category.value" value="{{facetA.id}}" name="facet-{{facetA.id}}" ng-click="selectOne(category); checkFacets()" />
+							{{facetA.label}}
+						</label>
+					</div>
 					<div ng-switch-default>
-						<label ng-repeat="radio in facetA.radio" ng-class="{ active: facetA.value == radio.value }">
-							<input type="radio" ng-model="facetA.value" value="{{radio.value}}" name="facet-{{facetA.id}}" ng-click="checkFacets()" />
-							{{radio.label}}
+						<label ng-class="{ active: facetA.value }" ui-if="!facetA.exclude">
+							<input type="checkbox" ng-model="facetA.value" ng-click="checkFacets()" />
+							{{facetA.label}}
 						</label>
 					</div>
 				</div>
-				
-				<div ui-if="!hasOpen || facetA.value == facetA.open" class="child">
+				<div ui-if="category.value == facetA.id" class="child">
 					<div ng-repeat="facetB in facetA.facets"
 						ng-init="hasValue = facetB.value != undefined;
 								hasLabel = facetB.label != undefined && facetB.label.length > 0;
@@ -46,29 +48,11 @@
 						</div>
 					</div>
 				</div>
+				
+			</div>
 			
-			</div>
-		
-		<!--
-		
-		
-			<label ui-if="category.selectAll" ng-class="{ active: category.selectAll.checked, grayed: category.selectAll.grayed }">
-				<input type="checkbox" ng-model="category.selectAll.checked" select-all="category" />
-				{{category.selectAll.label}}
-			</label>
-			<label ng-repeat="facet in category.facets" ng-class="{ active: facet.checked }">
-				<input type="checkbox" ng-model="facet.checked" />
-				{{facet.label}}
-			</label>
-			<div ng-repeat="facetGroup in category.groups">
-				<hr ui-if="!$first || category.selectAll"/>
-				<label ng-repeat="facet in facetGroup.facets" ng-class="{ active: facet.checked }">
-					<input type="checkbox" ng-model="facet.checked" />
-					{{facet.label}}
-				</label>
-			</div>
-		-->
 		</div>
+
 	</div>
 	<div class="searchBox">
 

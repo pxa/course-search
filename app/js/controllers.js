@@ -8,7 +8,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		console.log($event);	
 	};
 	
-	console.log(searchService);
+	//console.log(searchService);
 	$scope.search = searchService;
 	
 	var selectedFacets = function(source, arr) {
@@ -22,7 +22,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			var facet = source[i];
 				
 			// Or add this facet's id if checked
-			if( angular.isDefined(facet.id) && facet.value == true )
+			if( angular.isDefined(facet.id) && facet.id.length && facet.value == true )
 				arr.push(facet);
 				
 			// Recursively find child facet ids
@@ -52,21 +52,22 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		// "10&&(0||1)" => "false&&(true||false)" => false
 		
 		// Split the string, matching ids
-		var conditional = condition.split(/(\d+)/g);
-		
+		var regex = /(\w+)/g;
+		var conditional = condition.split(regex);
+
 		// Process ids
 		for( var i = 0, n = conditional.length; i < n; i++) {
 			var a = conditional[i];
 			
-			// Ignore empty, non-numeric strings
-			if( a.length > 0 && !isNaN(a) )
+			// Ignore non-identifying strings
+			if( a.match(regex) )
 				// Replace with a bool indicating a match in the source ids
-				conditional[i] = ids.indexOf(Number(a)) != -1;
+				conditional[i] = ids.indexOf(a) != -1;
 		}
 		
 		// Rejoin
 		conditional = conditional.join('');
-
+		
 		return $scope.$eval(conditional);
 	};
 	
@@ -179,37 +180,52 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	
 	// Apply a conditional value to facets
 	var setFacetValue = function(source, funct) {
+	
+		if( !angular.isArray(source.facets) )
+			return;
+			
 		// Loop through facets
-		for( var i = 0, n = source.length; i < n; i++ ) {
-			var facet = source[i];
-			// Apply the transform
-			if( angular.isDefined(facet.value) )
-				facet.value = funct(facet);
-			// Recursively work through child facets
-			if( angular.isArray(facet.facets) )
-				setFacetValue(facet.facets, funct);
+		for( var i = 0, n = source.facets.length; i < n; i++ ) {
+			var facet = source.facets[i];
+
+			if( source.radio || source.select ) {
+				facet.value = facet.id == source.value;
+			}
+			
+			if( source.radio ) {
+				setFacetValue(facet, function(f) {
+					return facet.value && f.value;
+				});
+			}
+			
+			if( source.select ) {
+				setFacetValue(facet, function(f) {
+					return f.id == source.value;
+				});
+			}
+			
+			if( angular.isDefined(funct) ) {
+				if( angular.isDefined(facet.value) )
+					facet.value = funct(facet);
+				setFacetValue(facet, funct);
+			}
 		}
 	};
 	
 	$scope.selectOne = function(source) {
 		
 		// Attempt to find and pre-select the appropriate facet, if not set
-		if( angular.isUndefined(source.selected) ) {
+		if( angular.isUndefined(source.value) ) {
 			// Get the first of any selected child facets.
 			var facets = selectedFacets(source.facets);
 			// Check there's at least one returned.
 			if( facets.length )
 				// There will be an id and value for any of these facets.
-				source.selected = facets[0].id;
+				source.value = facets[0].id;
 		}
 		// Otherwise, change all child facet values to match single selection
 		else {
-			// Function to check all facets against
-			var transformValue = function(facet) {
-				return facet.id == source.selected;
-			};
-			// Apply
-			setFacetValue(source.facets, transformValue);
+			setFacetValue(source);
 		}
 	};
 	
@@ -237,11 +253,13 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	//$scope.currentPage = 1;
 	$scope.maxPageSize = 5;
 	
+	/*
 	$http.get('/sissrarm-cs-kart/myplan/course/s/json').success(function(data) {
 		console.log($scope.search, data);
 	}).error(function(data, status, headers, config) {
 		console.log(data, '|', status, '|', headers, '|', config);
 	});
+	*/
 
 	$http.get('json/search.json').success(function(data) {
 	
