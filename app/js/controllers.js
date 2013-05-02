@@ -387,6 +387,47 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			}
 		});
 	};
+	
+	
+	var terms = [
+		{
+			label: 'Spring 2013',
+			sessions: [
+				{
+					label: 'Regular Academic Session',
+					startDate: 'Jan 7',
+					endDate: 'May 3',
+					sections: [
+						{
+							id: '0001',
+							component: 'Lecture',
+							instructor: 'Dr. Manny',
+							enrollment: { available: 3, total: 20 },
+							location: { building: 'Business School', room: '219' },
+							day: 'Mon, Wed',
+							startTime: '08:00 AM',
+							endTime: '08:50 AM',
+							label: 'INTRO TO FINANCIAL ACCOUNTING',
+							description: 'The concepts and issues associated with corporate financial reporting. Particular emphasis is placed on understanding the role of financial accounting in the economy and how different accounting methods affect the financial statements.'
+						},
+						{
+							id: '0002',
+							component: 'Lecture',
+							instructor: 'Dr. Manny',
+							enrollment: { available: 3, total: 20 },
+							location: { building: 'Business School', room: '219' },
+							day: 'Mon, Wed',
+							startTime: '08:00 AM',
+							endTime: '08:50 AM'
+						}
+					]
+				}
+			]
+		}
+	];
+	
+	$scope.terms = terms;	
+	
 }
 
 // the dialog is injected in the specified controller

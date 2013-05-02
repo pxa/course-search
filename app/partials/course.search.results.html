@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	
-	<div>
+	<div ui-if="$state.includes('course.search.results.list')">
 		<h2>Filters</h2>
 		<div ng-repeat="facetGroup in search.filters.facets">
 			<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>

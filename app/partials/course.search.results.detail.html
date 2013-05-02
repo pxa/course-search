@@ -12,66 +12,38 @@
 
 <div ng-include="'partials/course.item.html'"></div>
 
+<div ng-repeat="term in terms" class="sections">
+	<h3>{{term.label}}</h3>
+	<table ng-repeat="session in term.sessions">
+		<caption>{{session.label}} <small>{{session.startDate}} &ndash; {{session.endDate}}</small></caption>
+		<thead>
+			<th>Section</th>
+			<th>Instructor</th>
+			<th>Availability</th>
+			<th>Location</th>
+			<th>Time</th>
+			<th title="Add to plan"><abbr>Add</abbr></th>
+		</thead>
+		<tbody ng-repeat="section in session.sections">
+			<tr>
+				<td>{{section.id}} {{section.component}}</td>
+				<td>{{section.instructor}}</td>
+				<td>{{section.enrollment.available}}/{{section.enrollment.total}}</td>
+				<td>{{section.location.building}} {{section.location.room}}</td>
+				<td>{{section.day}} <time>{{section.startTime}} &ndash; {{section.endTime}}</time></td>
+				<td><a>+</a></td>
+			</tr>
+			<tr ui-if="section.label || section.description">
+				<td colspan="6">
+					<strong>{{section.label}}</strong>
+					<p>{{section.description}}</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
 <nav class="pagination">
 	<a ng-href="{{course.prev.url}}" class="page" ng-class="{ disabled: course.prev == null }">Previous</a>
 	<a ng-href="{{course.next.url}}" class="page" ng-class="{ disabled: course.next == null }">Next</a>
 </nav>
-
-<!--
-<div id="edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail_popup" class="myplan-quick-detail"> 
-          <div id="u157" class="uif-header uif-subSectionHeader" data-headerfor="course_quick_detail"> 
-           <h4 class="uif-headerText"> <span class="uif-headerText-span"> <a href="inquiry?methodToCall=start&amp;viewId=CourseDetails-InquiryView&amp;courseId=edu.iu.sis.arm.cs.api.CourseSearchIndex.030685.1" id="undefined_popup_edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail">MATH 00100 Introduction to Algebra (4-6)</a> </span> </h4> 
-          </div> 
-          <div id="u159" class="uif-validationMessages uif-groupValidationMessages" style="display: none;" data-messagesfor="course_quick_detail"> 
-          </div> 
-          <div id="u156_boxLayout" class="uif-boxLayout uif-verticalBoxLayout clearfix"> 
-           <span id="u162_span" class="uif-message uif-boxLayoutVerticalItem clearfix" data-parent="course_quick_detail"> PLACEMENT. FALL, SPRING, SUMMER. COVERS THE MATERIAL TAUGHT IN THE FIRST YEAR OF HIGH SCHOOL ALGEBRA. NUMBERS AND ALGEBRA, INTEGERS, RATIONAL NUMBERS, EQUATIONS, POLYNOMIALS, GRAPHS, SYSTEMS OF EQUATIONS, INEQUALITIES, RADICALS. CREDIT DOES NOT APPLY TOWARD ANY DEGREE.<br><span class="fl-font-size-90 fl-text-gray">(Source: IU Course Bulletin)</span> </span> 
-           <div id="u163" class="uif-field uif-fieldGroup uif-horizontalFieldGroup uif-boxLayoutVerticalItem clearfix" data-parent="course_quick_detail" data-group="u166"> 
-            <fieldset aria-labelledby="u163_label" id="u163_fieldset"> 
-             <legend style="display: none"></legend> 
-             <div id="u166" class="uif-group uif-boxGroup uif-horizontalBoxGroup" data-parent="u163"> 
-              <div id="u167_boxLayout" class="uif-boxLayout uif-horizontalBoxLayout clearfix"> 
-               <div id="u169" class="uif-group uif-boxGroup uif-horizontalBoxGroup myplan-course-detail-label uif-boxLayoutHorizontalItem" data-parent="u166"> 
-                <div id="u170_boxLayout" class="uif-boxLayout uif-horizontalBoxLayout clearfix"> 
-                 <span id="u172_span" class="uif-label uif-boxLayoutHorizontalItem"> <label id="u172" for=""> Requisites </label> </span> 
-                </div> 
-               </div> 
-               <input type="hidden" data-role="dataScript" data-for="u169" value="jQuery('#u169').data('validationMessages', {summarize:true,displayMessages:true,collapseFieldMessages:true,displayLabel:true,hasOwnMessages:false,pageLevel:false,forceShow:false,sections:[],order:[],serverErrors:[],serverWarnings:[],serverInfo:[]});" script="first_run"> 
-               <div id="u175" class="uif-group uif-boxGroup uif-horizontalBoxGroup myplan-course-detail-field uif-boxLayoutHorizontalItem" data-parent="u166"> 
-                <div id="u176_boxLayout" class="uif-boxLayout uif-horizontalBoxLayout clearfix"> 
-                 <span id="u178_span" class="uif-message uif-boxLayoutHorizontalItem" data-parent="u175"> Not provided </span> 
-                </div> 
-               </div> 
-               <input type="hidden" data-role="dataScript" data-for="u175" value="jQuery('#u175').data('validationMessages', {summarize:true,displayMessages:true,collapseFieldMessages:true,displayLabel:true,hasOwnMessages:false,pageLevel:false,forceShow:false,sections:[],order:[],serverErrors:[],serverWarnings:[],serverInfo:[]});" script="first_run"> 
-              </div> 
-             </div> 
-             <input type="hidden" data-role="dataScript" data-for="u166" value="jQuery('#u166').data('validationMessages', {summarize:true,displayMessages:true,collapseFieldMessages:true,displayLabel:true,hasOwnMessages:false,pageLevel:false,forceShow:true,sections:[],order:[],serverErrors:[],serverWarnings:[],serverInfo:[]});" script="first_run"> 
-            </fieldset> 
-           </div> 
-           <div id="u181" class="uif-field uif-fieldGroup uif-horizontalFieldGroup uif-boxLayoutVerticalItem clearfix" data-parent="course_quick_detail" data-group="u184"> 
-            <fieldset aria-labelledby="u181_label" id="u181_fieldset"> 
-             <legend style="display: none"></legend> 
-             <div id="u184" class="uif-group uif-boxGroup uif-horizontalBoxGroup" data-parent="u181"> 
-              <div id="u185_boxLayout" class="uif-boxLayout uif-horizontalBoxLayout clearfix"> 
-               <div id="u187" class="uif-group uif-boxGroup uif-horizontalBoxGroup myplan-course-detail-label uif-boxLayoutHorizontalItem" data-parent="u184"> 
-                <div id="u188_boxLayout" class="uif-boxLayout uif-horizontalBoxLayout clearfix"> 
-                 <span id="u190_span" class="uif-label uif-boxLayoutHorizontalItem"> <label id="u190" for=""> Projected for </label> </span> 
-                </div> 
-               </div> 
-               <input type="hidden" data-role="dataScript" data-for="u187" value="jQuery('#u187').data('validationMessages', {summarize:true,displayMessages:true,collapseFieldMessages:true,displayLabel:true,hasOwnMessages:false,pageLevel:false,forceShow:false,sections:[],order:[],serverErrors:[],serverWarnings:[],serverInfo:[]});" script="first_run"> 
-               <div id="u193" class="uif-group uif-boxGroup uif-horizontalBoxGroup myplan-course-detail-field uif-boxLayoutHorizontalItem" data-parent="u184"> 
-                <div id="u194_boxLayout" class="uif-boxLayout uif-horizontalBoxLayout clearfix"> 
-                 <span id="u196_span" class="uif-message uif-boxLayoutHorizontalItem" data-parent="u193"> Fall, Spring and Summer Terms </span> 
-                </div> 
-               </div> 
-               <input type="hidden" data-role="dataScript" data-for="u193" value="jQuery('#u193').data('validationMessages', {summarize:true,displayMessages:true,collapseFieldMessages:true,displayLabel:true,hasOwnMessages:false,pageLevel:false,forceShow:false,sections:[],order:[],serverErrors:[],serverWarnings:[],serverInfo:[]});" script="first_run"> 
-              </div> 
-             </div> 
-             <input type="hidden" data-role="dataScript" data-for="u184" value="jQuery('#u184').data('validationMessages', {summarize:true,displayMessages:true,collapseFieldMessages:true,displayLabel:true,hasOwnMessages:false,pageLevel:false,forceShow:true,sections:[],order:[],serverErrors:[],serverWarnings:[],serverInfo:[]});" script="first_run"> 
-            </fieldset> 
-           </div> 
-           <span id="u199_span" class="uif-message uif-boxLayoutVerticalItem clearfix" data-parent="course_quick_detail"> <dl class="ksap-section-info"><dt class="SP"><label>Scheduled for Spring 2013</label></dt><dd><dl><dt>Regular Academic Session (1)</dt><dd><span>01/07/2013 to 05/05/2013</span><table><thead><tr><th>Section</th><th>Title</th><th>Component</th><th>Location</th><th>Times</th></tr></thead><tbody></tbody><tbody><tr><td rowspan="1">0200</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> ICTC 162</td><td>Mon, Wed, Fri, 09:00 AM - 10:15 AM</td></tr><tr><td rowspan="1">0400</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Science Building LD026</td><td>Mon, Wed, Fri, 12:00 PM - 01:15 PM</td></tr><tr><td rowspan="1">0600</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Nursing School 108</td><td>Mon, Wed, 03:00 PM - 04:50 PM</td></tr><tr><td rowspan="1">0700</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> ICTC 073</td><td>Mon, Wed, 06:00 PM - 07:50 PM</td></tr><tr><td rowspan="1">0900</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Science Building LD026</td><td>Tue, Thu, 09:00 AM - 10:50 AM</td></tr><tr><td rowspan="1">1000</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 11:00 AM - 12:50 PM</td></tr><tr><td rowspan="1">1100</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Business/SPEA 4087</td><td>Tue, Thu, 01:00 PM - 02:50 PM</td></tr><tr><td rowspan="1">1400</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> ICTC 160</td><td>Tue, Thu, 03:00 PM - 04:50 PM</td></tr><tr><td rowspan="1">1500</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Univ Place Conference Center 231</td><td>Tue, Thu, 06:00 PM - 07:50 PM</td></tr><tr><td rowspan="1">1600</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Univ Place Conference Center 216</td><td>Mon, Wed, Fri, 10:30 AM - 11:45 AM</td></tr></tbody></table></dd></dl></dd><dt class="SU"><label>Scheduled for Summer 2013</label></dt><dd><dl><dt>Summer Session 1 (SS1)</dt><dd><span>05/08/2013 to 06/19/2013</span><table><thead><tr><th>Section</th><th>Title</th><th>Component</th><th>Location</th><th>Times</th></tr></thead><tbody></tbody><tbody><tr><td rowspan="1">0200</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> ICTC 162</td><td>Mon, Tue, Wed, Thu, 08:00 AM - 10:05 AM</td></tr><tr><td rowspan="1">0300</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Eng Science &amp; Technology SL137</td><td>Mon, Tue, Wed, Thu, 01:00 PM - 03:05 PM</td></tr></tbody></table></dd></dl></dd><dt class="FA"><label>Scheduled for Fall 2013</label></dt><dd><dl><dt>Regular Academic Session (1)</dt><dd><span>08/19/2013 to 12/16/2013</span><table><thead><tr><th>Section</th><th>Title</th><th>Component</th><th>Location</th><th>Times</th></tr></thead><tbody></tbody><tbody><tr><td rowspan="1">0100</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 10:30 AM - 11:45 AM</td></tr><tr><td rowspan="1">0200</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 09:00 AM - 10:15 AM</td></tr><tr><td rowspan="1">0400</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 10:30 AM - 11:45 AM</td></tr><tr><td rowspan="1">0500</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 12:00 PM - 01:15 PM</td></tr><tr><td rowspan="1">0600</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 12:00 PM - 01:15 PM</td></tr><tr><td rowspan="1">0700</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 01:30 PM - 02:45 PM</td></tr><tr><td rowspan="1">0900</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, 03:00 PM - 04:50 PM</td></tr><tr><td rowspan="1">1000</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 09:00 AM - 10:50 AM</td></tr><tr><td rowspan="1">1200</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 11:00 AM - 12:50 PM</td></tr><tr><td rowspan="1">1300</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 01:00 PM - 02:50 PM</td></tr><tr><td rowspan="1">1400</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 01:00 PM - 02:50 PM</td></tr><tr><td rowspan="1">1700</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 03:00 PM - 04:50 PM</td></tr><tr><td rowspan="1">1800</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 03:00 PM - 04:50 PM</td></tr><tr><td rowspan="1">1900</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 03:00 PM - 04:50 PM</td></tr><tr><td rowspan="1">2100</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, 06:00 PM - 07:50 PM</td></tr><tr><td rowspan="1">3700</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 06:00 PM - 07:50 PM</td></tr><tr><td rowspan="1">3800</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, 06:00 PM - 08:00 PM</td></tr><tr><td rowspan="1">3900</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 07:30 AM - 08:45 AM</td></tr><tr><td rowspan="1">4000</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 11:00 AM - 12:50 PM</td></tr><tr><td rowspan="1">4100</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 09:00 AM - 10:15 AM</td></tr><tr><td rowspan="1">4200</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 12:00 PM - 01:15 PM</td></tr><tr><td rowspan="1">4300</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td> Cavanaugh Hall 008F</td><td>Tue, Thu, 01:00 PM - 02:50 PM</td></tr><tr><td rowspan="1">4400</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Mon, Wed, Fri, 01:30 PM - 02:45 PM</td></tr><tr><td rowspan="1">4500</td><td rowspan="1">INTRO TO ALGEBRA</td><td rowspan="1">Lecture</td><td></td><td>Tue, Thu, 09:00 AM - 10:50 AM</td></tr></tbody></table></dd></dl></dd></dl> </span> 
-           <a id="u200_popup_edu_iu_sis_arm_cs_api_CourseSearchIndex_030685_1_detail" href="inquiry?methodToCall=start&amp;viewId=CourseDetails-InquiryView&amp;courseId=edu.iu.sis.arm.cs.api.CourseSearchIndex.030685.1" target="" class="uif-link uif-boxLayoutVerticalItem clearfix" style="margin:0;" title="Course Details">Full details...</a> 
-          </div> 
-         </div>
--->
