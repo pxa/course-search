@@ -39,7 +39,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				}
 			})
 			.state('course.search.results.list', {
-				url: '/search/{query}?page',
+				url: '/search/{criteriaKey}/{query}?page',
 				templateUrl: 'partials/course.search.results.list.html',
 				controller: function($scope, $state, $rootScope, $location, $anchorScroll, $timeout, $window) {
 				
@@ -80,11 +80,11 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				}
 			})
 			.state('course.search.results.detail', {
-				url: '/search/{query}/{courseId}',
+				url: '/search/{criteriaKey}/{query}/{courseId}',
 				templateUrl: 'partials/course.search.results.detail.html',
 				controller: function($scope, $state, $document, $location, $rootScope) {
 				
-					$scope.resultsListUrl = ['#/search', $state.params.query].join('/');
+					$scope.resultsListUrl = ['#/search', $state.params.criteriaKey, $state.params.query].join('/');
 				
 					// Find the course for the given parameter
 					$scope.course = $scope.results[$state.params.courseId];

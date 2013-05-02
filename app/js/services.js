@@ -12,12 +12,16 @@ angular.module('courseSearchApp.services', ['ngResource'])
 })
 
 .factory('searchService', function($http) {
+
+	var k = 0;
+	
 	// Higher `chance`, fewer random items
 	var convert = function(obj, chance) {
 		chance = chance ? chance : 0;
 		var a = [];
 		for( var key in obj ) {
 			a.push({
+				id: (++k).toString(),
 				label: key,
 				count: obj[key].count,
 				value: chance ? getRandomInt(0, chance) == 0 : obj[key].checked
@@ -25,8 +29,6 @@ angular.module('courseSearchApp.services', ['ngResource'])
 		}
 		return a;
 	};
-	
-	var k = 0;
 	
 	var labelize = function(arr) {
 		var a = [];
@@ -88,7 +90,7 @@ angular.module('courseSearchApp.services', ['ngResource'])
 			select: true, // Only one facet may be selected
 			facets: [
 				{ label: 'Campuses', facets: campuses },
-				{ label: ' ', facets: labelize(['Online']) }
+				{ facets: labelize(['Online']) }
 			]
 		},
 		{
@@ -98,17 +100,17 @@ angular.module('courseSearchApp.services', ['ngResource'])
 		},
 		{
 			label: 'Offered',
-			alerts: [ { type: 'error', message: 'Select a term.', condition: "!ANY&&!(12||13||14||15||16||17||18)" } ],
+			alerts: [ { type: 'error', message: 'Select a term.', condition: "!any&&!(12||13||14||15||16||17||18)" } ],
 			radio: true, // Only one facet may be selected
 			facets: [
-			  	{ label: 'Any term', id: 'ANY', value: true },
+			  	{ label: 'Any term', id: 'any', value: true },
 				{
 					label: 'Specific term',
 					id: '',
 					value: false,
 					facets: [
 						{ label: 'Scheduled classes', facets: scheduledTerms },
-						{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
+						{ label: 'All courses', title: '(including scheduled classes)', facets: projectedTerms }
 					]
 				}
 			]
@@ -117,41 +119,7 @@ angular.module('courseSearchApp.services', ['ngResource'])
 			facets: [ { label: 'More than 10 years ago', id: (++k).toString() } ]
 		}
 	];
-	/*
-			{
-			label: 'Offered',
-			alerts: [ { type: 'error', message: 'Select a term.', condition: "!21&&!(12||13||14||15||16||17||18)" } ],
-			
-			facets: [
-				{ id: (++k),
-				  value: 'any',
-				  open: false, // Show child facets when the facet value equals the open value
-				  radio: true,
-				  facets: [
-				  	{ label: 'Any term', value: 'any' },
-					{
-						label: 'Specific term',
-						value: '',
-						facets: [
-							{ label: 'Scheduled classes', facets: scheduledTerms },
-							{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
-						]
-					}
-				//],
-				  ]
-				  
-				  radio: [
-					{ label: 'Any term', value: 1 },
-					{ label: 'Specific term', value: 0 } ],
-				  facets: [
-					{ label: 'Scheduled classes', facets: scheduledTerms },
-					{ label: 'All courses', small: '(including scheduled classes)', facets: projectedTerms }
-					
-				}
-					
-			]
-		},
-	*/
+
 	var searchExamples = [
 		{ label: 'Find english courses', examples: [ 'english', 'ENG', 'ENG-W' ] },
 		{ label: 'Find a specific english course', examples: [ 'ENG-W 131' ] },
@@ -160,15 +128,17 @@ angular.module('courseSearchApp.services', ['ngResource'])
 	
 	var search = {
 		
-		query: '',
+		query: null,
 		placeholder: 'title, keyword, department, subject, or number',
 		examples: searchExamples,
-		criteria: searchCriteria
+		criteria: {
+			key: 'z6xx52',
+			facets: searchCriteria }
 		
 	};
 
 	$http.get('json/facetValues.json').success(function(data) {
-		search.query = data.sQuery;
+		//search.query = data.sQuery;
 		
 		var facetGroups = [
 			//{ label: 'Campus', facets: convert(data.oFacetState.facet_campus) },
@@ -180,7 +150,7 @@ angular.module('courseSearchApp.services', ['ngResource'])
 			{ label: 'Keywords', facets: convert(data.oFacetState.facet_keywords, 8) }
 		];
 		
-		search.filters = facetGroups;
+		search.filters = { facets: facetGroups };
 	});
 	
 	return search;

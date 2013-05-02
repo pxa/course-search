@@ -43,7 +43,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	};
 	
 	var selectedFacetIds = function() {
-		return ids(selectedFacets($scope.search.criteria));
+		return ids(selectedFacets($scope.search.criteria.facets));
 	};
 	
 	var checkCondition = function(condition, ids) {
@@ -52,7 +52,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		// "10&&(0||1)" => "false&&(true||false)" => false
 		
 		// Split the string, matching ids
-		var regex = /(\w+)/g;
+		var regex = /([\w.]+)/g;
 		var conditional = condition.split(regex);
 
 		// Process ids
@@ -75,7 +75,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	
 		// Determine the default facet source, if not supplied
 		if( !angular.isArray(source) )
-			source = $scope.search.criteria;
+			source = $scope.search.criteria.facets;
 	
 		// Determine the selected facet ids, if not supplied
 		if( !angular.isArray(ids) )
@@ -112,7 +112,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	
 		// Determine the default facet source, if not supplied
 		if( !angular.isArray(source) )
-			source = $scope.search.criteria;
+			source = $scope.search.criteria.facets;
 	
 		// Determine the selected facet ids, if not supplied
 		if( !angular.isArray(ids) )
@@ -165,7 +165,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		if( $event )
 			$event.preventDefault();
 		if( validate() && $scope.search.query.length )
-			$state.transitionTo('course.search.results.list', { query: $scope.search.query });
+			$state.transitionTo('course.search.results.list', { criteriaKey: $scope.search.criteria.key, query: $scope.search.query });
 	};
 	
 	$scope.checkFacets = function() {
@@ -240,6 +240,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		var array = [];
 		for( var i = 0, n = source.length; i < n; i++ ) {
 			var a = source[i];
+			
+			// Provide a group label so an <optgroup> will be created
+			if( angular.isUndefined(a.label) )
+				a.label = ' ';
+				
 			for( var j = 0, m = a.facets.length; j < m; j++ ) {
 				var b = angular.copy(a.facets[j]);
 				b.group = a.label;
@@ -348,7 +353,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 					return this.index == 0 ? null : ($scope.results[this.index - 1] || null);
 				},
 				get url() {
-					return ['#/search', $scope.search.query, this.subject].join('/');
+					return ['#/search', $scope.search.criteria.key, $scope.search.query, this.subject].join('/');
 				}
 			};
 			

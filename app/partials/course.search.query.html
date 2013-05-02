@@ -1,6 +1,6 @@
 <nav class="query">
 
-	<div ng-repeat="category in search.criteria" ng-switch="category.select">
+	<div ng-repeat="category in search.criteria.facets" ng-switch="category.select">
 		<h1 ui-if="category.label != undefined">{{category.label}}</h1>
 		
 		<p ng-repeat="alert in category.alerts | filter:{ show: true }" ng-class="{ error: alert.type == 'error' }">{{alert.message}}</p>
@@ -33,12 +33,12 @@
 					<div ng-repeat="facetB in facetA.facets"
 						ng-init="hasValue = facetB.value != undefined;
 								hasLabel = facetB.label != undefined && facetB.label.length > 0;
-								hasSmallLabel = facetB.small != undefined">
+								hasTitle = facetB.title != undefined">
 						<label ui-if="hasValue && hasLabel" ng-class="{ active: facetB.value }">
 							<input type="checkbox" ng-model="facetB.value" ng-click="checkFacets()" />
 							{{facetB.label}}
 						</label>
-						<h2 ui-if="!hasValue && hasLabel">{{facetB.label}} <small ui-if="hasSmallLabel">{{facetB.small}}</small></h2>
+						<h2 ui-if="!hasValue && hasLabel">{{facetB.label}} <small ui-if="hasTitle">{{facetB.title}}</small></h2>
 						<hr ui-if="!hasValue && !hasLabel && !$first" />
 						<div ng-repeat="facetC in facetB.facets">
 							<label ui-if="!facetC.exclude" ng-class="{ active: facetC.value }">
