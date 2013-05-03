@@ -14,10 +14,9 @@
 
 <div ng-repeat="term in terms" class="sections">
 	<h3>{{term.label}}</h3>
-	<dl class="gened">
+	<dl ui-if="term.gened" class="gened">
 		<dt>Satisfies <abbr title="General Education">Gen Ed</abbr> requirements</dt>
-		<dd>Quantitative Skills (CORE)</dd>
-		<dd>Critical Thinking</dd>
+		<dd ng-repeat="gened in term.gened">{{gened}}</dd>
 	</dl>
 	<table ng-repeat="session in term.sessions">
 		<caption>{{session.label}} <small>{{session.startDate}} &ndash; {{session.endDate}}</small></caption>
@@ -44,8 +43,7 @@
 					<p ui-if="section.description">{{section.description}}</p>
 					<dl ui-if="section.gened" class="gened">
 						<dt>Satisfies <abbr title="General Education">Gen Ed</abbr> requirements</dt>
-						<dd>Quantitative Skills (CORE)</dd>
-						<dd>Critical Thinking</dd>
+						<dd ng-repeat="gened in section.gened">{{gened}}</dd>
 					</dl>
 				</td>
 			</tr>

@@ -388,10 +388,12 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		});
 	};
 	
-	
+	var gened = [ 'Quantitative Skills (CORE)', 'Critical Thinking' ];
+
 	var terms = [
 		{
 			label: 'Spring 2013',
+			gened: gened,
 			sessions: [
 				{
 					label: 'Regular Academic Session',
@@ -426,7 +428,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 									endTime: '08:00 PM'
 								}
 							],
-							gened: true,
+							gened: gened,
 							label: 'INTRO TO FINANCIAL ACCOUNTING',
 							description: 'The concepts and issues associated with corporate financial reporting. Particular emphasis is placed on understanding the role of financial accounting in the economy and how different accounting methods affect the financial statements.'
 						},
@@ -476,7 +478,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 									endTime: '08:50 AM'
 								}
 							],
-							gened: true
+							gened: gened
 						},	
 						{
 							id: '0005',
