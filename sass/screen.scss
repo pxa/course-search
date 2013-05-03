@@ -868,14 +868,6 @@ body > header {
 		text-align: center;
 	}
 	
-	caption {
-		color: $color-7;
-		font-size: em($r);
-		font-weight: bold;
-		margin: 1.5em 0 0.5em 1rem;
-		text-align: left;
-	}
-	
 	abbr {
 		border-bottom: 1px dotted $color-6;
 	}
@@ -891,8 +883,18 @@ body > header {
 	}
 	
 	table {
+		@include text-shadow;
 		border: 1px solid $color-2;
+		border-bottom-color: $color-3;
 		width: 100%;
+	}
+	
+	caption {
+		color: $color-7;
+		font-size: em($r);
+		font-weight: bold;
+		margin: 1.5em 0 0.5em 1rem;
+		text-align: left;
 	}
 	
 	thead {
@@ -902,48 +904,13 @@ body > header {
 	tbody {
 		background-color: #fff;
 		
-		tr:first-child:hover {
+		&:hover {
 			background-color: $cream;
-			
-			+ tr {
-				background-color: $cream;
-				
-				strong {
-					border-color: $color-3;
-				}
-			}
-		}
-	}
-	
-	tr {
-		border-top: 1px solid $color-2;
-	
-		+ tr {
-			border-width: 0;
-			
-			td:first-child {
-				padding: 0 1rem 1rem;
-				white-space: inherit;
-			}
-			
-			strong, p {
-				border-top: 1px solid $color-2;
-				display: block;
-				padding-top: 1rem;
-			}
-			
-			p {
-				margin: 0;
-			}
-			
-			strong + p {
-				border-width: 0;
-				padding-top: 0;
-			}
 		}
 	}
 	
 	th, td {
+		font-size: em($s);
 		padding: 0.5rem;
 		text-align: left;
 		
@@ -953,25 +920,109 @@ body > header {
 		
 		&:first-child {
 			padding-left: 1rem;
-			white-space: nowrap;
 		}
 		
 		&:last-child {
 			padding-right: 1rem;
 		}
 		
-		&:nth-child(3), &:nth-child(5), &:nth-child(6) {
+		&:nth-child(3), &:nth-child(6) {
 			text-align: right;
 		}
-	}
-	
-	th {
-		font-size: em($s);
 	}
 	
 	td {
 		font-size: em($s);
 		line-height: 1.5;
+		
+		&:nth-child(5) {
+			text-align: right;
+		}
+		
+		&:nth-child(6) {
+			
+			a {
+				@extend .btn;
+				font-weight: bold;
+			}
+		}
+	}
+	
+	tr {
+		border-top: 1px solid $color-3;
+		
+		&:first-child td:first-child {
+			font-weight: bold;
+			white-space: nowrap;
+		}
+		
+		+ tr:not(:last-child) {
+			border-width: 0;
+			
+			td {
+				padding: 0 0.5rem 0.5rem;
+				
+				&:nth-child(2) {
+					text-align: right;
+				}
+			}
+		}
+	
+		~ :last-child {
+			border-width: 0;
+			
+			td:first-child {
+				padding: 0.5rem 1rem 1rem;
+				white-space: inherit;
+			}
+			
+			p {
+				margin: 0;
+			}
+			
+			.gened {
+				font-size: em($m);
+				margin-top: 0;
+			}
+		
+			* + .gened {
+				margin-top: 1rem;
+			}
+		}
+	}
+}
+
+.gened { // dl
+	@extend %grid;
+	@include border-radius;
+	background-color: $cream;
+	color: $color-7;
+	margin: 1em 0 0;
+	padding: 0.5em 1em;
+	
+	> * {
+		@extend %grid-item;
+		font-size: em($s);
+		vertical-align: baseline;
+	}
+	
+	dt {
+		font-weight: bold;
+		margin: 0 1em 0 0;
+	}
+	
+	dd {
+		margin: 0;
+				
+		& + dd {
+			margin-left: 0.5em;
+			
+			&::before {
+				content: '\2022';
+				color: $color-5;
+				padding-right: 0.5em;
+			}
+		}
 	}
 }
 

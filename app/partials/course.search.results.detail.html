@@ -14,29 +14,39 @@
 
 <div ng-repeat="term in terms" class="sections">
 	<h3>{{term.label}}</h3>
+	<dl class="gened">
+		<dt>Satisfies <abbr title="General Education">Gen Ed</abbr> requirements</dt>
+		<dd>Quantitative Skills (CORE)</dd>
+		<dd>Critical Thinking</dd>
+	</dl>
 	<table ng-repeat="session in term.sessions">
 		<caption>{{session.label}} <small>{{session.startDate}} &ndash; {{session.endDate}}</small></caption>
 		<thead>
 			<th>Section</th>
 			<th>Instructor</th>
-			<th>Availability</th>
+			<th title="Available / Total"><abbr>Seats</abbr></th>
 			<th>Location</th>
 			<th>Time</th>
 			<th title="Add to plan"><abbr>Add</abbr></th>
 		</thead>
 		<tbody ng-repeat="section in session.sections">
-			<tr>
-				<td>{{section.id}} {{section.component}}</td>
-				<td>{{section.instructor}}</td>
-				<td>{{section.enrollment.available}}/{{section.enrollment.total}}</td>
-				<td>{{section.location.building}} {{section.location.room}}</td>
-				<td>{{section.day}} <time>{{section.startTime}} &ndash; {{section.endTime}}</time></td>
-				<td><a>+</a></td>
+			<tr ng-repeat="meeting in section.meetings">
+				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.id}} {{section.component}}</td>
+				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.instructor}}</td>
+				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.enrollment.available}}/{{section.enrollment.total}}</td>
+				<td>{{meeting.building}} {{meeting.room}}</td>
+				<td>{{meeting.day}} <time>{{meeting.startTime}} &ndash; {{meeting.endTime}}</time></td>
+				<td ui-if="$first" rowspan="{{section.meetings.length}}"><a href>+</a></td>
 			</tr>
-			<tr ui-if="section.label || section.description">
+			<tr ui-if="section.label || section.description || section.gened">
 				<td colspan="6">
-					<strong>{{section.label}}</strong>
-					<p>{{section.description}}</p>
+					<em ui-if="section.label">{{section.label}}</em>
+					<p ui-if="section.description">{{section.description}}</p>
+					<dl ui-if="section.gened" class="gened">
+						<dt>Satisfies <abbr title="General Education">Gen Ed</abbr> requirements</dt>
+						<dd>Quantitative Skills (CORE)</dd>
+						<dd>Critical Thinking</dd>
+					</dl>
 				</td>
 			</tr>
 		</tbody>

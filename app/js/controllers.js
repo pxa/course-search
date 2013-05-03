@@ -403,10 +403,30 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 							component: 'Lecture',
 							instructor: 'Dr. Manny',
 							enrollment: { available: 3, total: 20 },
-							location: { building: 'Business School', room: '219' },
-							day: 'Mon, Wed',
-							startTime: '08:00 AM',
-							endTime: '08:50 AM',
+							meetings: [
+								{
+									building: 'Business School',
+									room: '219',
+									day: 'Mon, Wed',
+									startTime: '08:00 AM',
+									endTime: '08:50 AM'
+								},
+								{
+									building: 'Business School',
+									room: '203',
+									day: 'Thu',
+									startTime: '04:00 PM',
+									endTime: '05:15 PM'
+								},
+								{
+									building: 'HPER',
+									room: '150',
+									day: 'Sun',
+									startTime: '07:00 PM',
+									endTime: '08:00 PM'
+								}
+							],
+							gened: true,
 							label: 'INTRO TO FINANCIAL ACCOUNTING',
 							description: 'The concepts and issues associated with corporate financial reporting. Particular emphasis is placed on understanding the role of financial accounting in the economy and how different accounting methods affect the financial statements.'
 						},
@@ -415,10 +435,63 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 							component: 'Lecture',
 							instructor: 'Dr. Manny',
 							enrollment: { available: 3, total: 20 },
-							location: { building: 'Business School', room: '219' },
-							day: 'Mon, Wed',
-							startTime: '08:00 AM',
-							endTime: '08:50 AM'
+							meetings: [
+								{
+									building: 'Business School',
+									room: '219',
+									day: 'Mon, Wed',
+									startTime: '08:00 AM',
+									endTime: '08:50 AM'
+								}
+							],
+							label: 'Introduction to Financial Accounting'
+						},
+						{
+							id: '0003',
+							component: 'Lecture',
+							instructor: 'Dr. Manny',
+							enrollment: { available: 3, total: 20 },
+							meetings: [
+								{
+									building: 'Business School',
+									room: '219',
+									day: 'Mon, Wed',
+									startTime: '08:00 AM',
+									endTime: '08:50 AM'
+								}
+							],
+							description: 'The concepts and issues associated with corporate financial reporting. Particular emphasis is placed on understanding the role of financial accounting in the economy and how different accounting methods affect the financial statements.'
+						},
+						{
+							id: '0004',
+							component: 'Lecture',
+							instructor: 'Dr. Manny',
+							enrollment: { available: 3, total: 20 },
+							meetings: [
+								{
+									building: 'Business School',
+									room: '219',
+									day: 'Mon, Wed',
+									startTime: '08:00 AM',
+									endTime: '08:50 AM'
+								}
+							],
+							gened: true
+						},	
+						{
+							id: '0005',
+							component: 'Lecture',
+							instructor: 'Dr. Manny',
+							enrollment: { available: 3, total: 20 },
+							meetings: [
+								{
+									building: 'Business School',
+									room: '219',
+									day: 'Mon, Wed',
+									startTime: '08:00 AM',
+									endTime: '08:50 AM'
+								}
+							]
 						}
 					]
 				}
