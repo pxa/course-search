@@ -38,7 +38,7 @@
 							<input type="checkbox" ng-model="facetB.value" ng-click="checkFacets()" />
 							{{facetB.label}}
 						</label>
-						<h2 ui-if="!hasValue && hasLabel">{{facetB.label}} <small ui-if="hasTitle">{{facetB.title}}</small></h2>
+						<h2 ui-if="!hasValue && hasLabel">{{facetB.label}} <small ui-if="hasTitle">({{facetB.title}})</small></h2>
 						<hr ui-if="!hasValue && !hasLabel && !$first" />
 						<div ng-repeat="facetC in facetB.facets">
 							<label ui-if="!facetC.exclude" ng-class="{ active: facetC.value }">

@@ -502,16 +502,23 @@ body > header {
 	h3 {
 		@include adjust-font-size-to($r, 1);
 		@include border-top-radius;
-		@extend %interactive;
+		@include text-shadow;
+		background-color: $color-2;
+		border: 1px solid $color-3;
+		color: $color-5;
 		margin: 0em 0 0;
 		padding: 0 0.5em;
-		
-		&::before {
-			content: 'select';
-			float: right;
-			font-size: em($s);
-			font-style: italic;
-			font-weight: normal;
+	
+		&[ng-click] {
+			@extend %interactive;
+
+			&::before {
+				content: 'select';
+				float: right;
+				font-size: em($s);
+				font-style: italic;
+				font-weight: normal;
+			}
 		}
 		
 		& + label {
@@ -519,12 +526,24 @@ body > header {
 		}
 	}
 	
-	label {
+	p, label {
 		border-bottom: 1px solid $color-2;
-		color: $color-6;
+		color: $color-7;
+		padding-left: 0.5em;
+	}
+	
+	.empty { // p
+		@include text-shadow;
+		color: $color-5;
+		font-size: em($s);
+		font-style: italic;
+		padding: 0.5em 0;
+		text-align: center;
+	}
+	
+	label {
 		cursor: pointer;
 		display: block;
-		padding-left: 0.5em;
 		
 		&:hover {
 			background-color: $color-2;

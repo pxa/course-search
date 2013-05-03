@@ -164,8 +164,25 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	$scope.searchCourses = function($event) {
 		if( $event )
 			$event.preventDefault();
-		if( validate() && $scope.search.query.length )
+		if( validate() && $scope.search.query.length ) {
 			$state.transitionTo('course.search.results.list', { criteriaKey: $scope.search.criteria.key, query: $scope.search.query });
+			
+			var params = { searchQuery: 'csci-b', length: 20 };
+			
+			$http.get('/sissrarm-cs-kart/myplan/course/s/json', { params: params })
+			.success(function(data, status) {
+				console.log(data, status);
+				
+				$scope.search.query = data.query;
+				$scope.search.placeholder = data.placeholder;
+				$scope.search.examples = data.examples;
+				$scope.search.criteria = data.criteria;
+				$scope.search.filters = data.filters;
+			})
+			.error(function(data, status, headers, config) {
+				console.log(data, status, headers, config);
+			});
+		}
 	};
 	
 	$scope.checkFacets = function() {

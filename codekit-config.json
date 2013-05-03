@@ -243,17 +243,14 @@
       "outputAbbreviatedPath" : "\/config\/testacular-e2e.conf.min.js",
       "fileType" : 64
     },
-    "\/sass\/lib\/susy\/_settings.scss" : {
+    "\/app\/index.html" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
-      "fileType" : 4,
-      "debugStyle" : 0
+      "inputAbbreviatedPath" : "\/app\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/sass\/_extensions.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -267,14 +264,17 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/app\/index.html" : {
+    "\/sass\/lib\/susy\/_settings.scss" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/index.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
+      "fileType" : 4,
+      "debugStyle" : 0
     },
     "\/app\/css\/screen.css" : {
       "ignoreWasSetByUser" : 0,

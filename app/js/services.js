@@ -110,7 +110,7 @@ angular.module('courseSearchApp.services', ['ngResource'])
 					value: false,
 					facets: [
 						{ label: 'Scheduled classes', facets: scheduledTerms },
-						{ label: 'All courses', title: '(including scheduled classes)', facets: projectedTerms }
+						{ label: 'All courses', title: 'including scheduled classes', facets: projectedTerms }
 					]
 				}
 			]

@@ -17,12 +17,24 @@
 	<div ui-if="$state.includes('course.search.results.list')">
 		<h2>Filters</h2>
 		<div ng-repeat="facetGroup in search.filters.facets">
-			<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
-			<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">
-				<input type="checkbox" ng-model="facet.value" />
-				{{facet.label}}
-				<small>{{facet.count}}</small>
-			</label>
+			<div ng-switch="facetGroup.facets.length">
+				<div ng-switch-when="0">
+					<h3>{{facetGroup.label}}</h3>
+					<p class="empty">No matches</p>
+				</div>
+				<div ng-switch-when="1">
+					<h3>{{facetGroup.label}}</h3>
+					<p>{{facetGroup.facets[0].label}}</p>
+				</div>
+				<div ng-switch-default>
+					<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
+					<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">
+						<input type="checkbox" ng-model="facet.value" />
+						{{facet.label}}
+						<small>{{facet.count}}</small>
+					</label>
+				</div>
+			</div>
 		</div>
 	</div>
 	
