@@ -46,24 +46,87 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 					// Current page default
 					$scope.currentPage = parseInt($state.params.page) || 1;
 					
+					var pageHasCache = function(page) {
+						// No cache found
+						if( !$scope.pageCache[page] ) {
+						
+							// Form a new cache for the current page
+							for( var i = 0, start = (page - 1) * $scope.resultsPerPage, pageResults = []; i < $scope.resultsPerPage; i++ ) {
+								var r = $scope.resultsCache[start + i];
+								if( r )
+									pageResults.push(r);
+							}
+					
+							if( pageResults.length ) {
+								console.log('generating new page cache', page);
+								$scope.pageCache[page] = pageResults;
+							}
+						}
+						
+						return angular.isDefined($scope.pageCache[page]);
+					};
+					
+					var preloadResults = function(page) {
+					
+						// Ignore if page is already cached
+						if( pageHasCache(page) )
+							return;
+							
+						// Get new set of results for this page
+						$scope.searchCourses(page, false, function() {
+							console.log('preloaded page', page);
+						});
+					};
+
+					var loadResultsFromCache = function(page) {
+						
+						// Attempt to load from page cache
+						if( pageHasCache(page) ) {
+						
+							console.log('transitioning to page', page);
+							
+							$scope.results = $scope.pageCache[page];
+							
+							// Since page defaults to `1`, clear it to clean the url
+							$state.params.page = page == 1 ? null : page;
+						
+							// Because `$state.transitionTo()` wrongly thinks we aren't navigating with different parameters,
+							// we have to manually transition.
+
+							// Transition
+							$location.url($state.$current.navigable.url.format($state.params));
+							// Save the state for dynamic urls
+							dynamicStateController('course.search')($rootScope, $state);
+						
+							return true;
+						}
+						
+						console.log('no cache for page', page);
+						return false;
+					};
+					
+					var loadPage = function(page) {
+						
+						if( loadResultsFromCache(page) ) {
+							// Dynamically load the next cache set
+							//preloadResults(page + 1);
+							return;
+						}
+						
+						// Get new set of results for this page
+						$scope.searchCourses(page, false, function() {
+							console.log('gifts for page', page);
+							//loadResultsFromCache(page);
+						});
+					};
+					
+					// Deep linked, but attempt to fulfill request
+					if( !$scope.results.length )
+						loadPage($scope.currentPage);
+					
 					// Pagination handler
 					$scope.selectPage = function(page) {
-						
-						// Since page defaults to `1`, clear it to clean the url
-						page = page == 1 ? null : page;
-						$state.params.page = page;
-						
-						// Because `$state.transitionTo()` wrongly thinks we aren't navigating with different parameters,
-						// we have to manually transition.
-				
-						// Transition
-						$location.url($state.$current.navigable.url.format($state.params));
-						// Save the state for dynamic urls
-						dynamicStateController('course.search')($rootScope, $state);
-						// Scroll to the top
-						$anchorScroll();
-						
-						// Get new set of $scope.search.results
+						loadPage(page);
 					};
 					
 					/*
@@ -87,7 +150,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 					$scope.resultsListUrl = ['#/search', $state.params.criteriaKey, $state.params.query].join('/');
 				
 					// Find the course for the given parameter
-					$scope.course = $scope.results[$state.params.courseId];
+					$scope.course = $scope.resultsCache[$state.params.courseId];
 					
 					// Save the state
 					dynamicStateController('course.search')($rootScope, $state);

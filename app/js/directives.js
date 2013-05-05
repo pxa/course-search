@@ -10,6 +10,17 @@ angular.module('courseSearchApp.directives', [])
 		};
 	}])
   
+	// Upon DOM render, scroll to the top
+	.directive('scrollToTop', function($timeout, $anchorScroll) {
+		return function(scope, elm, attrs) {
+
+			$timeout(function() {
+				$anchorScroll();
+			});
+
+		} 
+	})
+
 	// http://stackoverflow.com/a/14803274
 	// http://plnkr.co/edit/gSeQL6XPaMsNSnlXwgHt
 	.directive('selectAll', function() {

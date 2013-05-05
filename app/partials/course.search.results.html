@@ -9,7 +9,7 @@
 	<div>
 		<h2>Search</h2>
 		<div class="searchbox">
-			<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" ui-keydown="{ 'enter': 'searchCourses($event)' }" />
+			<input id="searchInput" ng-model="search.query" placeholder="{{search.placeholder}}" ui-keydown="{ 'enter': 'searchCourses()' }" />
 			<button ng-click="searchCourses()">Go</button>
 		</div>
 	</div>

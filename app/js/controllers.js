@@ -10,6 +10,8 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	
 	//console.log(searchService);
 	$scope.search = searchService;
+	$scope.resultsCache = [];
+	$scope.pageCache = [];
 	
 	var selectedFacets = function(source, arr) {
 	
@@ -161,23 +163,142 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		return valid;
 	};
 	
-	$scope.searchCourses = function($event) {
-		if( $event )
-			$event.preventDefault();
+	/*
+	var Course = function(config) {
+		this.id = config.id;
+		this.label = config.label;
+		this.slug = config.slug;
+		
+		
+	}
+	*/
+	
+	var Course = function(config, context) {
+		// Apply all properties from the source object
+		for( var key in config )
+			this[key] = config[key];
+		
+		this.context = context;
+		
+		// Need min credits, not max
+		if( !this.credits.value )
+			this.credits.value = this.credits.max;
+		
+		this.offering = [
+			{
+				year: 2013,
+				term: 'Fall',
+				offering: getRandomInt(0,2)
+			},
+			{
+				year: 2014,
+				term: 'Spring',
+				offering: getRandomInt(0,2)
+			},
+			{
+				year: 2014,
+				term: 'Summer',
+				offering: getRandomInt(0,2)
+			}
+		];
+		
+		// Retain restore
+		this._bookmark = this.bookmark;
+		
+		return this;
+	};
+	Course.prototype = {
+	
+		get desc() {
+			return this.description ? this.description : this.bulletinDescription;
+		},
+		
+		get bookmarked() {
+			return this.bookmark != null;
+		},
+		
+		set bookmarked(val) {
+			if( val ) { // Bookmark and save restore
+				this.bookmark = this._bookmark = Date.now();
+				this.bookmarkAddedAnimation();
+			}
+			else { // Undo bookmark but retain restore
+				this.bookmark = null;
+				this.bookmarkRemovedAnimation();
+			}
+		},
+		
+		restoreBookmark: function() {
+			this.bookmark = this._bookmark;
+			this.bookmarkAddedAnimation();
+		},
+		
+		bookmarkAddedAnimation: function() {
+			$scope.bookmarkAdded = true;
+			$timeout(function() { // Remove animation class after the animation completes
+				$scope.bookmarkAdded = false;
+			}, 250);
+		},
+		
+		bookmarkRemovedAnimation: function() {
+			$scope.bookmarkRemoved = true;
+			$timeout(function() { // Remove animation class after the animation completes
+				$scope.bookmarkRemoved = false;
+			}, 500);
+		},
+		
+		get next() {
+			return $scope.results[this.index + 1] || null;
+		},
+		
+		get prev() { // Can't use `previous()`, for whatever reason.
+			return this.index == 0 ? null : ($scope.results[this.index - 1] || null);
+		},
+		
+		get url() {
+			return ['#/search', this.context.criteria.key, this.context.query, this.slug].join('/');
+		}
+	};
+	
+	$scope.searchCourses = function(page, transition, successCallback) {
+		page = page ? page : 1;
+		transition = transition ? transition : true;
+
 		if( validate() && $scope.search.query.length ) {
-			$state.transitionTo('course.search.results.list', { criteriaKey: $scope.search.criteria.key, query: $scope.search.query });
-			
-			var params = { searchQuery: 'csci-b', length: 20 };
+
+			// If query or facets changed since last call, clear page and result cache
+
+			var params = { searchQuery: $scope.search.query, length: 2 * $scope.resultsPerPage, start: (page - 1) * $scope.resultsPerPage };
 			
 			$http.get('/sissrarm-cs-kart/myplan/course/s/json', { params: params })
 			.success(function(data, status) {
-				console.log(data, status);
+
+				// Transform results
+				for( var i = 0, n = data.results.length; i < n; i++ ) {
+					var r = data.results[i];
+					r.result.index = r.index;
+					
+					// Translate the result into a course model	
+					var course = new Course(r.result, data);
+					
+					// Reassign
+					data.results[i] = course;
+					
+					// Load the course into cache, indexed by index and unique id
+					$scope.resultsCache[course.index] = course;
+					$scope.resultsCache[course.slug] = course;
+				}
 				
-				$scope.search.query = data.query;
-				$scope.search.placeholder = data.placeholder;
-				$scope.search.examples = data.examples;
-				$scope.search.criteria = data.criteria;
-				$scope.search.filters = data.filters;
+				$scope.numberOfPages = Math.ceil(data.count / $scope.resultsPerPage);
+				$scope.search = data;
+				
+				if( transition )
+					$state.transitionTo('course.search.results.list', { criteriaKey: $scope.search.criteria.key, query: $scope.search.query, page: page });
+				
+				if( angular.isDefined(successCallback) )
+					successCallback();
+							
+				console.log(data, status);
 			})
 			.error(function(data, status, headers, config) {
 				console.log(data, status, headers, config);
@@ -282,7 +403,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		console.log(data, '|', status, '|', headers, '|', config);
 	});
 	*/
-
+/*
 	$http.get('json/search.json').success(function(data) {
 	
 		// Transform the returned data as a temporary patch, until better formed data is generated dynamically
@@ -304,7 +425,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			 * 0: Not offered
 			 * 1: Typically offered
 			 * 2: Offered
-			 */
+			 *
 			 
 			var bookmark = getRandomInt(0,1) == 0 ? null : Date.now();
 			//bookmark = null;
@@ -386,6 +507,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		$scope.search.results = courses.results;
 		$scope.numberOfPages = Math.ceil($scope.search.count / $scope.resultsPerPage);
 	});
+	*/
 	
 	$scope.openFacetGroupDialog = function(facetGroup) {
 	

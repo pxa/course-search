@@ -644,8 +644,17 @@ body > header {
 
 .course {
 	
-	> a h2:hover {
-		border-color: $color-3;
+	> a {
+		text-decoration: none;
+		
+		&:visited h2 {
+			border-color: inherit;
+		}
+		
+		&:hover h2 {
+			background-color: $cream;
+			border-color: $color-3;
+		}
 	}
 	
 	> div {
@@ -704,33 +713,42 @@ body > header {
 	}
 	
 	h2 {
-		@extend %grid;
+		//@extend %grid;
 		@include border-top-radius;
 		background-color: #fff;
 		border: 1px solid $color-2;
+		border-color: $color-3 $color-2;
+		border-top-color: $color-2;
 		font-size: em($r);
 		font-weight: normal;
-		line-height: 2;
+		line-height: 1.2;
 		margin: 0;
+		//padding: 0.4em 0;
 		padding-right: 6em;
+		padding: 0.5em 6em 0.5em 1em;
 		position: relative;
 		
 		> * {
-			@extend %grid-item;
+			//@extend %grid-item;
 		}
 		
-		span:first-child { // Campus
+		> span:first-child { // Campus
 			@include border-top-left-radius;
 			@include text-shadow;
 			background-color: $color-2;
 			border-right: 1px solid $color-2;
 			color: $color-5;
 			padding: 0 0.5em;
+			display: none;
+		}
+		
+		strong {
+			padding-right: 0.5em;
 		}
 		
 		strong, strong + span { // Course Number, Course Name
 			color: $color-7;
-			padding-left: 0.5em;
+			//padding-left: 0.5em;
 		}
 		
 		small { // Credits
@@ -738,8 +756,8 @@ body > header {
 			display: block;
 			font-size: em($s);
 			font-weight: bold;
-			line-height: 2rem;
-			right: 0.5rem;
+			line-height: 2.3rem;
+			right: 1rem;
 			text-align: right;
 			top: 0;
 			position: absolute;

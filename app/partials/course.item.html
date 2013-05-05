@@ -1,10 +1,13 @@
-<div class="course" id="course-{{course.index}}">
+<div class="course" id="{{course.id}}">
 	<a ng-href="{{course.url}}">
 		<h2>
 			<span>{{course.campus}}</span>
-			<strong>{{course.subject}}</strong>
-			<span>{{course.title}}</span>
-			<small>{{course.credits}} credits</small>
+			<strong>{{course.code}}</strong>
+			<span>{{course.label}}</span>
+			<small>
+				<span ui-if="course.credits.min">{{course.credits.min}}&ndash;</span>{{course.credits.value}}
+				<span ng-pluralize count="course.credits.value" when="{ 'one': 'credit', 'other': 'credits' }"></span>
+			</small>
 		</h2>
 	</a>
 	<div>
@@ -27,6 +30,6 @@
 				<span ng-switch-when="2">{{offering.term}} {{offering.year}}</span>
 			</dd>
 		</dl>
-		<p>{{course.description}}</p>
+		<p>{{course.desc}}</p>
 	</div>
 </div>
