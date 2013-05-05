@@ -30,6 +30,6 @@
 				<span ng-switch-when="2">{{offering.term}} {{offering.year}}</span>
 			</dd>
 		</dl>
-		<p>{{course.desc}}</p>
+		<p ui-if="course.desc">{{course.desc}}</p>
 	</div>
 </div>

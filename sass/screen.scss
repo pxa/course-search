@@ -857,6 +857,10 @@ body > header {
 	li + li {
 		margin-top: 1em;
 	}
+	
+	&.loading ol {
+		opacity: 0.5;
+	}
 }
 
 .pager { // nav

@@ -85,6 +85,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 						
 							console.log('transitioning to page', page);
 							
+							$scope.isLoadingResults = false;
 							$scope.results = $scope.pageCache[page];
 							
 							// Since page defaults to `1`, clear it to clean the url
@@ -113,11 +114,10 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 							return;
 						}
 						
+						$scope.isLoadingResults = true;
+						
 						// Get new set of results for this page
-						$scope.searchCourses(page, false, function() {
-							console.log('gifts for page', page);
-							//loadResultsFromCache(page);
-						});
+						$scope.searchCourses(page, false);
 					};
 					
 					// Deep linked, but attempt to fulfill request

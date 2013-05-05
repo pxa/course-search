@@ -5,7 +5,7 @@
 		<p>Try widening your search or <a href="#/search">start over</a>.</p>
 	</div>
 
-	<div ng-switch-default class="results">
+	<div ng-switch-default class="results" ng-class="{ loading: isLoadingResults }">
 	
 		<div class="pager">
 			<p><span ng-show="numberOfPages > 1">Page {{currentPage}} of </span>{{search.count}}
