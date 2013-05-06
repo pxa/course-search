@@ -35,7 +35,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 				templateUrl: 'partials/course.search.results.html',
 				controller: function($scope, $state) {
 					// Override the query based on the parameter, once the controller initiates
-					$scope.search.query = $state.params.query;
+					$scope.searchModel.query = $state.params.query;
 				}
 			})
 			.state('course.search.results.list', {

@@ -10,6 +10,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	
 	//console.log(searchService);
 	$scope.search = searchService;
+	$scope.searchModel = { query: null };
 	$scope.resultsCache = [];
 	$scope.pageCache = [];
 	
@@ -260,19 +261,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		}
 	};
 	
-	$scope.searchCourses = function(page, transition, successCallback) {
-		page = page ? page : 1;
-		transition = transition ? transition : true;
+	var searchQueryService = function(params, successCallback) {
+		$http.get('/sissrarm-cs-kart/myplan/course/s/json', { params: params })
+		.success(function(data, status) {
 
-		if( validate() && $scope.search.query.length ) {
-
-			// If query or facets changed since last call, clear page and result cache
-
-			var params = { searchQuery: $scope.search.query, length: 2 * $scope.resultsPerPage, start: (page - 1) * $scope.resultsPerPage };
-			
-			$http.get('/sissrarm-cs-kart/myplan/course/s/json', { params: params })
-			.success(function(data, status) {
-
+			if( data.results && data.count ) {
 				// Transform results
 				for( var i = 0, n = data.results.length; i < n; i++ ) {
 					var r = data.results[i];
@@ -290,18 +283,43 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 				}
 				
 				$scope.numberOfPages = Math.ceil(data.count / $scope.resultsPerPage);
-				$scope.search = data;
-				
-				if( transition )
-					$state.transitionTo('course.search.results.list', { criteriaKey: $scope.search.criteria.key, query: $scope.search.query, page: page });
-				
-				if( angular.isDefined(successCallback) )
-					successCallback();
-							
-				console.log(data, status);
-			})
-			.error(function(data, status, headers, config) {
-				console.log(data, status, headers, config);
+			}
+
+			$scope.searchModel.query = data.query;
+			$scope.search = data;
+			
+			if( angular.isDefined(successCallback) )
+				successCallback();
+						
+			console.log(data, status);
+		})
+		.error(function(data, status, headers, config) {
+			console.log(data, status, headers, config);
+		});
+	};
+	
+	searchQueryService();
+	
+	$scope.searchCourses = function(page, transition, successCallback) {
+		page = page ? page : 1;
+		transition = transition ? transition : true;
+
+		if( validate() && $scope.searchModel.query.length ) {
+
+			// If query or facets changed since last call, clear page and result cache
+			if( $scope.searchModel.query != $scope.search.query ) {
+				$scope.resultsCache = [];
+				$scope.pageCache = [];
+				$scope.results = [];
+			}
+			
+			var params = { searchQuery: $scope.searchModel.query, length: 2 * $scope.resultsPerPage, start: (page - 1) * $scope.resultsPerPage };
+			
+			searchQueryService(params, function() {
+				if( transition ) {
+					var p = { criteriaKey: $scope.search.criteria.key, query: $scope.search.query, page: page };
+					$state.transitionTo('course.search.results.list', p);
+				}
 			});
 		}
 	};

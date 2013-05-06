@@ -645,10 +645,12 @@ body > header {
 .course {
 	
 	> a {
+		// For unknown reasons, `color` affects the `h2` border color
+		//color: $color-2;
 		text-decoration: none;
 		
 		&:visited h2 {
-			border-color: inherit;
+			border-color: $color-2 $color-2 $color-3 $color-2;
 		}
 		
 		&:hover h2 {
@@ -717,8 +719,7 @@ body > header {
 		@include border-top-radius;
 		background-color: #fff;
 		border: 1px solid $color-2;
-		border-color: $color-3 $color-2;
-		border-top-color: $color-2;
+		border-color: $color-2 $color-2 $color-3 $color-2;
 		font-size: em($r);
 		font-weight: normal;
 		line-height: 1.2;
@@ -733,13 +734,14 @@ body > header {
 		}
 		
 		> span:first-child { // Campus
-			@include border-top-left-radius;
+			//@include border-top-left-radius;
 			@include text-shadow;
-			background-color: $color-2;
-			border-right: 1px solid $color-2;
+			//background-color: $color-2;
+			//border-right: 1px solid $color-2;
 			color: $color-5;
-			padding: 0 0.5em;
-			display: none;
+			//padding: 0 0.5em;
+			//display: none;
+			padding: 0 0.5em 0 0;
 		}
 		
 		strong {
