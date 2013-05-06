@@ -38,6 +38,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		
 		return arr;
 	};
+	
+	// Watch for changes to criteria, to generate a list of only those selected
+	$scope.$watch('search.criteria', function(value) {
+		$scope.selectedCriteria = selectedFacets(value.facets);
+	});
 
 	var ids = function(source) {
 		for( var i = 0, n = source.length, a = []; i < n; i++ )
@@ -313,7 +318,15 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 				$scope.results = [];
 			}
 			
-			var params = { searchQuery: $scope.searchModel.query, length: 2 * $scope.resultsPerPage, start: (page - 1) * $scope.resultsPerPage };
+			var criteriaIds = ids(selectedFacets($scope.search.criteria.facets));
+			var filterIds = ids(selectedFacets($scope.search.filters.facets));
+			var facetIds = criteriaIds.concat(filterIds);
+			
+			var params = {
+				query: $scope.searchModel.query,
+				length: 2 * $scope.resultsPerPage,
+				start: (page - 1) * $scope.resultsPerPage,
+				facet: facetIds };
 			
 			searchQueryService(params, function() {
 				if( transition ) {

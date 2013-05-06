@@ -155,17 +155,6 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap.min.min.js",
       "fileType" : 64
     },
-    "\/app\/js\/filters.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/js\/filters.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/app\/js\/filters.min.js",
-      "fileType" : 64
-    },
     "\/sass\/_functions.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -189,6 +178,15 @@
       "outputAbbreviatedPath" : "\/app\/css\/_modal.css",
       "fileType" : 4,
       "debugStyle" : 0
+    },
+    "\/app\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/app\/template\/tooltip\/tooltip-popup.html" : {
       "ignoreWasSetByUser" : 0,
@@ -243,14 +241,17 @@
       "outputAbbreviatedPath" : "\/config\/testacular-e2e.conf.min.js",
       "fileType" : 64
     },
-    "\/app\/index.html" : {
+    "\/sass\/lib\/susy\/_settings.scss" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/index.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
+      "fileType" : 4,
+      "debugStyle" : 0
     },
     "\/sass\/_extensions.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -264,17 +265,16 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/sass\/lib\/susy\/_settings.scss" : {
-      "ignoreWasSetByUser" : 0,
+    "\/app\/js\/filters.js" : {
+      "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
-      "fileType" : 4,
-      "debugStyle" : 0
+      "inputAbbreviatedPath" : "\/app\/js\/filters.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/app\/js\/filters.min.js",
+      "fileType" : 64
     },
     "\/app\/css\/screen.css" : {
       "ignoreWasSetByUser" : 0,
@@ -625,6 +625,18 @@
       "outputAbbreviatedPath" : "\/test\/e2e\/scenarios.min.js",
       "fileType" : 64
     },
+    "\/sass\/_forms.scss" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/sass\/_forms.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_forms.css",
+      "fileType" : 4,
+      "debugStyle" : 0
+    },
     "\/app\/lib\/angular\/angular-bootstrap-prettify.min.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -635,15 +647,6 @@
       "syntaxCheckerStyle" : 1,
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap-prettify.min.min.js",
       "fileType" : 64
-    },
-    "\/app\/template\/dialog\/message.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/template\/dialog\/message.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
     },
     "\/sass\/lib\/susy\/_grid.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -706,6 +709,15 @@
       "outputAbbreviatedPath" : "\/app\/js\/services.min.js",
       "fileType" : 64
     },
+    "\/app\/template\/dialog\/message.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/template\/dialog\/message.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/scripts\/web-server.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
@@ -726,18 +738,6 @@
       "outputStyle" : 2,
       "shouldRunBless" : 0,
       "outputAbbreviatedPath" : "\/app\/css\/_units.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
-    "\/sass\/_forms.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/_forms.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_forms.css",
       "fileType" : 4,
       "debugStyle" : 0
     },
@@ -772,6 +772,17 @@
       "inputAbbreviatedPath" : "\/app\/template\/carousel\/slide.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/app\/lib\/angular\/angular-mobile.min.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-mobile.min.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-mobile.min.min.js",
+      "fileType" : 64
     },
     "\/sass\/lib\/susy\/_isolation.scss" : {
       "ignoreWasSetByUser" : 0,
@@ -836,6 +847,17 @@
       "inputAbbreviatedPath" : "\/app\/partials\/modal.facet-group.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/app\/lib\/angular\/angular-mobile.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/lib\/angular\/angular-mobile.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-mobile.min.js",
+      "fileType" : 64
     },
     "\/app\/lib\/angular\/angular.js" : {
       "ignoreWasSetByUser" : 0,
