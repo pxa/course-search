@@ -254,11 +254,11 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		},
 		
 		get next() {
-			return $scope.results[this.index + 1] || null;
+			return $scope.resultsCache[this.index + 1] || null;
 		},
 		
 		get prev() { // Can't use `previous()`, for whatever reason.
-			return this.index == 0 ? null : ($scope.results[this.index - 1] || null);
+			return this.index == 0 ? null : ($scope.resultsCache[this.index - 1] || null);
 		},
 		
 		get url() {

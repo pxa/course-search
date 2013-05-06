@@ -155,6 +155,17 @@
       "outputAbbreviatedPath" : "\/app\/lib\/angular\/angular-bootstrap.min.min.js",
       "fileType" : 64
     },
+    "\/app\/js\/filters.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/js\/filters.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/app\/js\/filters.min.js",
+      "fileType" : 64
+    },
     "\/sass\/_functions.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -178,15 +189,6 @@
       "outputAbbreviatedPath" : "\/app\/css\/_modal.css",
       "fileType" : 4,
       "debugStyle" : 0
-    },
-    "\/app\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/index.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
     },
     "\/app\/template\/tooltip\/tooltip-popup.html" : {
       "ignoreWasSetByUser" : 0,
@@ -241,6 +243,15 @@
       "outputAbbreviatedPath" : "\/config\/testacular-e2e.conf.min.js",
       "fileType" : 64
     },
+    "\/app\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/app\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/sass\/lib\/susy\/_settings.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -264,17 +275,6 @@
       "outputAbbreviatedPath" : "\/app\/css\/_extensions.css",
       "fileType" : 4,
       "debugStyle" : 0
-    },
-    "\/app\/js\/filters.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/app\/js\/filters.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/app\/js\/filters.min.js",
-      "fileType" : 64
     },
     "\/app\/css\/screen.css" : {
       "ignoreWasSetByUser" : 0,
