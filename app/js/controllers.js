@@ -45,6 +45,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	$scope.$watch('search.criteria', function(value) {
 		$scope.selectedCriteria = selectedFacets(value.facets);
 	});
+	
+	//$scope.$watch('search.filters.facets', function(value) {
+	//	console.log('filters', selectedFacetIds().length);
+	//});
 
 	var ids = function(source) {
 		for( var i = 0, n = source.length, a = []; i < n; i++ )
@@ -561,6 +565,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			if(result) {
 				// Copy back changes into the original facetGroup object
 				angular.copy(result.facetGroup, facetGroup);
+				$scope.searchCourses();
 			}
 		});
 	};

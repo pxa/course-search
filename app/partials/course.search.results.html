@@ -29,7 +29,7 @@
 				<div ng-switch-default>
 					<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
 					<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">
-						<input type="checkbox" ng-model="facet.value" />
+						<input type="checkbox" ng-model="facet.value" ng-change="searchCourses()" />
 						{{facet.label}}
 						<small>{{facet.count}}</small>
 					</label>
