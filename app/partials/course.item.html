@@ -1,12 +1,12 @@
 <div class="course" id="{{course.id}}">
 	<a ng-href="{{course.url}}">
 		<h2>
-			<span>{{course.campus}}</span>
+			<span title="{{course.campus.title}}">{{course.campus.label}}</span>
 			<strong>{{course.code}}</strong>
 			<span>{{course.label}}</span>
 			<small>
-				<span ui-if="course.credits.min">{{course.credits.min}}&ndash;</span>{{course.credits.value}}
-				<span ng-pluralize count="course.credits.value" when="{ 'one': 'credit', 'other': 'credits' }"></span>
+				<span ui-if="course.credits.min != course.credits.max">{{course.credits.min}}&ndash;</span>{{course.credits.value}}
+				<span ng-pluralize count="course.credits.max" when="{ 'one': 'credit', 'other': 'credits' }"></span>
 			</small>
 		</h2>
 	</a>

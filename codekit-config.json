@@ -252,18 +252,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/sass\/lib\/susy\/_settings.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
-      "outputStyle" : 2,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
     "\/sass\/_extensions.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -273,6 +261,18 @@
       "outputStyle" : 2,
       "shouldRunBless" : 0,
       "outputAbbreviatedPath" : "\/app\/css\/_extensions.css",
+      "fileType" : 4,
+      "debugStyle" : 0
+    },
+    "\/sass\/lib\/susy\/_settings.scss" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
+      "outputStyle" : 2,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
       "fileType" : 4,
       "debugStyle" : 0
     },

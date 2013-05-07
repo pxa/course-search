@@ -12,8 +12,8 @@
 
 <div ng-include="'partials/course.item.html'"></div>
 
-<div ng-repeat="term in terms" class="sections">
-	<h3>{{term.label}}</h3>
+<div ng-repeat="term in course.terms" class="sections">
+	<h3>{{term.desc}}</h3>
 	<dl ui-if="term.gened" class="gened">
 		<dt>Satisfies <abbr title="General Education">Gen Ed</abbr> requirements</dt>
 		<dd ng-repeat="gened in term.gened">{{gened}}</dd>
@@ -28,13 +28,15 @@
 			<th>Time</th>
 			<th title="Add to plan"><abbr>Add</abbr></th>
 		</thead>
-		<tbody ng-repeat="section in session.sections">
+		<tbody ng-repeat="section in session.details">
 			<tr ng-repeat="meeting in section.meetings">
-				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.id}} {{section.component}}</td>
-				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.instructor}}</td>
+				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.sectionCode}} {{section.componentDescr}}</td>
+				<td ui-if="$first" rowspan="{{section.meetings.length}}">
+					<span ng-repeat="instructor in meeting.instructors">{{instructor}}<span>
+				</td>
 				<td ui-if="$first" rowspan="{{section.meetings.length}}">{{section.enrollment.available}}/{{section.enrollment.total}}</td>
 				<td>{{meeting.building}} {{meeting.room}}</td>
-				<td>{{meeting.day}} <time>{{meeting.startTime}} &ndash; {{meeting.endTime}}</time></td>
+				<td>{{meeting.days}} <time>{{meeting.start}} &ndash; {{meeting.end}}</time></td>
 				<td ui-if="$first" rowspan="{{section.meetings.length}}"><a href>+</a></td>
 			</tr>
 			<tr ui-if="section.label || section.description || section.gened">

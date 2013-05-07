@@ -11,6 +11,193 @@ angular.module('courseSearchApp.services', ['ngResource'])
 	});
 })
 
+.factory('searchFactory', function($http) {
+	
+	var SearchFactory = function() {
+
+	};
+	SearchFactory.prototype = {
+		query: null,
+		placeholder: '',
+		examples: null,
+		criteria: null,
+		filters: null,
+		count: 0,
+		resultsPerPage: 20,
+		
+		get numberOfPages() {
+			return Math.ceil(this.count / this.resultsPerPage);
+		},
+		
+		config: function(properties) {
+			// Apply all properties from the source object
+			for( var key in properties )
+				this[key] = properties[key];
+		},
+		
+		search: function(params) {
+			var self = this;
+
+			$http.get('/sissrarm-cs-kart/myplan/course/s/json', { params: params })
+			.success(function(data, status) {
+
+				if( data.results && data.count ) {
+					// Transform results
+					for( var i = 0, n = data.results.length; i < n; i++ ) {
+						var r = data.results[i];
+						r.result.index = r.index;
+						
+						// Translate the result into a course model	
+						var course = new Course(r.result, data);
+						
+						// Reassign
+						data.results[i] = course;
+						
+						// Load the course into cache, indexed by index and unique id
+						//$scope.resultsCache[course.index] = course;
+						//$scope.resultsCache[course.slug] = course;
+					}
+				}
+
+				self.config(data);
+				
+				//if( angular.isDefined(successCallback) )
+				//	successCallback();
+	
+				//console.log('woot', factory, status);
+			})
+			.error(function(data, status, headers, config) {
+				console.log(data, status, headers, config);
+			});
+		}
+	};
+	
+	var factory = new SearchFactory();
+	factory.search();
+		
+	var Course = function(config, context) {
+		// Apply all properties from the source object
+		for( var key in config )
+			this[key] = config[key];
+		
+		this.context = context;
+		
+		// Need min credits, not max
+		if( !this.credits.value )
+			this.credits.value = this.credits.max;
+		
+		this.offering = [
+			{
+				year: 2013,
+				term: 'Fall',
+				offering: getRandomInt(0,2)
+			},
+			{
+				year: 2014,
+				term: 'Spring',
+				offering: getRandomInt(0,2)
+			},
+			{
+				year: 2014,
+				term: 'Summer',
+				offering: getRandomInt(0,2)
+			}
+		];
+		
+		// Retain restore
+		this._bookmark = this.bookmark;
+		
+		return this;
+	};
+	Course.prototype = {
+	
+		get desc() {
+			return this.description ? this.description : this.bulletinDescription;
+		},
+		
+		get bookmarked() {
+			return this.bookmark != null;
+		},
+		
+		set bookmarked(val) {
+			if( val ) { // Bookmark and save restore
+				this.bookmark = this._bookmark = Date.now();
+				this.bookmarkAddedAnimation();
+			}
+			else { // Undo bookmark but retain restore
+				this.bookmark = null;
+				this.bookmarkRemovedAnimation();
+			}
+		},
+		
+		restoreBookmark: function() {
+			this.bookmark = this._bookmark;
+			this.bookmarkAddedAnimation();
+		},
+		
+		bookmarkAddedAnimation: function() {
+			$scope.bookmarkAdded = true;
+			$timeout(function() { // Remove animation class after the animation completes
+				$scope.bookmarkAdded = false;
+			}, 250);
+		},
+		
+		bookmarkRemovedAnimation: function() {
+			$scope.bookmarkRemoved = true;
+			$timeout(function() { // Remove animation class after the animation completes
+				$scope.bookmarkRemoved = false;
+			}, 500);
+		},
+		
+		get next() {
+			return $scope.resultsCache[this.index + 1] || null;
+		},
+		
+		get prev() { // Can't use `previous()`, for whatever reason.
+			return this.index == 0 ? null : ($scope.resultsCache[this.index - 1] || null);
+		},
+		
+		get url() {
+			return ['#/search', this.context.criteria.key, this.context.query, this.slug].join('/');
+		}
+	};
+
+	/*
+	$scope.searchCourses = function(page, transition, successCallback) {
+		page = page ? page : 1;
+		transition = transition ? transition : true;
+
+		if( validate() && $scope.searchModel.query.length ) {
+
+			// If query or facets changed since last call, clear page and result cache
+			if( $scope.searchModel.query != $scope.search.query ) {
+				$scope.resultsCache = [];
+				$scope.pageCache = [];
+				$scope.results = [];
+			}
+			
+			var criteriaIds = ids(selectedFacets($scope.search.criteria.facets));
+			var filterIds = ids(selectedFacets($scope.search.filters.facets));
+			var facetIds = criteriaIds.concat(filterIds);
+			
+			var params = {
+				query: $scope.searchModel.query,
+				length: 2 * $scope.resultsPerPage,
+				start: (page - 1) * $scope.resultsPerPage,
+				facet: facetIds };
+			
+			searchQueryService(params, function() {
+				if( transition ) {
+					var p = { criteriaKey: $scope.search.criteria.key, query: $scope.search.query, page: page };
+					$state.transitionTo('course.search.results.list', p);
+				}
+			});
+		}
+	};
+	*/
+	return factory;
+})
+
 .factory('searchService', function($http) {
 
 	var k = 0;

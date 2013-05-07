@@ -8,6 +8,8 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		console.log($event);	
 	};
 	
+	//console.log(searchFactory);
+	
 	//console.log(searchService);
 	$scope.search = searchService;
 	$scope.searchModel = { query: null };
@@ -274,10 +276,9 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 				// Transform results
 				for( var i = 0, n = data.results.length; i < n; i++ ) {
 					var r = data.results[i];
-					r.result.index = r.index;
 					
 					// Translate the result into a course model	
-					var course = new Course(r.result, data);
+					var course = new Course(r, data);
 					
 					// Reassign
 					data.results[i] = course;
@@ -285,8 +286,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 					// Load the course into cache, indexed by index and unique id
 					$scope.resultsCache[course.index] = course;
 					$scope.resultsCache[course.slug] = course;
+					
+					
 				}
-				
+
 				$scope.numberOfPages = Math.ceil(data.count / $scope.resultsPerPage);
 			}
 
@@ -296,10 +299,10 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			if( angular.isDefined(successCallback) )
 				successCallback();
 						
-			console.log(data, status);
+			console.log(params, data, status);
 		})
 		.error(function(data, status, headers, config) {
-			console.log(data, status, headers, config);
+			console.log('ERROR', data, status, config);
 		});
 	};
 	
@@ -308,9 +311,13 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	$scope.searchCourses = function(page, transition, successCallback) {
 		page = page ? page : 1;
 		transition = transition ? transition : true;
-
+		
+		console.log('searching', $scope.searchModel.query, params);
+		
 		if( validate() && $scope.searchModel.query.length ) {
-
+		
+			console.log('search validated');
+			
 			// If query or facets changed since last call, clear page and result cache
 			if( $scope.searchModel.query != $scope.search.query ) {
 				$scope.resultsCache = [];
@@ -324,7 +331,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			
 			var params = {
 				query: $scope.searchModel.query,
-				length: 2 * $scope.resultsPerPage,
+				count: 2 * $scope.resultsPerPage,
 				start: (page - 1) * $scope.resultsPerPage,
 				facet: facetIds };
 			
