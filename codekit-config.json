@@ -178,15 +178,15 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/sass\/lib\/susy\/_settings.scss" : {
+    "\/sass\/components\/_modal.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
+      "inputAbbreviatedPath" : "\/sass\/components\/_modal.scss",
       "outputStyle" : 2,
       "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
+      "outputAbbreviatedPath" : "\/app\/css\/_modal.css",
       "fileType" : 4,
       "debugStyle" : 0
     },
@@ -264,15 +264,15 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/sass\/components\/_modal.scss" : {
+    "\/sass\/lib\/susy\/_settings.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/components\/_modal.scss",
+      "inputAbbreviatedPath" : "\/sass\/lib\/susy\/_settings.scss",
       "outputStyle" : 2,
       "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/app\/css\/_modal.css",
+      "outputAbbreviatedPath" : "\/app\/css\/_settings.css",
       "fileType" : 4,
       "debugStyle" : 0
     },

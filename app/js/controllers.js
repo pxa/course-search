@@ -271,9 +271,9 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 			return ['#/search', this.context.criteria.key, this.context.query, this.slug].join('/');
 		}
 	};
-	
+
 	var searchQueryService = function(params, successCallback) {
-		$http.get('/sissrarm-cs-kart/myplan/course/s/json', { params: params })
+		$http.get(CONFIG.api.search, { params: params })
 		.success(function(data, status) {
 
 			if( data.results && data.count ) {
