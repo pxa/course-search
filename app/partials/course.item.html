@@ -5,7 +5,7 @@
 			<strong>{{course.code}}</strong>
 			<span>{{course.label}}</span>
 			<small>
-				<span ui-if="course.credits.min != course.credits.max">{{course.credits.min}}&ndash;</span>{{course.credits.value}}
+				<span ui-if="course.credits.min != course.credits.max">{{course.credits.min}}&ndash;</span>{{course.credits.max}}
 				<span ng-pluralize count="course.credits.max" when="{ 'one': 'credit', 'other': 'credits' }"></span>
 			</small>
 		</h2>
@@ -23,13 +23,28 @@
 			<dt>Offered</dt>
 			<dd ng-repeat="offering in course.offering"
 				data-placeholder="{{offering.term}} {{offering.year}}"
-				ng-class="{ notOffered: offering.offering == 0, upcomingOffering: offering.offering == 2 }"
-				ng-switch="offering.offering">
-				<span ng-switch-when="0"></span>
-				<span ng-switch-when="1">{{offering.term}}</span>
-				<span ng-switch-when="2">{{offering.term}} {{offering.year}}</span>
+				ng-class="{ notOffered: offering.scheduled == false && offering.typical == false, upcomingOffering: offering.scheduled == true }">
+				<span ui-if="!offering.scheduled && !offering.typical"></span>
+				<span ui-if="!offering.scheduled && offering.typical">{{offering.term}}</span>
+				<span ui-if="offering.scheduled">{{offering.term}} {{offering.year}}</span>
 			</dd>
 		</dl>
-		<p ui-if="course.desc">{{course.desc}}</p>
+		<p ui-if="course.description != null">{{course.description}}</p>
+		<div ui-if="course.bulletinDescription != null && (showExtras || (!showExtras && course.description == null ))">
+			<h3>Bulletin Description</h3>
+			<p>{{course.bulletinDescription}}</p>
+		</div>
+		<div ui-if="showExtras && course.prerequistes">
+			<h3>Prerequistes</h3>
+			<p>{{course.prerequistes}}</p>
+		</div>
+		<div ui-if="showExtras && course.corequistes">
+			<h3>Corequistes</h3>
+			<p>{{course.corequistes}}</p>
+		</div>
+		<div ui-if="showExtra && showcourse.typicallyOffered">
+			<h3>Typically offered</h3>
+			<p>{{course.typicallyOffered}}</p>
+		</div>
 	</div>
 </div>

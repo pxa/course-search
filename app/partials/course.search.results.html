@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	
-	<div ui-if="$state.includes('course.search.results.list')">
+	<div ui-if="$state.includes('course.search.results.list') && search.count">
 		<h2>Filters</h2>
 		<div ng-repeat="facetGroup in search.filters.facets">
 			<div ng-switch="facetGroup.facets.length">

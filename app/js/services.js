@@ -315,6 +315,7 @@ angular.module('courseSearchApp.services', ['ngResource'])
 	
 	var search = {
 		
+		mock: true,
 		query: null,
 		placeholder: 'title, keyword, department, subject, or number',
 		examples: searchExamples,

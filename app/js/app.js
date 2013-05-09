@@ -108,7 +108,7 @@ angular.module('courseSearchApp', ['courseSearchApp.filters', 'courseSearchApp.s
 					
 					var loadPage = function(page) {
 						
-						if( loadResultsFromCache(page) ) {
+						if( loadResultsFromCache(page) || $scope.search.count == 0 ) {
 							// Dynamically load the next cache set
 							//preloadResults(page + 1);
 							return;

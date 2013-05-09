@@ -665,7 +665,7 @@ body > header {
 		border-top-width: 0;
 		padding: 1em;
 		
-		> div {
+		> div:first-child {
 			float: right;
 			
 			label {
@@ -710,6 +710,18 @@ body > header {
 			
 			> * + * {
 				margin-left: 0.5em;
+			}
+		}
+		
+		div ~ div { // Extras
+			
+			h3 {
+				font-size: em($r);
+				margin-bottom: 0;
+				
+				& + p {
+					margin-top: 0;
+				}	
 			}
 		}
 	}
@@ -852,7 +864,7 @@ body > header {
 	
 	ol {
 		list-style-type: none;
-		margin: 0 1em 0 0;
+		margin: 0;
 		padding: 0;
 	}
 	
@@ -921,7 +933,6 @@ body > header {
 	}
 	
 	time {
-		margin-left: 0.5em;
 		white-space: nowrap;
 	}
 	
@@ -999,7 +1010,7 @@ body > header {
 			white-space: nowrap;
 		}
 		
-		+ tr:not(:last-child) {
+		+ tr:not(.details) {
 			border-width: 0;
 			
 			td {
@@ -1011,7 +1022,7 @@ body > header {
 			}
 		}
 	
-		~ :last-child {
+		&.details {
 			border-width: 0;
 			
 			td:first-child {

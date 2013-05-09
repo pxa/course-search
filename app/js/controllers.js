@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state, searchService) {
+function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state, searchService, $location) {
 	
 	$scope.keyup = function($event) {
 		console.log($event);	
@@ -192,27 +192,28 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 		
 		this.context = context;
 		
-		// Need min credits, not max
-		if( !this.credits.value )
-			this.credits.value = this.credits.max;
-		
-		this.offering = [
-			{
-				year: 2013,
-				term: 'Fall',
-				offering: getRandomInt(0,2)
-			},
-			{
-				year: 2014,
-				term: 'Spring',
-				offering: getRandomInt(0,2)
-			},
-			{
-				year: 2014,
-				term: 'Summer',
-				offering: getRandomInt(0,2)
-			}
-		];
+		if( angular.isUndefined(this.offering) ) {
+			this.offering = [
+				{
+					year: 2013,
+					term: 'Fall',
+					scheduled: getRandomInt(0, 1),
+					typical: getRandomInt(0, 1)
+				},
+				{
+					year: 2014,
+					term: 'Spring',
+					scheduled: getRandomInt(0, 1),
+					typical: getRandomInt(0, 1)
+				},
+				{
+					year: 2014,
+					term: 'Summer',
+					scheduled: getRandomInt(0, 1),
+					typical: getRandomInt(0, 1)
+				}
+			];	
+		}
 		
 		// Retain restore
 		this._bookmark = this.bookmark;
@@ -221,8 +222,12 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	};
 	Course.prototype = {
 	
-		get desc() {
+		get primaryDesciption() {
 			return this.description ? this.description : this.bulletinDescription;
+		},
+		
+		get secondaryDescription() {
+			return this.description ? this.bulletinDescription : null;
 		},
 		
 		get bookmarked() {
@@ -290,8 +295,6 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 					// Load the course into cache, indexed by index and unique id
 					$scope.resultsCache[course.index] = course;
 					$scope.resultsCache[course.slug] = course;
-					
-					
 				}
 
 				$scope.numberOfPages = Math.ceil(data.count / $scope.resultsPerPage);
@@ -311,38 +314,54 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	};
 	
 	searchQueryService();
-	
+
 	$scope.searchCourses = function(page, transition, successCallback) {
+		
+		var newSearch = angular.isUndefined(page);
+		var newQuery = $scope.searchModel.query != $scope.search.query;
+		
 		page = page ? page : 1;
 		transition = transition ? transition : true;
 		
-		console.log('searching', $scope.searchModel.query, params);
+		console.log('searching', $scope.searchModel.query, $state.params);
+		console.log('new search', newSearch, '| new query', newQuery);
 		
-		if( validate() && $scope.searchModel.query.length ) {
+		if( validate() && $scope.searchModel && $scope.searchModel.query.length ) {
 		
 			console.log('search validated');
 			
 			// If query or facets changed since last call, clear page and result cache
-			if( $scope.searchModel.query != $scope.search.query ) {
+			if( newSearch ) {
 				$scope.resultsCache = [];
 				$scope.pageCache = [];
 				$scope.results = [];
 			}
 			
-			var criteriaIds = ids(selectedFacets($scope.search.criteria.facets));
-			var filterIds = ids(selectedFacets($scope.search.filters.facets));
-			var facetIds = criteriaIds.concat(filterIds);
+			console.log('old cache', $scope.resultsCache.length);
+			
+			var facetIds = ids(selectedFacets($scope.search.criteria.facets));
+			
+			if( !newSearch || !newQuery ) {
+				var filterIds = ids(selectedFacets($scope.search.filters.facets));
+				facetIds = facetIds.concat(filterIds);
+			}
+			
+			if( $scope.search.mock )
+				facetIds = null;
 			
 			var params = {
 				query: $scope.searchModel.query,
 				count: 2 * $scope.resultsPerPage,
 				start: (page - 1) * $scope.resultsPerPage,
-				facet: facetIds };
-			
+				facet: facetIds,
+				criteriaKey: $state.params.criteriaKey };
+
 			searchQueryService(params, function() {
 				if( transition ) {
 					var p = { criteriaKey: $scope.search.criteria.key, query: $scope.search.query, page: page };
 					$state.transitionTo('course.search.results.list', p);
+	
+					console.log('new cache', $scope.resultsCache.length);
 				}
 			});
 		}
