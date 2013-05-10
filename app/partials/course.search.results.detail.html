@@ -1,5 +1,5 @@
 <nav class="pager">
-	<p><span ng-show="numberOfPages > 1">Course {{course.index + 1}} of </span>{{search.count}}
+	<p>Course {{course.index + 1}} of {{search.count}}
 		<span ng-pluralize count="search.count" when="{ 'one': 'result', 'other': 'results' }"></span>
 		&bull;
 		<a ng-href="{{resultsListUrl}}">Back to results</a>

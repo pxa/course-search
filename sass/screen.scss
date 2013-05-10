@@ -58,17 +58,10 @@ body > header {
 	
 	.brand { // a
 		@include text-shadow;
-		background-image: url('data:image/svg+xml,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="50px" height="60px" viewBox="0 0 50 60" enable-background="new 0 0 50 60" xml:space="preserve">
-	<polygon style="fill:#{$crimson};" points="15,42 18,42 18,50 32,50 32,42 35,42 40,37 40,20 42,20 42,14 32,14 32,10 32,10 18,10 
-		18,14 8,14 8,20 10,20 10,37"/>
-	<polyline style="fill:#{white};" points="30,12 30,14 28,14 28,44 30,44 30,48 20,48 20,44 22,44 22,14 20,14 20,12 30,12"/>
-	<polyline style="fill:#{white};" points="40,16 40,18 38,18 38,36 34,40 29,40 29,34 32,34 32,18 30,18 30,16 40,16"/>
-	<polyline style="fill:#{white};" points="20,16 20,18 18,18 18,34 21,34 21,40 16,40 12,36 12,18 10,18 10,16 20,16"/>
-				</svg>');
+		background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0gPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuNCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgLS0+DSA8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0gPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINIHdpZHRoPSI1MHB4IiBoZWlnaHQ9IjYwcHgiIHZpZXdCb3g9IjAgMCA1MCA2MCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTAgNjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NIDxnPg0gPHBvbHlnb24gc3R5bGU9ImZpbGw6IzdEMTEwQzsiIHBvaW50cz0iMTUsNDIgMTgsNDIgMTgsNTAgMzIsNTAgMzIsNDIgMzUsNDIgNDAsMzcgNDAsMjAgNDIsMjAgNDIsMTQgMzIsMTQgMzIsMTAgMzIsMTAgMTgsMTAgDSAxOCwxNCA4LDE0IDgsMjAgMTAsMjAgMTAsMzcgIi8+DSA8cG9seWxpbmUgc3R5bGU9ImZpbGw6I0ZGRkZGRjsiIHBvaW50cz0iMzAsMTIgMzAsMTQgMjgsMTQgMjgsNDQgMzAsNDQgMzAsNDggMjAsNDggMjAsNDQgMjIsNDQgMjIsMTQgMjAsMTQgMjAsMTIgMzAsMTIgIi8+DSA8cG9seWxpbmUgc3R5bGU9ImZpbGw6I0ZGRkZGRjsiIHBvaW50cz0iNDAsMTYgNDAsMTggMzgsMTggMzgsMzYgMzQsNDAgMjksNDAgMjksMzQgMzIsMzQgMzIsMTggMzAsMTggMzAsMTYgNDAsMTYgIi8+DSA8cG9seWxpbmUgc3R5bGU9ImZpbGw6I0ZGRkZGRjsiIHBvaW50cz0iMjAsMTYgMjAsMTggMTgsMTggMTgsMzQgMjEsMzQgMjEsNDAgMTYsNDAgMTIsMzYgMTIsMTggMTAsMTggMTAsMTYgMjAsMTYgIi8+DSA8L2c+DSA8L3N2Zz4N');
 		background-position: 0 50%;
 		background-repeat: no-repeat;
 		display: inline-block;
-		//background-color: $color-;
 		color: $crimson;
 		font-size: em($m);
 		font-weight: bold;
@@ -288,23 +281,27 @@ body > header {
 		width: 10em;
 	}
 	
-	details {
+	details, .details {
 		margin: 1em 0;
 		
-		&[open] {
+		&[open], &.open {
 			@include border-radius;
 			background-color: $color-2;
 			border: 1px solid $color-3;
 			padding: 0 1em 1em;
 			
-			summary {
+			summary, .summary {
 				//@include border-bottom-right-radius(0);
 				background-color: $cream;
+			}
+			
+			.summary::before {
+				content: '\25BE';
 			}
 		}
 	}
 	
-	summary { // Examples
+	summary, .summary { // Examples
 		//@include border-right-radius;
 		@include border-radius;
 		@include box-sizing(border-box);
@@ -322,6 +319,14 @@ body > header {
 		top: 0rem;
 		right: 0rem;
 		width: 6rem;
+	}
+	
+	.summary::before {
+		content: '\25B8';
+		display: inline-block;
+		font-size: em($m);
+		text-align: left;
+		width: 1em;
 	}
 	
 	dl {
@@ -416,7 +421,7 @@ body > header {
 		margin: 2em 0 0;
 		position: relative;
 		
-		> div {
+		> div:first-child {
 			padding: 0 11em 0em 0;
 			position: relative;
 		}
