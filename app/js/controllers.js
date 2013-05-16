@@ -431,7 +431,7 @@ function CourseSearchCtrl($scope, $routeParams, $http, $dialog, $timeout, $state
 	// Because ng-repeat creates a new scope,
 	// we have to access the query property via a function, not inline
 	$scope.applySearchExample = function(example) {
-		$scope.search.query = example;
+		$scope.searchModel.query = example;
 	};
 	
 	// Flattens the source facet array to prepare for <select>'s ng-option

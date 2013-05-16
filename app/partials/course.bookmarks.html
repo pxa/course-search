@@ -19,7 +19,7 @@
 				<div ng-switch-when="false" class="course undo">
 					<a ng-click="bookmarks.restore(course)" title="Restore bookmark" href>
 						<h2>
-							<span>{{course.campus}}</span>
+							<span title="course.campus.title">{{course.campus.label}}</span>
 							<strong>{{course.code}}</strong>
 							<span>{{course.label}}</span>
 							<small>Undo</small>

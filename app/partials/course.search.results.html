@@ -24,11 +24,11 @@
 				</div>
 				<div ng-switch-when="1">
 					<h3>{{facetGroup.label}}</h3>
-					<p>{{facetGroup.facets[0].label}}</p>
+					<p title="{{facetGroup.facets[0].title}}">{{facetGroup.facets[0].label}}</p>
 				</div>
 				<div ng-switch-default>
 					<h3 ng-click="openFacetGroupDialog(facetGroup)">{{facetGroup.label}}</h3>
-					<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }">
+					<label ng-repeat="facet in facetGroup.facets | filter:{ value:true }" title="{{facet.title}}">
 						<input type="checkbox" ng-model="facet.value" ng-change="searchCourses()" />
 						{{facet.label}}
 						<small>{{facet.count}}</small>
